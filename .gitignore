@@ -1,0 +1,9 @@
+/Makefile
+/src/version.h
+/cmake-*
+/CMakeFiles
+/.cmake
+/.idea
+/target/
+/cmake_install.cmake
+/CMakeCache.txt
