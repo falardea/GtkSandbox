@@ -2,7 +2,7 @@
 #### Copyright (c)?
 
 <p>
-    This is a home project to explore some GTK3, maybe evolving into a GTK4 project.  It is intended to evolve considerably as a bit of a sandbox.  The git history may or may not capture some of this evolution... and who know whether I can maintain this readme.
+    This is a home project to explore some GTK3, maybe evolving into a GTK4 project.  It is intended to evolve considerably as a bit of a sandbox.  The git history may capture more of this evolution than this README, we'll see.
 </p>
 <p>
     First thing I want to document, that may help me (someone else) someday... how to get a GTK window to show up on a Windows box.  After trying a number of different X servers that were recommended on SO, I found <a href="https://mobaxterm.mobatek.net/">MobaXterm</a>, which actually seemed to present a display server to the windows.  Their home edition works fine, and their license isn't that much

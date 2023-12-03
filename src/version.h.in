@@ -1,4 +1,4 @@
 // the configured options and settings for Tutorial
-#define project_VERSION_MAJOR @gtkTest1_VERSION_MAJOR@
-#define project_VERSION_MINOR @gtkTest1_VERSION_MINOR@
-#define project_VERSION_PATCH @gtkTest1_VERSION_PATCH@
+#define project_VERSION_MAJOR @GtkSandbox_VERSION_MAJOR@
+#define project_VERSION_MINOR @GtkSandbox_VERSION_MINOR@
+#define project_VERSION_PATCH @GtkSandbox_VERSION_PATCH@

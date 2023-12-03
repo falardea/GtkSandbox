@@ -6,9 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PROJECT_SOURCE_DIR ./src)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ./target)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--export-dynamic")
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -rdynamic")
 include_directories(${PROJECT_SOURCE_DIR})
 
 configure_file("${PROJECT_SOURCE_DIR}/version.h.in" "${PROJECT_SOURCE_DIR}/version.h")
+configure_file("${PROJECT_SOURCE_DIR}/wndGladeMain.glade" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/wndGladeMain.glade")
 
 # GTK stuff
 FIND_PACKAGE(PkgConfig REQUIRED)

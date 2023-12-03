@@ -19,14 +19,14 @@ void echo_input_args(int argc, char **argv)
     }
 }
 
-static void closeButtonClicked(__attribute__((unused)) GtkWidget *btnSrc,
+extern "C" void closeButtonClicked(__attribute__((unused)) GtkWidget *btnSrc,
                               __attribute__((unused)) gpointer *user_date)
 {
     g_print("%s called\n", __func__ );
     gtk_main_quit();
 }
 
-gboolean windowDelete(__attribute__((unused)) GtkWidget *eventSrc,
+extern "C" gboolean windowDelete(__attribute__((unused)) GtkWidget *eventSrc,
                       __attribute__((unused)) GdkEvent *event,
                       __attribute__((unused)) gpointer data)
 {
@@ -40,7 +40,7 @@ gboolean windowDelete(__attribute__((unused)) GtkWidget *eventSrc,
     // home system
 }
 
-static void testBtnClicked(__attribute__((unused)) GtkWidget *btnSrc,
+extern "C" void testBtnClicked(__attribute__((unused)) GtkWidget *btnSrc,
                            __attribute__((unused)) gpointer *user_date)
 {
     static int test_count = 1;
@@ -54,7 +54,31 @@ static void testBtnClicked(__attribute__((unused)) GtkWidget *btnSrc,
     test_count++;
 }
 
-void loadWndMainContent(GtkWidget *parentWnd)
+extern "C" void openChildGladeWnd(__attribute__((unused)) GtkWidget *parent,
+                       __attribute__((unused)) gpointer *endowment)
+{
+    GtkWidget *ref_wndGladeMain;
+    GtkBuilder *guiBuilder = NULL;
+
+    guiBuilder = gtk_builder_new();
+
+    if (gtk_builder_add_from_file(guiBuilder, "wndGladeMain.glade", NULL) == 0)
+    {
+        g_print("%s: failed to load %s", __func__ , "wndGladeMain.glade");
+    }
+    ref_wndGladeMain = GTK_WIDGET(gtk_builder_get_object(guiBuilder, "wndGladeMain"));
+    gtk_builder_connect_signals(guiBuilder, NULL);
+    gtk_widget_show_all(ref_wndGladeMain);
+
+}
+
+extern "C" void launchChildWnd(__attribute__((unused)) GtkWidget *btnSrc,
+                           __attribute__((unused)) gpointer *user_date)
+{
+    openChildGladeWnd(gtk_widget_get_toplevel(btnSrc), user_date);
+}
+
+extern "C" void loadWndMainContent(GtkWidget *parentWnd)
 {
     GtkWidget *btnBox;
     GtkWidget *btnClose;
@@ -68,16 +92,19 @@ void loadWndMainContent(GtkWidget *parentWnd)
     gtk_container_add(GTK_CONTAINER (btnBox), btnClose);
     gtk_container_add(GTK_CONTAINER (parentWnd), btnBox);
 
-    g_signal_connect(btnTest, "clicked", G_CALLBACK(testBtnClicked), NULL);
+    g_signal_connect(btnTest, "clicked", G_CALLBACK(launchChildWnd), NULL);
     g_signal_connect(btnClose, "clicked", G_CALLBACK(closeButtonClicked), NULL);
 }
 
 int main(int argc, char **argv)
 {
     if (argc < 2) {
+        // Give me somethin', anythin'
         print_usage(argv[0]);
         return 1;
     } else {
+        // just because I don't know what else to do with them now and like leaving dev
+        // hooks in sandboxes.
         echo_input_args(argc, argv);
     }
 
