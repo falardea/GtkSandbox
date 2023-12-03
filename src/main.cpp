@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <gtk/gtk.h>
 #include "version.h"
@@ -39,7 +40,8 @@ extern "C" gboolean windowDelete(__attribute__((unused)) GtkWidget *eventSrc,
         gtk_main_quit();
     }
     // TRUE to stop other handlers from being invoked for the event.
-    // FALSE to propagate the event further*
+    // FALSE to propagate the event further (though it doesn't seem to quit the main thread unless we explicitly
+    // call gtk_main_quit();
     return FALSE;
 }
 
@@ -61,17 +63,18 @@ extern "C" void openChildGladeWnd(__attribute__((unused)) GtkWidget *parent,
                        __attribute__((unused)) gpointer *endowment)
 {
     GtkWidget *ref_wndGladeMain;
-    GtkBuilder *guiBuilder = NULL;
+    GtkBuilder *guiBuilder;
 
     guiBuilder = gtk_builder_new();
 
-    if (gtk_builder_add_from_file(guiBuilder, "wndGladeMain.glade", NULL) == 0)
+    if (gtk_builder_add_from_file(guiBuilder, "wndGladeMain.glade", nullptr) == 0)
     {
         g_print("%s: failed to load %s", __func__ , "wndGladeMain.glade");
     }
     ref_wndGladeMain = GTK_WIDGET(gtk_builder_get_object(guiBuilder, "wndGladeMain"));
-    gtk_builder_connect_signals(guiBuilder, NULL);
+    gtk_builder_connect_signals(guiBuilder, nullptr);
     gtk_widget_show_all(ref_wndGladeMain);
+    g_object_unref(guiBuilder);
 }
 
 extern "C" void launchChildWnd(__attribute__((unused)) GtkWidget *btnSrc,
@@ -101,7 +104,6 @@ extern "C" void loadWndMainContent(GtkWidget *parentWnd)
 int main(int argc, char **argv)
 {
     if (argc < 2) {
-        // Give me somethin', anythin'
         print_usage(argv[0]);
         return 1;
     } else {
