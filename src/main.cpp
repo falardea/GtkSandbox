@@ -2,6 +2,8 @@
 #include <gtk/gtk.h>
 #include "version.h"
 
+GtkWidget *g_wndMain;
+
 // Don't forget to set DISPLAY env variable
 void print_usage(char *argv)
 {
@@ -22,22 +24,23 @@ void echo_input_args(int argc, char **argv)
 extern "C" void closeButtonClicked(__attribute__((unused)) GtkWidget *btnSrc,
                               __attribute__((unused)) gpointer *user_date)
 {
-    g_print("%s called\n", __func__ );
-    gtk_main_quit();
+    if (g_wndMain != gtk_widget_get_toplevel(btnSrc)){
+        gtk_window_close(GTK_WINDOW(gtk_widget_get_toplevel(btnSrc)));
+    } else {
+        gtk_main_quit();
+    }
 }
 
 extern "C" gboolean windowDelete(__attribute__((unused)) GtkWidget *eventSrc,
                       __attribute__((unused)) GdkEvent *event,
                       __attribute__((unused)) gpointer data)
 {
-    g_print("%s called\n", __func__);
+    if (g_wndMain == gtk_widget_get_toplevel(eventSrc)) {
+        gtk_main_quit();
+    }
     // TRUE to stop other handlers from being invoked for the event.
     // FALSE to propagate the event further*
-    gtk_main_quit();
-    return TRUE;
-    // * returning False is "supposed" to let downstream event handlers
-    // fire and handle the destroy event, but doesn't appear to on my
-    // home system
+    return FALSE;
 }
 
 extern "C" void testBtnClicked(__attribute__((unused)) GtkWidget *btnSrc,
@@ -69,7 +72,6 @@ extern "C" void openChildGladeWnd(__attribute__((unused)) GtkWidget *parent,
     ref_wndGladeMain = GTK_WIDGET(gtk_builder_get_object(guiBuilder, "wndGladeMain"));
     gtk_builder_connect_signals(guiBuilder, NULL);
     gtk_widget_show_all(ref_wndGladeMain);
-
 }
 
 extern "C" void launchChildWnd(__attribute__((unused)) GtkWidget *btnSrc,
@@ -112,6 +114,7 @@ int main(int argc, char **argv)
     gtk_init(&argc , &argv);
 
     wndMain = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    g_wndMain = wndMain;
     g_signal_connect(wndMain, "delete-event", G_CALLBACK(windowDelete), NULL);
 
     loadWndMainContent(wndMain);
