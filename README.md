@@ -43,17 +43,8 @@
     -rdynamic
 </p>
 <p>
-    But, we've started this project using C++, so we need the C++ variant of the compiler flags; 
+    If we want to use C++ later, this is included in the CMakeList.txt 
 
     -Wl,--export-dynamic.
 </p>
 <p><small>Thanks again <a href="https://stackoverflow.com/questions/57536202/gtk3-compile-error-could-not-find-signal-handler-did-you-compile-with-rdyn">SO</a>.</small></p>
-<p>
-    And we need to add: 
-
-    extern "C"
-</p>
-<p>
-    To all our callbacks, so the compiler doesn't mangle our names and the GtkBuilder can map them while building the glade window at runtime.     
-</p>
-

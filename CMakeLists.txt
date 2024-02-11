@@ -1,28 +1,57 @@
-cmake_minimum_required(VERSION 3.14)
-project(GtkSandbox VERSION 1.1.4)
+cmake_minimum_required(VERSION 3.22)
+project(GtkSandbox VERSION 1.1.5)
+set(PROJECT_TARGET sandbox)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PROJECT_SOURCE_DIR ./src)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ./target)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--export-dynamic")
+set(PROJECT_BINARY_DIR ./target)
+set(PROJECT_RESOURCE_DIR ${CMAKE_SOURCE_DIR}/resources)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+
+set(MY_SOURCES
+        src/main.c
+        src/version.h
+        src/utils/os_interface.c
+        src/utils/os_interface.h
+        src/models/app_model.h
+        src/views/common/view_builder.c
+        src/views/common/view_builder.h
+        src/views/common/view_styler.c
+        src/views/common/view_styler.h
+        src/views/app_wnd/app_view.c
+        src/views/app_wnd/app_view.h
+        src/models/app_model.c
+        src/controllers/app_ctrl.c
+        src/controllers/app_ctrl.h)
+set(IMAGES_DIR ${PROJECT_RESOURCE_DIR}/images)
+set(STYLE_DIR ${PROJECT_RESOURCE_DIR}/style)
+set(SCSS_SOURCE ${STYLE_DIR}/sandbox_style.scss)
+set(CSS_OUTFILE ${PROJECT_BINARY_DIR}/sandbox_style.css)
+
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--export-dynamic")
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -rdynamic")
+add_link_options(-rdynamic)
+add_compile_options(-pedantic -Wall -Wextra)
+
 include_directories(${PROJECT_SOURCE_DIR})
 
 configure_file("${PROJECT_SOURCE_DIR}/version.h.in" "${PROJECT_SOURCE_DIR}/version.h")
-configure_file("${PROJECT_SOURCE_DIR}/wndGladeMain.glade" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/wndGladeMain.glade")
 
 # GTK stuff
-FIND_PACKAGE(PkgConfig REQUIRED)
-PKG_CHECK_MODULES(GTK3 REQUIRED gtk+-3.0)
-INCLUDE_DIRECTORIES(${GTK3_INCLUDE_DIRS})
-LINK_DIRECTORIES(${GTK3_LIBRARY_DIRS})
-ADD_DEFINITIONS(${GTK3_CFLAGS_OTHER})
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+include_directories(${GTK3_INCLUDE_DIRS})
+link_directories(${GTK3_LIBRARY_DIRS})
+add_definitions(${GTK3_CFLAGS_OTHER})
 
-add_executable(${CMAKE_PROJECT_NAME}
-        ${PROJECT_SOURCE_DIR}/main.cpp
-        ${PROJECT_SOURCE_DIR}/version.h)
+add_executable(${PROJECT_TARGET} ${MY_SOURCES})
 
-target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC "${PROJECT_BINARY_DIR}")
-TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${GTK3_LIBRARIES})
+target_include_directories(${PROJECT_TARGET} PUBLIC "${PROJECT_BINARY_DIR}")
+target_link_libraries(${PROJECT_TARGET} ${GTK3_LIBRARIES})
+
+add_custom_command(TARGET ${PROJECT_TARGET} PRE_BUILD COMMAND sassc -t expanded ${SCSS_SOURCE} ${CSS_OUTFILE})
+configure_file(${PROJECT_SOURCE_DIR}/sandbox.glade ${PROJECT_BINARY_DIR}/sandbox.glade COPYONLY)
