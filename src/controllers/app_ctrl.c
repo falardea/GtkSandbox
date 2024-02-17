@@ -5,6 +5,10 @@
 #include <string.h>
 #include "app_ctrl.h"
 #include "../utils/os_interface.h"
+#include "views/common/view_builder.h"
+#include "views/common/view_styler.h"
+
+AppWidgets_T *g_appWidgetsT;
 
 void app_init(int argc, char **argv, ApplicationModel *appModel)
 {
@@ -19,5 +23,10 @@ void app_init(int argc, char **argv, ApplicationModel *appModel)
             setAppInitState(appModel, INIT_RUNNING);
         }
     }
+    setDisplayEnv();
+    gtk_init(&argc, &argv);
+
+    g_appWidgetsT = build_application();
+    applyApplicationStyle(g_appWidgetsT);
     setAppInitState(appModel, INIT_SUCCESS);
 }

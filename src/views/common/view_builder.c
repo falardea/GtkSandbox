@@ -4,6 +4,20 @@
 #include <gtk/gtk.h>
 #include "view_builder.h"
 
+#define POSSIBLE_TOGGLE_TEXT_LENGTH 2
+
+gboolean activeTBTextSwap(GBinding *src, const GValue *fromValue, GValue *toValue, gpointer user_data)
+{
+    GtkToggleButton *tbutton = (GtkToggleButton *)g_binding_dup_source(src);
+    if (tbutton != NULL)
+    {
+        gboolean active = g_value_get_boolean(fromValue);
+        gtk_button_set_label(GTK_BUTTON(tbutton), active ? "ON" : "OFF");
+        return TRUE;
+    }
+    return FALSE;
+}
+
 AppWidgets_T *build_application(void)
 {
     GtkBuilder *builder;
@@ -32,6 +46,12 @@ AppWidgets_T *build_application(void)
     g_object_bind_property(appWidgetsT->w_tbBindingSrc, "active",
                            appWidgetsT->w_tbBoundTarget2, "sensitive",
                            G_BINDING_DEFAULT);
+    g_object_bind_property_full(appWidgetsT->w_tbBindingSrc, "active",
+                                appWidgetsT->w_tbBindingSrc, "label",
+                                G_BINDING_SYNC_CREATE,
+                                (GBindingTransformFunc) activeTBTextSwap,
+                                NULL,
+                                NULL, NULL);
 
     g_object_unref(builder);
     return appWidgetsT;
