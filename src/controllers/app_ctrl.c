@@ -2,31 +2,29 @@
 // Created by french on 2/4/24.
 //
 #include <stdio.h>
-#include <string.h>
+#include "../common_defs.h"
 #include "app_ctrl.h"
 #include "../utils/os_interface.h"
+#include "../utils/parse_args.h"
 #include "views/common/view_builder.h"
 #include "views/common/view_styler.h"
 
 AppWidgets_T *g_appWidgetsT;
 
-void app_init(int argc, char **argv, ApplicationModel *appModel)
+void app_init(int argc, char **argv)
 {
-    setAppInitState(appModel, INIT_STARTED);
+    RVALUE_T retVal;
 
-    print_usage(argv[0]);
-    for (int i = 0; i < argc; i++)
+    retVal = parse_input_args(argc, argv);
+    if (retVal == PARSE_ARG_ERR)
     {
-        if (strcmp(argv[i], "-a") == 0)
-        {
-            printf("%s option recognized\n", argv[i]);
-            setAppInitState(appModel, INIT_RUNNING);
-        }
+        printf("%s error parsing input args, exiting...", __func__ );
+        return;
     }
     setDisplayEnv();
     gtk_init(&argc, &argv);
 
     g_appWidgetsT = build_application();
     applyApplicationStyle(g_appWidgetsT);
-    setAppInitState(appModel, INIT_SUCCESS);
+    setAppModelInitState(INIT_SUCCESS);
 }

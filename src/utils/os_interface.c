@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../version.h"
 
 #include "os_interface.h"
 
@@ -51,12 +50,4 @@ bool setDisplayEnv(void)
     {
         return true;
     }
-}
-void print_usage(char *argv)
-{
-    printf("%s(%d.%d.%d)\n", argv, project_VERSION_MAJOR, project_VERSION_MINOR, project_VERSION_PATCH);
-//    std::cout << argv << " (v" << project_VERSION_MAJOR << "."
-//              << project_VERSION_MINOR << "."
-//              << project_VERSION_PATCH << ")" << std::endl;
-//    std::cout << "Usage: " << argv << " <TBD>" << std::endl;
 }

@@ -7,6 +7,5 @@
 #include <stdbool.h>
 
 bool setDisplayEnv(void);
-void print_usage(char *argv);
 
-#endif //SANDBOX_OS_INTERFACE_H
+#endif  // SANDBOX_OS_INTERFACE_H

@@ -18,4 +18,4 @@ typedef struct
 
 AppWidgets_T *build_application(void);
 
-#endif //SANDBOX_VIEW_BUILDER_H
+#endif  // SANDBOX_VIEW_BUILDER_H

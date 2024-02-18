@@ -27,13 +27,15 @@ typedef enum {
 typedef struct {
     APP_INIT_STATE      initState;
     APP_RUNTIME_STATE   runtimeState;
+    bool                debuggingEnabled;
 } ApplicationModel;
 
-extern ApplicationModel gAppModel;
+void setAppModelInitState(APP_INIT_STATE appInitState);
+APP_INIT_STATE getAppModelInitState(void);
+void setAppModelRuntimeState(APP_RUNTIME_STATE appRuntimeState);
+APP_RUNTIME_STATE getAppModelRuntimeState(void);
 
-void setAppInitState(ApplicationModel *model, APP_INIT_STATE appInitState);
-APP_INIT_STATE getAppInitState(ApplicationModel *model);
-void setAppRuntimeState(ApplicationModel *model, APP_RUNTIME_STATE appInitState);
-APP_RUNTIME_STATE getAppRuntimeState(ApplicationModel *model);
+void setAppModelDebuggingFlag(bool enable);
+bool getAppModelDebuggingFlag(void);
 
-#endif //SANDBOX_APP_MODEL_H
+#endif  // SANDBOX_APP_MODEL_H

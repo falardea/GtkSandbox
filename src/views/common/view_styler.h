@@ -8,4 +8,4 @@
 
 void applyApplicationStyle(AppWidgets_T *appWidgetsT);
 
-#endif //SANDBOX_VIEW_STYLER_H
+#endif  // SANDBOX_VIEW_STYLER_H

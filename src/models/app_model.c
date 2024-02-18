@@ -1,26 +1,40 @@
 //
 // Created by french on 2/3/24.
 //
+#include <stdio.h>
+#include <stdbool.h>
 #include "app_model.h"
 
-ApplicationModel gAppModel = {INIT_UNINITIALIZED, RUNTIME_INITIALIZING};
+// Thinking about making this static... would that make it a Singleton?
+// A model interface might be nothing more than setter/getter functions
+static ApplicationModel gAppModel = {INIT_UNINITIALIZED,
+                              RUNTIME_UNINITIALIZED,
+                              false};
 
-// A model interface might be nothing more than setter/getter functions for
-// the singletons of model instances?
-void setAppInitState(ApplicationModel *model, APP_INIT_STATE appInitState)
+void setAppModelInitState(APP_INIT_STATE appInitState)
 {
-    model->initState = appInitState;
+    gAppModel.initState = appInitState;
 }
-APP_INIT_STATE getAppInitState(ApplicationModel *model)
+APP_INIT_STATE getAppModelInitState(void)
 {
-    return model->initState;
-}
-void setAppRuntimeState(ApplicationModel *model, APP_RUNTIME_STATE appRuntimeState)
-{
-    model->runtimeState = appRuntimeState;
-}
-APP_RUNTIME_STATE getAppRuntimeState(ApplicationModel *model)
-{
-    return model->runtimeState;
+    return gAppModel.initState;
 }
 
+void setAppModelRuntimeState(APP_RUNTIME_STATE appRuntimeState)
+{
+    gAppModel.runtimeState = appRuntimeState;
+}
+APP_RUNTIME_STATE getAppModelRuntimeState(void)
+{
+    return gAppModel.runtimeState;
+}
+
+void setAppModelDebuggingFlag(bool enable)
+{
+    gAppModel.debuggingEnabled = enable;
+    printf("Debugging Enabled\n");  // TODO: set and immediately use log level?
+}
+bool getAppModelDebuggingFlag(void)
+{
+    return gAppModel.debuggingEnabled;
+}

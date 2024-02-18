@@ -4,9 +4,8 @@
 #include <gtk/gtk.h>
 #include "view_builder.h"
 
-#define POSSIBLE_TOGGLE_TEXT_LENGTH 2
-
-gboolean activeTBTextSwap(GBinding *src, const GValue *fromValue, GValue *toValue, gpointer user_data)
+gboolean activeTBTextSwap(GBinding *src, const GValue *fromValue,
+                          __attribute__((unused)) GValue *toValue, __attribute__((unused)) gpointer user_data)
 {
     GtkToggleButton *tbutton = (GtkToggleButton *)g_binding_dup_source(src);
     if (tbutton != NULL)

@@ -1,4 +1,11 @@
-// the configured options and settings for Tutorial
+//
+// Created by french on 2/3/24.
+//
+#ifndef GTKSANDBOX_VERSION_H
+#define GTKSANDBOX_VERSION_H
+
 #define project_VERSION_MAJOR @GtkSandbox_VERSION_MAJOR@
 #define project_VERSION_MINOR @GtkSandbox_VERSION_MINOR@
 #define project_VERSION_PATCH @GtkSandbox_VERSION_PATCH@
+
+#endif  // GTKSANDBOX_VERSION_H
