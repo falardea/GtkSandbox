@@ -7,5 +7,6 @@
 #include <stdbool.h>
 
 bool setDisplayEnv(void);
+void getTimestamp(char *buf, size_t bufsz);
 
 #endif  // SANDBOX_OS_INTERFACE_H

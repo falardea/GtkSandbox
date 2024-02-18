@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "../common_defs.h"
 #include "app_ctrl.h"
-#include "../utils/os_interface.h"
+#include "../utils/sys_interface.h"
 #include "../utils/parse_args.h"
 #include "views/common/view_builder.h"
 #include "views/common/view_styler.h"
@@ -18,9 +18,12 @@ void app_init(int argc, char **argv)
     retVal = parse_input_args(argc, argv);
     if (retVal == PARSE_ARG_ERR)
     {
-        printf("%s error parsing input args, exiting...", __func__ );
+        char timestamp[20];
+        getTimestamp(timestamp, sizeof (timestamp));
+        printf("%s:%s: error parsing input args, exiting...\n", timestamp, __func__ );
         return;
     }
+    // TODO: RVALUE_T returns?
     setDisplayEnv();
     gtk_init(&argc, &argv);
 

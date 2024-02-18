@@ -15,8 +15,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 set(MY_SOURCES
         src/main.c
         src/version.h
-        src/utils/os_interface.c
-        src/utils/os_interface.h
+        src/utils/sys_interface.c
+        src/utils/sys_interface.h
         src/models/app_model.h
         src/views/common/view_builder.c
         src/views/common/view_builder.h
