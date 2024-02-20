@@ -10,7 +10,10 @@
 
 static void print_usage(char *argv)
 {
-    printf("%s(%d.%d.%d)\n", argv, project_VERSION_MAJOR, project_VERSION_MINOR, project_VERSION_PATCH);
+    const char *exeName = strrchr(argv, '/') + 1;  // the +1 removes the leading '/'
+    printf("Usage: %s\n"
+           "A sandbox project for experimenting with GTK3 and design patterns in C.\n"
+           " -D\tEnable Debugging (currently unused)\n\n\n", exeName);
 }
 
 RVALUE_T parse_input_args(int argc, char **argv)

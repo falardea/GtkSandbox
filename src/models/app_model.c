@@ -32,7 +32,11 @@ APP_RUNTIME_STATE getAppModelRuntimeState(void)
 void setAppModelDebuggingFlag(bool enable)
 {
     gAppModel.debuggingEnabled = enable;
-    printf("Debugging Enabled\n");  // TODO: set and immediately use log level?
+    if (enable)
+    {
+        // TODO: set and immediately use log level?
+        printf("Debugging Enabled\n");
+    }
 }
 bool getAppModelDebuggingFlag(void)
 {
