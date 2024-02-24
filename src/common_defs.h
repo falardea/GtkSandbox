@@ -10,4 +10,12 @@ typedef enum {
     DISPLAY_ENV_ERR
 } RVALUE_T;
 
+typedef enum
+{
+    LOGLEVEL_DEBUG,
+    LOGLEVEL_INFO,
+    LOGLEVEL_ERROR
+} LOGLEVEL_T;
+
+
 #endif  // GTKSANDBOX_COMMON_DEFS_H

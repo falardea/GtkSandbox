@@ -3,7 +3,6 @@
 //
 #include <stdio.h>
 #include <string.h>
-#include "../version.h"
 #include "../common_defs.h"
 #include "../models/app_model.h"
 #include "parse_args.h"
@@ -20,9 +19,14 @@ RVALUE_T parse_input_args(int argc, char **argv)
 {
     for (int i = 1; i < argc; i++)
     {
-        if (strcmp(argv[i], "-D") == 0)
+        if (strcmp(argv[i], "-D") == 0)  // D for Debug
         {
             setAppModelDebuggingFlag(true);
+            setAppModelLoglevel(LOGLEVEL_DEBUG);
+        }
+        else if (strcmp(argv[i], "-v") == 0)  // v for verbose
+        {
+            setAppModelLoglevel(LOGLEVEL_INFO);
         }
         else if (strlen(argv[i]) > 0)
         {

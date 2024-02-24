@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(GtkSandbox VERSION 1.1.5)
+project(GtkSandbox VERSION 1.2.1)
 set(PROJECT_TARGET sandbox)
 
 set(CMAKE_C_STANDARD 11)
@@ -28,7 +28,9 @@ set(MY_SOURCES
         src/controllers/app_ctrl.c
         src/controllers/app_ctrl.h
         src/utils/parse_args.c
-        src/utils/parse_args.h src/common_defs.h)
+        src/utils/parse_args.h src/common_defs.h
+        src/utils/logging.c
+        src/utils/logging.h)
 set(IMAGES_DIR ${PROJECT_RESOURCE_DIR}/images)
 set(STYLE_DIR ${PROJECT_RESOURCE_DIR}/style)
 set(SCSS_SOURCE ${STYLE_DIR}/sandbox_style.scss)

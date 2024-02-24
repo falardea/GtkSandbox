@@ -9,7 +9,8 @@
 // A model interface might be nothing more than setter/getter functions
 static ApplicationModel gAppModel = {INIT_UNINITIALIZED,
                               RUNTIME_UNINITIALIZED,
-                              false};
+                              false,
+                              LOGLEVEL_ERROR};
 
 void setAppModelInitState(APP_INIT_STATE appInitState)
 {
@@ -41,4 +42,21 @@ void setAppModelDebuggingFlag(bool enable)
 bool getAppModelDebuggingFlag(void)
 {
     return gAppModel.debuggingEnabled;
+}
+
+/**
+ * setAppModelLoglevel
+ * @param logLevel
+ * If the model runtimeLoglevel is set to a lower level already, it does not get raised.  Once set, it's set for the
+ * runtime life of the application.
+ */
+void setAppModelLoglevel(LOGLEVEL_T logLevel)
+{
+    if (gAppModel.runtimeLoglevel > logLevel)
+        gAppModel.runtimeLoglevel = logLevel;
+}
+
+LOGLEVEL_T getAppModelLoglevel(void)
+{
+    return gAppModel.runtimeLoglevel;
 }

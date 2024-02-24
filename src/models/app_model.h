@@ -5,6 +5,7 @@
 #ifndef SANDBOX_APP_MODEL_H
 #define SANDBOX_APP_MODEL_H
 #include <stdbool.h>
+#include "common_defs.h"
 
 typedef enum {
     INIT_UNINITIALIZED,
@@ -28,6 +29,7 @@ typedef struct {
     APP_INIT_STATE      initState;
     APP_RUNTIME_STATE   runtimeState;
     bool                debuggingEnabled;
+    LOGLEVEL_T          runtimeLoglevel;
 } ApplicationModel;
 
 void setAppModelInitState(APP_INIT_STATE appInitState);
@@ -37,5 +39,8 @@ APP_RUNTIME_STATE getAppModelRuntimeState(void);
 
 void setAppModelDebuggingFlag(bool enable);
 bool getAppModelDebuggingFlag(void);
+
+void setAppModelLoglevel(LOGLEVEL_T logLevel);
+LOGLEVEL_T getAppModelLoglevel(void);
 
 #endif  // SANDBOX_APP_MODEL_H

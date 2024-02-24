@@ -6,10 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
 #include "sys_interface.h"
+#include "common_defs.h"
+#include "logging.h"
 
-bool setDisplayEnv(void)
+RVALUE_T setDisplayEnv(void)
 {
     char *displayEnv;
     displayEnv = getenv("DISPLAY");
@@ -22,14 +23,15 @@ bool setDisplayEnv(void)
         FILE *pF;
         pF = popen(cmd, "r");
         if(pF == NULL) {
-            printf("Oops, something went wrong trying to find the IP\n");
-            return false;
+            logging_llprint(LOGLEVEL_ERROR, "%s: trying to open cmd interface\n", __func__);
+            return EXIT_FAILURE;
         }
 
         char retBuf[256];
-        if (fgets(retBuf, 256, pF) != NULL)
+        if (fgets(retBuf, 256, pF) == NULL)
         {
-            printf("something went wrong reading the file\n");
+           logging_llprint(LOGLEVEL_ERROR, "%s: something went wrong reading cmd response\n", __func__);
+           return EXIT_FAILURE;
         }
         retBuf[strcspn(retBuf, "\n")] = 0; // strip the newline
 
@@ -37,19 +39,20 @@ bool setDisplayEnv(void)
         char nameserverStr[sizeof (retBuf) + sizeof (displayId)];
 
         snprintf(nameserverStr, sizeof (nameserverStr), "%s%s", retBuf, displayId);
-        printf("setenv: DISPLAY=%s\n", nameserverStr);
 
         if(pclose(pF) != 0)
         {
-            printf("Error closing command interface\n");
-            return false;
+           logging_llprint(LOGLEVEL_ERROR, "%s: closing cmd interface\n", __func__);
+           return EXIT_FAILURE;
         }
+        printf("setenv: DISPLAY=%s\n", nameserverStr);
+        logging_llprint(LOGLEVEL_DEBUG, "%s: setenv: DISPLAY=%s\n", __func__, nameserverStr);
 
-        return setenv("DISPLAY", nameserverStr, false);
+        return (setenv("DISPLAY", nameserverStr, false) ? EXIT_SUCCESS : EXIT_FAILURE);
     }
     else
     {
-        return true;
+        return EXIT_SUCCESS;
     }
 }
 
