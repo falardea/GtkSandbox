@@ -3,6 +3,7 @@
 //
 #include <gtk/gtk.h>
 #include "view_builder.h"
+#include "utils/logging.h"
 
 gboolean activeTBTextSwap(GBinding *src, const GValue *fromValue,
                           __attribute__((unused)) GValue *toValue, __attribute__((unused)) gpointer user_data) {
@@ -23,7 +24,7 @@ AppWidgets_T *build_application(void) {
    builder = gtk_builder_new();
 
    if (gtk_builder_add_from_file(builder, "sandbox.glade", NULL) == 0) {
-      printf("gtk_builder_add_from_file failed to load glade resource\n");
+      logging_llprint(LOGLEVEL_ERROR, "gtk_builder_add_from_file failed to load glade resource\n");
       return NULL;
    }
 
@@ -32,6 +33,7 @@ AppWidgets_T *build_application(void) {
    appWidgetsT->w_tbBindingSrc = GTK_WIDGET(gtk_builder_get_object(builder, "tbBindingSrc"));
    appWidgetsT->w_tbBoundTarget1 = GTK_WIDGET(gtk_builder_get_object(builder, "tbBoundTarget1"));
    appWidgetsT->w_tbBoundTarget2 = GTK_WIDGET(gtk_builder_get_object(builder, "tbBoundTarget2"));
+   appWidgetsT->w_btnLaunchChildWnd = GTK_WIDGET(gtk_builder_get_object(builder, "btnLaunchChildWnd"));
 
    gtk_builder_connect_signals(builder, appWidgetsT);
 

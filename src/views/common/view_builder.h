@@ -14,6 +14,8 @@ typedef struct {
    GtkWidget *w_tbBindingSrc;
    GtkWidget *w_tbBoundTarget1;
    GtkWidget *w_tbBoundTarget2;
+
+   GtkWidget *w_btnLaunchChildWnd;
 } AppWidgets_T;
 
 AppWidgets_T *build_application(void);

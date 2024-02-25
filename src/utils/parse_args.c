@@ -1,7 +1,6 @@
 //
 // Created by french on 2/17/24.
 //
-#include <glib.h>
 #include <stdio.h>
 #include <string.h>
 #include "../common_defs.h"

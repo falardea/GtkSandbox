@@ -30,7 +30,10 @@ set(MY_SOURCES
         src/utils/parse_args.c
         src/utils/parse_args.h src/common_defs.h
         src/utils/logging.c
-        src/utils/logging.h)
+        src/utils/logging.h
+        src/views/child_wnd/child_view.c
+        src/views/child_wnd/child_view.h
+)
 set(IMAGES_DIR ${PROJECT_RESOURCE_DIR}/images)
 set(STYLE_DIR ${PROJECT_RESOURCE_DIR}/style)
 set(SCSS_SOURCE ${STYLE_DIR}/sandbox_style.scss)
@@ -38,8 +41,8 @@ set(CSS_OUTFILE ${PROJECT_BINARY_DIR}/sandbox_style.css)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--export-dynamic")
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -rdynamic")
+add_compile_options(-pedantic -Wall -Wextra -rdynamic)
 add_link_options(-rdynamic)
-add_compile_options(-pedantic -Wall -Wextra)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
@@ -59,3 +62,4 @@ target_link_libraries(${PROJECT_TARGET} ${GTK3_LIBRARIES})
 
 add_custom_command(TARGET ${PROJECT_TARGET} PRE_BUILD COMMAND sassc -t expanded ${SCSS_SOURCE} ${CSS_OUTFILE})
 configure_file(${PROJECT_SOURCE_DIR}/sandbox.glade ${PROJECT_BINARY_DIR}/sandbox.glade COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/sandbox_child.glade ${PROJECT_BINARY_DIR}/sandbox_child.glade COPYONLY)
