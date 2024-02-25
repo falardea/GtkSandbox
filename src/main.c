@@ -14,14 +14,14 @@ int main(int argc, char **argv) {
    app_init(argc, argv);
 
    if (getAppModelInitState() != INIT_ERROR) {
-      logging_llprint(LOGLEVEL_INFO, "application initialized, starting UI\n");
+      logging_llprint(LOGLEVEL_DEBUG, "application initialized, starting UI\n");
       gtk_main();
-      logging_llprint(LOGLEVEL_INFO, "UI closed, shutting down\n");
+      logging_llprint(LOGLEVEL_DEBUG, "UI closed, shutting down\n");
 
       exit_test();
    } else {
       setAppModelRuntimeState(RUNTIME_HANDLING_ERROR);
-      logging_llprint(LOGLEVEL_ERROR, "application initialized failed, attempting a graceful shutdown\n");
+      logging_llprint(LOGLEVEL_ERROR, "application initialization failed, attempting a graceful shutdown\n");
       // Graceful shutdown stuff here
       setAppModelRuntimeState(RUNTIME_SHUTTING_DOWN);
    }
