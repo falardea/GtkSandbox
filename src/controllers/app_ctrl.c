@@ -12,30 +12,27 @@
 
 AppWidgets_T *g_appWidgetsT;
 
-void app_init(int argc, char **argv)
-{
-    RVALUE_T retVal;
+void app_init(int argc, char **argv) {
+   RVALUE_T retVal;
 
-    retVal = parse_input_args(argc, argv);
+   retVal = parse_input_args(argc, argv);
 
+   if (retVal == PARSE_ARG_ERR) {
+      char timestamp[20];
+      getTimestamp(timestamp, sizeof(timestamp));
+      logging_llprint(LOGLEVEL_ERROR, "error parsing input args, exiting...\n");
+      return;
+   }
+   logging_llprint(LOGLEVEL_DEBUG, "input arguments parsed successfully\n");
 
-    if (retVal == PARSE_ARG_ERR)
-    {
-        char timestamp[20];
-        getTimestamp(timestamp, sizeof (timestamp));
-//        printf("%s:%s: error parsing input args, exiting...\n", timestamp, __func__ );
-        logging_llprint(LOGLEVEL_ERROR, "error parsing input args, exiting...\n");
-        return;
-    }
-
-    logging_llprint(LOGLEVEL_DEBUG, "input arguments parsed successfully\n");
-    // TODO: RVALUE_T returns?
-    setDisplayEnv();
-
-    gtk_init(&argc, &argv);
+   // TODO: RVALUE_T returns?
+   retVal = setDisplayEnv();
 
 
-    g_appWidgetsT = build_application();
-    applyApplicationStyle(g_appWidgetsT);
-    setAppModelInitState(INIT_SUCCESS);
+   gtk_init(&argc, &argv);
+
+
+   g_appWidgetsT = build_application();
+   applyApplicationStyle(g_appWidgetsT);
+   setAppModelInitState(INIT_SUCCESS);
 }

@@ -4,31 +4,26 @@
 #include "controllers/app_ctrl.h"
 #include "utils/logging.h"
 
-void exit_test(void)
-{
+void exit_test(void) {
    logging_llprint(LOGLEVEL_DEBUG, "%s called as expected\n", __func__);
 }
 
-int main(int argc, char **argv)
-{
-    printf("ver.%d.%d.%d\n", project_VERSION_MAJOR, project_VERSION_MINOR, project_VERSION_PATCH);
+int main(int argc, char **argv) {
+   printf("ver.%d.%d.%d\n", project_VERSION_MAJOR, project_VERSION_MINOR, project_VERSION_PATCH);
 
-    app_init(argc, argv);
+   app_init(argc, argv);
 
-    if (getAppModelInitState() != INIT_ERROR)
-    {
-        logging_llprint(LOGLEVEL_INFO, "application initialized, starting UI\n");
-        gtk_main();
-        logging_llprint(LOGLEVEL_INFO, "UI closed, shutting down\n");
+   if (getAppModelInitState() != INIT_ERROR) {
+      logging_llprint(LOGLEVEL_INFO, "application initialized, starting UI\n");
+      gtk_main();
+      logging_llprint(LOGLEVEL_INFO, "UI closed, shutting down\n");
 
-        exit_test();
-    }
-    else
-    {
-        setAppModelRuntimeState(RUNTIME_HANDLING_ERROR);
-        logging_llprint(LOGLEVEL_ERROR, "application initialized failed, attempting a graceful shutdown\n");
-        // Graceful shutdown stuff here
-        setAppModelRuntimeState(RUNTIME_SHUTTING_DOWN);
-    }
-    return getAppModelRuntimeState();
+      exit_test();
+   } else {
+      setAppModelRuntimeState(RUNTIME_HANDLING_ERROR);
+      logging_llprint(LOGLEVEL_ERROR, "application initialized failed, attempting a graceful shutdown\n");
+      // Graceful shutdown stuff here
+      setAppModelRuntimeState(RUNTIME_SHUTTING_DOWN);
+   }
+   return getAppModelRuntimeState();
 }

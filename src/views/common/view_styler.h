@@ -4,6 +4,7 @@
 
 #ifndef SANDBOX_VIEW_STYLER_H
 #define SANDBOX_VIEW_STYLER_H
+
 #include "view_builder.h"
 
 void applyApplicationStyle(AppWidgets_T *appWidgetsT);

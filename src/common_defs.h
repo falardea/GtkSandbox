@@ -5,16 +5,15 @@
 #define GTKSANDBOX_COMMON_DEFS_H
 
 typedef enum {
-    SUCCESS,
-    PARSE_ARG_ERR,
-    DISPLAY_ENV_ERR
+   SUCCESS,
+   PARSE_ARG_ERR,
+   DISPLAY_ENV_ERR
 } RVALUE_T;
 
-typedef enum
-{
-    LOGLEVEL_DEBUG,
-    LOGLEVEL_INFO,
-    LOGLEVEL_ERROR
+typedef enum {
+   LOGLEVEL_DEBUG,
+   LOGLEVEL_INFO,
+   LOGLEVEL_ERROR
 } LOGLEVEL_T;
 
 

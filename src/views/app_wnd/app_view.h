@@ -4,6 +4,7 @@
 
 #ifndef SANDBOX_APP_VIEW_H
 #define SANDBOX_APP_VIEW_H
+
 #include <gtk/gtk.h>
 
 void on_btnCloseMainApp_clicked(__attribute__((unused)) GtkWidget *srcWidget,

@@ -11,28 +11,25 @@ const char *INFO_STR = "INFO";
 const char *ERROR_STR = "ERROR";
 static char timestamp[20];  // not sure why it felt better to allocate the memory once
 
-const char* strLoglevel(LOGLEVEL_T loglevelT)
-{
-    if (loglevelT == LOGLEVEL_ERROR)
-        return ERROR_STR;
-    else if (loglevelT == LOGLEVEL_INFO)
-        return INFO_STR;
-    else
-        return DEBUG_STR;
+const char *strLoglevel(LOGLEVEL_T loglevelT) {
+   if (loglevelT == LOGLEVEL_ERROR)
+      return ERROR_STR;
+   else if (loglevelT == LOGLEVEL_INFO)
+      return INFO_STR;
+   else
+      return DEBUG_STR;
 }
 
-int logging_llprint (LOGLEVEL_T logLevel, const char *_format, ...)
-{
-    int done = 0;
-    if (logLevel >= getAppModelLoglevel())
-    {
-        va_list arg;
-        getTimestamp(timestamp, sizeof (timestamp));
-        printf("%s:%s:", timestamp, strLoglevel(logLevel));
-        va_start(arg, _format);
-        done = vfprintf(stdout, _format, arg);
-        va_end(arg);
-        return done;
-    }
-    return done;
+int logging_llprint(LOGLEVEL_T logLevel, const char *_format, ...) {
+   int done = 0;
+   if (logLevel >= getAppModelLoglevel()) {
+      va_list arg;
+      getTimestamp(timestamp, sizeof(timestamp));
+      printf("%s:%s:", timestamp, strLoglevel(logLevel));
+      va_start(arg, _format);
+      done = vfprintf(stdout, _format, arg);
+      va_end(arg);
+      return done;
+   }
+   return done;
 }

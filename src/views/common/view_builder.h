@@ -4,16 +4,16 @@
 
 #ifndef SANDBOX_VIEW_BUILDER_H
 #define SANDBOX_VIEW_BUILDER_H
+
 #include <gtk/gtk.h>
 
-typedef struct
-{
-    GtkWidget *w_mainAppWnd;
-    GtkWidget *w_btnCloseMainApp;
+typedef struct {
+   GtkWidget *w_mainAppWnd;
+   GtkWidget *w_btnCloseMainApp;
 
-    GtkWidget *w_tbBindingSrc;
-    GtkWidget *w_tbBoundTarget1;
-    GtkWidget *w_tbBoundTarget2;
+   GtkWidget *w_tbBindingSrc;
+   GtkWidget *w_tbBoundTarget1;
+   GtkWidget *w_tbBoundTarget2;
 } AppWidgets_T;
 
 AppWidgets_T *build_application(void);

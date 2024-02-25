@@ -4,9 +4,10 @@
 
 #ifndef GTKSANDBOX_LOGGING_H
 #define GTKSANDBOX_LOGGING_H
+
 #include <stdarg.h>
 #include "common_defs.h"
 
-int logging_llprint (LOGLEVEL_T logLevel, const char *_format, ...);
+int logging_llprint(LOGLEVEL_T logLevel, const char *_format, ...);
 
 #endif // GTKSANDBOX_LOGGING_H
