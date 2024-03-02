@@ -1,3 +1,6 @@
+/*
+ * Created by french sometime in early 2024.
+*/
 #include <gtk/gtk.h>
 #include "version.h"
 #include "models/app_model.h"

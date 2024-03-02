@@ -1,6 +1,6 @@
 /*
  * Created by falar on 2/24/2024.
- */
+*/
 #include <stdio.h>
 #include "../models/app_model.h"
 #include "sys_interface.h"
@@ -23,6 +23,8 @@ const char *strLoglevel(LOGLEVEL_T loglevelT) {
 int logging_llprint(LOGLEVEL_T logLevel, const char *_format, ...) {
    int done = 0;
    if (logLevel >= getAppModelLoglevel()) {
+      // This is effectively a copy of stdio.printf, with a filter for log level
+      // Probably not a "production" way of doing this, but it's a sandbox, so meh
       va_list arg;
       getTimestamp(timestamp, sizeof(timestamp));
       printf("%s:%s:", timestamp, strLoglevel(logLevel));

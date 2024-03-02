@@ -1,6 +1,6 @@
-//
-// Created by french on 2/3/24.
-//
+/*
+ * Created by french on 2/3/24.
+*/
 #include <stdio.h>
 #include <stdbool.h>
 #include "app_model.h"

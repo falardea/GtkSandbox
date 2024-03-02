@@ -1,8 +1,12 @@
-//
-// Created by french on 2/18/24.
-//
+/*
+ * Created by french on 2/18/24.
+*/
 #ifndef GTKSANDBOX_COMMON_DEFS_H
 #define GTKSANDBOX_COMMON_DEFS_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef enum {
    SUCCESS,
@@ -17,4 +21,7 @@ typedef enum {
 } LOGLEVEL_T;
 
 
-#endif  // GTKSANDBOX_COMMON_DEFS_H
+#ifdef __cplusplus
+}  /* closing brace for extern "C" */
+#endif
+#endif  /* GTKSANDBOX_COMMON_DEFS_H */

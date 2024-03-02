@@ -1,6 +1,6 @@
-//
-// Created by french on 2/4/24.
-//
+/*
+ * Created by french on 2/4/24.
+*/
 
 #ifndef SANDBOX_APP_CTRL_H
 #define SANDBOX_APP_CTRL_H
@@ -10,4 +10,4 @@
 
 void app_init(int argc, char **argv);
 
-#endif //SANDBOX_APP_CTRL_H
+#endif  /* SANDBOX_APP_CTRL_H */

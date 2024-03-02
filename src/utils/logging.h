@@ -1,7 +1,6 @@
 /*
  * Created by falar on 2/24/2024.
- */
-
+*/
 #ifndef GTKSANDBOX_LOGGING_H
 #define GTKSANDBOX_LOGGING_H
 
@@ -10,4 +9,4 @@
 
 int logging_llprint(LOGLEVEL_T logLevel, const char *_format, ...);
 
-#endif // GTKSANDBOX_LOGGING_H
+#endif  /* GTKSANDBOX_LOGGING_H */

@@ -1,7 +1,6 @@
-//
-// Created by french on 2/3/24.
-//
-
+/*
+ * Created by french on 2/3/24.
+*/
 #ifndef SANDBOX_APP_MODEL_H
 #define SANDBOX_APP_MODEL_H
 
@@ -49,4 +48,4 @@ void setAppModelLoglevel(LOGLEVEL_T logLevel);
 
 LOGLEVEL_T getAppModelLoglevel(void);
 
-#endif  // SANDBOX_APP_MODEL_H
+#endif  /* SANDBOX_APP_MODEL_H */

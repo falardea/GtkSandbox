@@ -34,9 +34,14 @@ void app_init(int argc, char **argv) {
 
    gtk_init(&argc, &argv);
    logging_llprint(LOGLEVEL_DEBUG, "gtk_init success\n");
+
    g_appWidgetsT = build_application();
    logging_llprint(LOGLEVEL_DEBUG, "build_application success\n");
+
    applyApplicationStyle(g_appWidgetsT);
    logging_llprint(LOGLEVEL_DEBUG, "applyApplicationStyle success\n");
+
    setAppModelInitState(INIT_SUCCESS);
+
+
 }
