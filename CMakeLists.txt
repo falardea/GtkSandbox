@@ -14,29 +14,34 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
 set(MY_SOURCES
     src/main.c
+    src/common_defs.h
+    src/globals.h
     src/version.h
-    src/utils/sys_interface.c
-    src/utils/sys_interface.h
-    src/models/app_model.h
-    src/views/common/view_builder.c
-    src/views/common/view_builder.h
-    src/views/common/view_styler.c
-    src/views/common/view_styler.h
-    src/views/app_wnd/app_view.c
-    src/views/app_wnd/app_view.h
-    src/models/app_model.c
-    src/controllers/app_ctrl.c
-    src/controllers/app_ctrl.h
     src/utils/parse_args.c
-    src/utils/parse_args.h src/common_defs.h
+    src/utils/parse_args.h
     src/utils/logging.c
     src/utils/logging.h
-    src/views/child_wnd/child_view.c
-    src/views/child_wnd/child_view.h
-    src/utils/parse_args.h
-    src/common_defs.h
+    src/utils/sys_interface.c
+    src/utils/sys_interface.h
+    src/controllers/app_ctrl.c
+    src/controllers/app_ctrl.h
     src/models/model_device.c
-    src/models/model_device.h)
+    src/models/model_device.h
+    src/models/model_workflow.c
+    src/models/model_workflow.h
+    src/models/app_model.c
+    src/models/app_model.h
+    src/views/view_builder.c
+    src/views/view_builder.h
+    src/views/view_styler.c
+    src/views/view_styler.h
+    src/views/view_app_root.c
+    src/views/view_app_root.h
+    src/views/view_app_child.c
+    src/views/view_app_child.h
+    src/views/view_bound_toggles.c
+    src/views/view_bound_toggles.h
+    )
 set(IMAGES_DIR ${PROJECT_RESOURCE_DIR}/images)
 set(STYLE_DIR ${PROJECT_RESOURCE_DIR}/style)
 set(SCSS_SOURCE ${STYLE_DIR}/sandbox_style.scss)

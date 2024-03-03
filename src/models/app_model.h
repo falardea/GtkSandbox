@@ -6,6 +6,7 @@
 
 #include <stdbool.h>
 #include "common_defs.h"
+#include "utils/logging.h"
 
 typedef enum {
    INIT_UNINITIALIZED,

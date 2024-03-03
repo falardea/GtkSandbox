@@ -7,8 +7,17 @@
 #include "controllers/app_ctrl.h"
 #include "utils/logging.h"
 
+#include "models/model_workflow.h"
+
+extern WORKFLOW_STATE_T (*set_workflow_state[N_WORKFLOW_STATES])(void);
 void exit_test(void) {
    logging_llprint(LOGLEVEL_DEBUG, "%s called as expected\n", __func__);
+
+   WORKFLOW_STATE_T currStep = STARTUP;
+   while (currStep != SHUTDOWN && currStep != ERROR)
+   {
+      currStep = set_workflow_state[currStep]();
+   }
 }
 
 int main(int argc, char **argv) {
@@ -28,5 +37,6 @@ int main(int argc, char **argv) {
       // Graceful shutdown stuff here
       setAppModelRuntimeState(RUNTIME_SHUTTING_DOWN);
    }
+   app_finalize();
    return getAppModelRuntimeState();
 }

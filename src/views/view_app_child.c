@@ -3,7 +3,7 @@
  */
 #include <gtk/gtk.h>
 #include <stdbool.h>
-#include "child_view.h"
+#include "view_app_child.h"
 #include "utils/logging.h"
 
 gboolean childWindowDelete(__attribute__((unused)) GtkWidget *eventSrc, __attribute__((unused)) GdkEvent *event,

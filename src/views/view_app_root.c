@@ -2,8 +2,8 @@
 // Created by french on 2/3/24.
 //
 
-#include "app_view.h"
-#include "../child_wnd/child_view.h"
+#include "view_app_root.h"
+#include "view_app_child.h"
 
 void on_btnCloseMainApp_clicked(__attribute__((unused)) GtkWidget *srcWidget,
                                 __attribute__((unused)) gpointer uData) {

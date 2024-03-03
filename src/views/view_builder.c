@@ -2,6 +2,7 @@
 // Created by french on 2/3/24.
 //
 #include <gtk/gtk.h>
+#include "globals.h"
 #include "view_builder.h"
 #include "utils/logging.h"
 
@@ -33,6 +34,7 @@ AppWidgets_T *build_application(void) {
    appWidgetsT->w_tbBindingSrc = GTK_WIDGET(gtk_builder_get_object(builder, "tbBindingSrc"));
    appWidgetsT->w_tbBoundTarget1 = GTK_WIDGET(gtk_builder_get_object(builder, "tbBoundTarget1"));
    appWidgetsT->w_tbBoundTarget2 = GTK_WIDGET(gtk_builder_get_object(builder, "tbBoundTarget2"));
+   appWidgetsT->w_tbModelToggle = GTK_WIDGET(gtk_builder_get_object(builder, "tbModelToggle"));
    appWidgetsT->w_btnLaunchChildWnd = GTK_WIDGET(gtk_builder_get_object(builder, "btnLaunchChildWnd"));
 
    gtk_builder_connect_signals(builder, appWidgetsT);
@@ -49,6 +51,8 @@ AppWidgets_T *build_application(void) {
                                (GBindingTransformFunc) activeTBTextSwap,
                                NULL,
                                NULL, NULL);
+   g_object_bind_property(appWidgetsT->w_tbBoundTarget1, "active",
+                          modelDeviceA, "device-enabled", G_BINDING_BIDIRECTIONAL);
 
    g_object_unref(builder);
    return appWidgetsT;
