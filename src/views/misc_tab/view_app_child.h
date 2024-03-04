@@ -8,5 +8,6 @@
 #include <gtk/gtk.h>
 
 void openChildGladeWnd(GtkWidget *parent, gpointer *endowment);
+void launchChildWnd(GtkWidget *btnSrc, gpointer *user_date);
 
 #endif  // GTKSANDBOX_VIEW_APP_CHILD_H

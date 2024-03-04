@@ -17,7 +17,3 @@ gboolean on_mainAppWnd_delete_event(__attribute__((unused)) GtkWidget *srcWidget
    return FALSE;
 }
 
-void launchChildWnd(GtkWidget *btnSrc, gpointer *user_date)
-{
-   openChildGladeWnd(gtk_widget_get_toplevel(btnSrc), user_date);
-}

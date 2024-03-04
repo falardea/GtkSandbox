@@ -14,6 +14,4 @@ gboolean on_mainAppWnd_delete_event(__attribute__((unused)) GtkWidget *srcWidget
                                     __attribute__((unused)) GdkEvent *event,
                                     __attribute__((unused)) gpointer uData);
 
-void launchChildWnd(GtkWidget *btnSrc, gpointer *user_date);
-
 #endif  // SANDBOX_APP_VIEW_H
