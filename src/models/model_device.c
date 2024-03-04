@@ -84,7 +84,7 @@ static void model_device_init( ModelDevice *self )
 {
    self->device_name = g_strdup( "INIT_UNNAMED" );
    self->enabled = FALSE;
-   logging_llprint(LOGLEVEL_DEBUG, "%s: object instance init: device_name = %s",
+   logging_llprint(LOGLEVEL_DEBUG, "%s: object instance init: device_name = %s\n",
                    __func__,
                    self->device_name);
 }

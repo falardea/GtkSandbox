@@ -22,9 +22,18 @@ typedef struct {
    GtkWidget *w_tbBindingSrc;
    GtkWidget *w_tbBoundTarget1;
    GtkWidget *w_tbBoundTarget2;
-   GtkWidget *w_tbModelToggle;
+   GtkWidget *w_tbTextSwapToggleExample;
+
+   GtkWidget *w_tbBiDirModelBoundEnable;
+   GtkWidget *w_bUnboundModelEnable;
+   GtkWidget *w_bUnboundModelDisable;
+   GtkWidget *w_bPrintModelEnableState;
 
    GtkWidget *w_btnLaunchChildWnd;
+   GtkWidget *w_lblChildCount;
+
+   GtkWidget *w_tvChildMsgOutViewer;
+
 } AppWidgets_T;
 
 #ifdef __cplusplus

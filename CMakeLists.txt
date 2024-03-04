@@ -35,12 +35,12 @@ set(MY_SOURCES
     src/views/view_builder.h
     src/views/view_styler.c
     src/views/view_styler.h
-    src/views/view_app_root.c
-    src/views/view_app_root.h
-    src/views/view_app_child.c
-    src/views/view_app_child.h
-    src/views/view_bound_toggles.c
-    src/views/view_bound_toggles.h
+    src/views/root/view_app_root.c
+    src/views/root/view_app_root.h
+    src/views/misc_tab/view_app_child.c
+    src/views/misc_tab/view_app_child.h
+    src/views/button_box_tab/view_bound_toggles.c
+    src/views/button_box_tab/view_bound_toggles.h
     )
 set(IMAGES_DIR ${PROJECT_RESOURCE_DIR}/images)
 set(STYLE_DIR ${PROJECT_RESOURCE_DIR}/style)

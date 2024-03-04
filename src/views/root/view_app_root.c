@@ -3,7 +3,7 @@
 //
 
 #include "view_app_root.h"
-#include "view_app_child.h"
+#include "views/misc_tab/view_app_child.h"
 
 void on_btnCloseMainApp_clicked(__attribute__((unused)) GtkWidget *srcWidget,
                                 __attribute__((unused)) gpointer uData) {

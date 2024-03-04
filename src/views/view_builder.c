@@ -6,15 +6,29 @@
 #include "view_builder.h"
 #include "utils/logging.h"
 
-gboolean activeTBTextSwap(GBinding *src, const GValue *fromValue,
-                          __attribute__((unused)) GValue *toValue, __attribute__((unused)) gpointer user_data) {
+gboolean transform_toggle_label_on_off(GBinding *src, const GValue *fromValue,
+                                       __attribute__((unused)) GValue *toValue,
+                                       __attribute__((unused)) gpointer user_data) {
    GtkToggleButton *tbutton = (GtkToggleButton *) g_binding_dup_source(src);
    if (tbutton != NULL) {
       gboolean active = g_value_get_boolean(fromValue);
       gtk_button_set_label(GTK_BUTTON(tbutton), active ? "ON" : "OFF");
+      g_object_unref(tbutton);
       return TRUE;
    }
    return FALSE;
+}
+
+static void bind_toggle_active_label_swap(GtkToggleButton *tbutton)
+{
+   g_object_bind_property_full(tbutton, "active", tbutton, "label",
+                               G_BINDING_SYNC_CREATE, (GBindingTransformFunc) transform_toggle_label_on_off,
+                               NULL,NULL, NULL);
+}
+
+static void bind_toggle_src_active_tar_sensitive(GtkToggleButton *src, GtkWidget *tar)
+{
+   g_object_bind_property(src, "active", tar, "sensitive", G_BINDING_DEFAULT);
 }
 
 AppWidgets_T *build_application(void) {
@@ -31,27 +45,29 @@ AppWidgets_T *build_application(void) {
 
    appWidgetsT->w_mainAppWnd = GTK_WIDGET(gtk_builder_get_object(builder, "app_wnd"));
    appWidgetsT->w_btnCloseMainApp = GTK_WIDGET(gtk_builder_get_object(builder, "btnCloseMainApp"));
+
    appWidgetsT->w_tbBindingSrc = GTK_WIDGET(gtk_builder_get_object(builder, "tbBindingSrc"));
    appWidgetsT->w_tbBoundTarget1 = GTK_WIDGET(gtk_builder_get_object(builder, "tbBoundTarget1"));
    appWidgetsT->w_tbBoundTarget2 = GTK_WIDGET(gtk_builder_get_object(builder, "tbBoundTarget2"));
-   appWidgetsT->w_tbModelToggle = GTK_WIDGET(gtk_builder_get_object(builder, "tbModelToggle"));
+   appWidgetsT->w_tbTextSwapToggleExample = GTK_WIDGET(gtk_builder_get_object(builder, "tbTextSwapToggleExample"));
+
+   appWidgetsT->w_tbBiDirModelBoundEnable = GTK_WIDGET(gtk_builder_get_object(builder, "tbBiDirModelBoundEnable"));
+   appWidgetsT->w_bUnboundModelEnable = GTK_WIDGET(gtk_builder_get_object(builder, "bUnboundModelEnable"));
+   appWidgetsT->w_bUnboundModelDisable = GTK_WIDGET(gtk_builder_get_object(builder, "bUnboundModelDisable"));
+   appWidgetsT->w_bPrintModelEnableState = GTK_WIDGET(gtk_builder_get_object(builder, "bPrintModelEnableState"));
+
    appWidgetsT->w_btnLaunchChildWnd = GTK_WIDGET(gtk_builder_get_object(builder, "btnLaunchChildWnd"));
+   appWidgetsT->w_lblChildCount = GTK_WIDGET(gtk_builder_get_object(builder, "lblChildCount"));
+   appWidgetsT->w_tvChildMsgOutViewer = GTK_WIDGET(gtk_builder_get_object(builder, "tvChildMsgOutViewer"));
+
+   /* appWidgetsT->w_glade_ID = GTK_WIDGET(gtk_builder_get_object(builder, "glade_ID")); */
 
    gtk_builder_connect_signals(builder, appWidgetsT);
+   bind_toggle_src_active_tar_sensitive(GTK_TOGGLE_BUTTON(appWidgetsT->w_tbBindingSrc), appWidgetsT->w_tbBoundTarget1);
+   bind_toggle_src_active_tar_sensitive(GTK_TOGGLE_BUTTON(appWidgetsT->w_tbBindingSrc), appWidgetsT->w_tbBoundTarget2);
+   bind_toggle_active_label_swap(GTK_TOGGLE_BUTTON(appWidgetsT->w_tbTextSwapToggleExample));
 
-   g_object_bind_property(appWidgetsT->w_tbBindingSrc, "active",
-                          appWidgetsT->w_tbBoundTarget1, "sensitive",
-                          G_BINDING_DEFAULT);
-   g_object_bind_property(appWidgetsT->w_tbBindingSrc, "active",
-                          appWidgetsT->w_tbBoundTarget2, "sensitive",
-                          G_BINDING_DEFAULT);
-   g_object_bind_property_full(appWidgetsT->w_tbBindingSrc, "active",
-                               appWidgetsT->w_tbBindingSrc, "label",
-                               G_BINDING_SYNC_CREATE,
-                               (GBindingTransformFunc) activeTBTextSwap,
-                               NULL,
-                               NULL, NULL);
-   g_object_bind_property(appWidgetsT->w_tbBoundTarget1, "active",
+   g_object_bind_property(appWidgetsT->w_tbBiDirModelBoundEnable, "active",
                           modelDeviceA, "device-enabled", G_BINDING_BIDIRECTIONAL);
 
    g_object_unref(builder);

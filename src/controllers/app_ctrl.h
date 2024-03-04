@@ -5,7 +5,7 @@
 #ifndef SANDBOX_APP_CTRL_H
 #define SANDBOX_APP_CTRL_H
 
-#include "views/view_app_root.h"
+#include "views/root/view_app_root.h"
 
 void app_init(int argc, char **argv);
 void app_finalize(void);
