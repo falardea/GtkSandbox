@@ -9,5 +9,6 @@
 extern AppWidgets_T *g_appWidgetsT;
 extern ModelDevice *modelDeviceA;
 extern ModelDevice *modelDeviceB;
+extern GtkListStore *sampleCalcTable;
 
 #endif  /* GTKSANDBOX_GLOBALS_H */

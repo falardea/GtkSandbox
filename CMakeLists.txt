@@ -41,7 +41,10 @@ set(MY_SOURCES
     src/views/misc_tab/view_app_child.h
     src/views/button_box_tab/view_bound_toggles.c
     src/views/button_box_tab/view_bound_toggles.h
-    )
+    src/models/model_samples.c
+    src/models/model_samples.h
+    src/views/samples_tab/view_samples.c
+    src/views/samples_tab/view_samples.h)
 set(IMAGES_DIR ${PROJECT_RESOURCE_DIR}/images)
 set(STYLE_DIR ${PROJECT_RESOURCE_DIR}/style)
 set(SCSS_SOURCE ${STYLE_DIR}/sandbox_style.scss)

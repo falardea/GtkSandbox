@@ -5,6 +5,8 @@
 #include "globals.h"
 #include "view_builder.h"
 #include "utils/logging.h"
+#include "models/model_samples.h"
+#include "views/samples_tab/view_samples.h"
 
 gboolean transform_toggle_label_on_off(GBinding *src, const GValue *fromValue,
                                        __attribute__((unused)) GValue *toValue,
@@ -60,7 +62,13 @@ AppWidgets_T *build_application(void) {
    appWidgetsT->w_lblChildCount = GTK_WIDGET(gtk_builder_get_object(builder, "lblChildCount"));
    appWidgetsT->w_tvChildMsgOutViewer = GTK_WIDGET(gtk_builder_get_object(builder, "tvChildMsgOutViewer"));
 
+   appWidgetsT->w_nblblTreeViewTab = GTK_WIDGET(gtk_builder_get_object(builder, "nblblTreeViewTab"));
+
    /* appWidgetsT->w_glade_ID = GTK_WIDGET(gtk_builder_get_object(builder, "glade_ID")); */
+
+   build_samples_view(appWidgetsT->w_nblblTreeViewTab);
+   gtk_tree_view_set_model(GTK_TREE_VIEW(appWidgetsT->w_nblblTreeViewTab), build_samples_model());
+
 
    gtk_builder_connect_signals(builder, appWidgetsT);
    bind_toggle_src_active_tar_sensitive(GTK_TOGGLE_BUTTON(appWidgetsT->w_tbBindingSrc), appWidgetsT->w_tbBoundTarget1);
@@ -69,6 +77,8 @@ AppWidgets_T *build_application(void) {
 
    g_object_bind_property(appWidgetsT->w_tbBiDirModelBoundEnable, "active",
                           modelDeviceA, "device-enabled", G_BINDING_BIDIRECTIONAL);
+
+
 
    g_object_unref(builder);
    return appWidgetsT;

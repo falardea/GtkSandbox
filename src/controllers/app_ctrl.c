@@ -19,7 +19,6 @@ void app_init(int argc, char **argv) {
    RVALUE_T retVal;
 
    retVal = parse_input_args(argc, argv);
-
    if (retVal == PARSE_ARG_ERR) {
       setAppModelInitState(INIT_ERROR);
       logging_llprint(LOGLEVEL_ERROR, "error parsing input args, exiting...\n");

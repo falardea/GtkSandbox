@@ -12,7 +12,7 @@ extern "C" {
 typedef enum {
    SUCCESS,
    PARSE_ARG_ERR,
-   DISPLAY_ENV_ERR
+   DISPLAY_ENV_ERR // TODO: fill in more values here... or delete this
 } RVALUE_T;
 
 typedef struct {
@@ -34,6 +34,7 @@ typedef struct {
 
    GtkWidget *w_tvChildMsgOutViewer;
 
+   GtkWidget *w_nblblTreeViewTab;
 } AppWidgets_T;
 
 #ifdef __cplusplus
