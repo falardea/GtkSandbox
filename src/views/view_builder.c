@@ -62,23 +62,24 @@ AppWidgets_T *build_application(void) {
    appWidgetsT->w_lblChildCount = GTK_WIDGET(gtk_builder_get_object(builder, "lblChildCount"));
    appWidgetsT->w_tvChildMsgOutViewer = GTK_WIDGET(gtk_builder_get_object(builder, "tvChildMsgOutViewer"));
 
-   appWidgetsT->w_nblblTreeViewTab = GTK_WIDGET(gtk_builder_get_object(builder, "nblblTreeViewTab"));
+   appWidgetsT->w_trvwSamplesTable = GTK_WIDGET(gtk_builder_get_object(builder, "trvwSamplesTable"));
+   appWidgetsT->w_btnPrintSelection = GTK_WIDGET(gtk_builder_get_object(builder, "btnPrintSelection"));
+   appWidgetsT->w_lblSelectionText = GTK_WIDGET(gtk_builder_get_object(builder, "lblSelectionText"));
 
    /* appWidgetsT->w_glade_ID = GTK_WIDGET(gtk_builder_get_object(builder, "glade_ID")); */
 
-   build_samples_view(appWidgetsT->w_nblblTreeViewTab);
-   gtk_tree_view_set_model(GTK_TREE_VIEW(appWidgetsT->w_nblblTreeViewTab), build_samples_model());
-
+   build_samples_view(appWidgetsT->w_trvwSamplesTable);
+   gtk_tree_view_set_model(GTK_TREE_VIEW(appWidgetsT->w_trvwSamplesTable), build_samples_model());
+   appWidgetsT->g_trslctnSelectedSample = G_OBJECT(gtk_builder_get_object(builder, "trslctnSelectedSample"));
 
    gtk_builder_connect_signals(builder, appWidgetsT);
+
    bind_toggle_src_active_tar_sensitive(GTK_TOGGLE_BUTTON(appWidgetsT->w_tbBindingSrc), appWidgetsT->w_tbBoundTarget1);
    bind_toggle_src_active_tar_sensitive(GTK_TOGGLE_BUTTON(appWidgetsT->w_tbBindingSrc), appWidgetsT->w_tbBoundTarget2);
    bind_toggle_active_label_swap(GTK_TOGGLE_BUTTON(appWidgetsT->w_tbTextSwapToggleExample));
 
    g_object_bind_property(appWidgetsT->w_tbBiDirModelBoundEnable, "active",
                           modelDeviceA, "device-enabled", G_BINDING_BIDIRECTIONAL);
-
-
 
    g_object_unref(builder);
    return appWidgetsT;

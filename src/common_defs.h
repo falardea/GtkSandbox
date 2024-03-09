@@ -34,8 +34,15 @@ typedef struct {
 
    GtkWidget *w_tvChildMsgOutViewer;
 
-   GtkWidget *w_nblblTreeViewTab;
+   GtkWidget *w_trvwSamplesTable;
+   GtkWidget *w_lblSelectionText;
+   GtkWidget *w_btnPrintSelection;
+
+
+   GObject *g_trslctnSelectedSample;
+
 } AppWidgets_T;
+
 
 #ifdef __cplusplus
 }  /* closing brace for extern "C" */

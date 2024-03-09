@@ -76,11 +76,11 @@ void openChildGladeWnd(__attribute__((unused)) GtkWidget *parent,
    g_object_unref(guiBuilder);
 }
 
-void launchChildWnd(GtkWidget *btnSrc, gpointer *user_date)
+void launchChildWnd(GtkWidget *btnSrc, gpointer *user_data)
 {
    if (currentChildCount < MAX_CHILDREN)
    {
-      openChildGladeWnd(gtk_widget_get_toplevel(btnSrc), user_date);
+      openChildGladeWnd(gtk_widget_get_toplevel(btnSrc), user_data);
    }
 }
 
