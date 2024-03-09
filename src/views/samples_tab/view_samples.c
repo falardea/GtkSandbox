@@ -27,6 +27,8 @@ void build_samples_view(GtkWidget *samplesTable)
                                                cellRenderer, "text", COL_CALCULATED_A, NULL);
    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(samplesTable), -1, "CalcB",
                                                cellRenderer, "text", COL_CALCULATED_B, NULL);
+   g_object_set(cellRenderer, "cell-background", "white", "cell-background-set", TRUE, NULL);
+
    logging_llprint(LOGLEVEL_DEBUG, "%s\n", __func__);
 }
 

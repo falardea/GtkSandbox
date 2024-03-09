@@ -1,12 +1,20 @@
-window.colored_window, dialog.colored_window, .colored_window {
-  background-image: none;
-  background-color: rgba(245, 245, 245, 1);
+$sandbox-slate: rgba(100, 100, 120, 1);
+$dark-sandbox-slate: darken($sandbox-slate, 20%);
+$light-sandbox-slate: lighten($sandbox-slate, 20%);
+
+window {
+  //background-image: none;
+  background-color: $sandbox-slate;
+  color: black;
 }
 
-treeview.view {
-  color: lightgrey;
-}
-
-treeview.view header {
-  background-color: slategrey;
+treeview {
+  color: black;
+  background-color: $dark-sandbox-slate;
+  header button {
+    color: $light-sandbox-slate;
+  }
+  :selected {
+    background-color: cornflowerblue;
+  }
 }
