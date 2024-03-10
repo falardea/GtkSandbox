@@ -6,6 +6,8 @@
 #include "../../models/app_model.h"
 #include "../../utils/sys_interface.h"
 
+static const char *MSG_OUT_CURSOR_NAME = "msgOutCursor";
+static GtkTextMark *msgOutCursor;
 static char timestamp[20];  // not sure why it felt better to allocate the memory once
 
 void set_msgout_buffer(const char *msgout)
@@ -15,7 +17,15 @@ void set_msgout_buffer(const char *msgout)
       GtkTextBuffer  *tvBuff  =  gtk_text_view_get_buffer(GTK_TEXT_VIEW(g_appWidgetsT->w_tvAppMsgOut));
       GtkTextIter    endIter;
       gtk_text_buffer_get_end_iter(tvBuff, &endIter);
+
+      if (!gtk_text_buffer_get_mark(tvBuff, MSG_OUT_CURSOR_NAME))
+      {
+         msgOutCursor = gtk_text_mark_new(MSG_OUT_CURSOR_NAME, FALSE);
+         gtk_text_buffer_add_mark(tvBuff, msgOutCursor, &endIter);
+      }
+
       gtk_text_buffer_insert(tvBuff, &endIter, msgout, -1);
+      gtk_text_view_scroll_to_mark(GTK_TEXT_VIEW(g_appWidgetsT->w_tvAppMsgOut), msgOutCursor, 0.0, TRUE, 0.0, 0.0);
    }
 }
 

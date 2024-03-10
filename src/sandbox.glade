@@ -883,6 +883,7 @@
             <child>
               <object class="GtkScrolledWindow">
                 <property name="width-request">1000</property>
+                <property name="height-request">150</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="halign">start</property>
@@ -893,6 +894,7 @@
                 <property name="margin-bottom">10</property>
                 <property name="hexpand">True</property>
                 <property name="hscrollbar-policy">never</property>
+                <property name="shadow-type">in</property>
                 <property name="min-content-width">1000</property>
                 <child>
                   <object class="GtkTextView" id="tvAppMsgOut">
@@ -902,6 +904,7 @@
                     <property name="editable">False</property>
                     <property name="cursor-visible">False</property>
                     <property name="accepts-tab">False</property>
+                    <property name="monospace">True</property>
                   </object>
                 </child>
               </object>
