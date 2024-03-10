@@ -3,7 +3,6 @@
 */
 #include "view_samples.h"
 #include "../../models/model_samples.h"
-#include "../../utils/logging.h"
 #include "../root/view_msgout.h"
 
 void build_samples_view(GtkWidget *samplesTable)
@@ -56,11 +55,8 @@ void on_btnPrintSelection_clicked(__attribute__((unused)) GtkButton *button, gpo
                          COL_MEASUREMENT_4, &m4,
                          -1);
 
-      char testMsg[256];
-      snprintf(testMsg, sizeof (testMsg), "%s:SAMPLE:>>%s|%f|%f|%f|%f\n", __func__,
-               timestamp, m1, m2, m3, m4);
-      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s", testMsg);
-      gtk_label_set_label(GTK_LABEL(appWidgetsT->w_lblSelectionText), testMsg);
+      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s:SAMPLE:>>%s|%f|%f|%f|%f\n", __func__,
+                          timestamp, m1, m2, m3, m4);
       free(timestamp);
    }
 }
