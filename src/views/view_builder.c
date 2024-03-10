@@ -64,8 +64,25 @@ AppWidgets_T *build_application(void) {
    appWidgetsT->w_tvChildMsgOutViewer = GTK_WIDGET(gtk_builder_get_object(builder, "tvChildMsgOutViewer"));
 
    appWidgetsT->w_trvwSamplesTable = GTK_WIDGET(gtk_builder_get_object(builder, "trvwSamplesTable"));
-   appWidgetsT->w_btnPrintSelection = GTK_WIDGET(gtk_builder_get_object(builder, "btnPrintSelection"));
+   appWidgetsT->w_btnEditSelection = GTK_WIDGET(gtk_builder_get_object(builder, "btnEditSelection"));
    appWidgetsT->w_lblSelectionText = GTK_WIDGET(gtk_builder_get_object(builder, "lblSelectionText"));
+
+   appWidgetsT->w_editSampleDateTime = GTK_WIDGET(gtk_builder_get_object(builder, "editSampleDateTime"));
+   appWidgetsT->w_lblSampleDate = GTK_WIDGET(gtk_builder_get_object(builder, "lblSampleDate"));
+   appWidgetsT->w_entrySampleHour = GTK_WIDGET(gtk_builder_get_object(builder, "entrySampleHour"));
+   appWidgetsT->w_entrySampleMinute = GTK_WIDGET(gtk_builder_get_object(builder, "entrySampleMinute"));
+   appWidgetsT->w_entryMeasurement1 = GTK_WIDGET(gtk_builder_get_object(builder, "entryMeasurement1"));
+   appWidgetsT->w_entryMeasurement2 = GTK_WIDGET(gtk_builder_get_object(builder, "entryMeasurement2"));
+   appWidgetsT->w_entryMeasurement3 = GTK_WIDGET(gtk_builder_get_object(builder, "entryMeasurement3"));
+   appWidgetsT->w_entryMeasurement4 = GTK_WIDGET(gtk_builder_get_object(builder, "entryMeasurement4"));
+   appWidgetsT->w_entryCalculationA = GTK_WIDGET(gtk_builder_get_object(builder, "entryCalculationA"));
+   appWidgetsT->w_entryCalculationB = GTK_WIDGET(gtk_builder_get_object(builder, "entryCalculationB"));
+
+   // Datepicker
+   appWidgetsT->w_ppvrDatepicker = GTK_WIDGET(gtk_builder_get_object(builder, "ppvrDatepicker"));
+   appWidgetsT->w_popCalendar = GTK_WIDGET(gtk_builder_get_object(builder, "popCalendar"));
+   appWidgetsT->w_popDone = GTK_WIDGET(gtk_builder_get_object(builder, "popDone"));
+   appWidgetsT->w_popCancel = GTK_WIDGET(gtk_builder_get_object(builder, "popCancel"));
 
    /* appWidgetsT->w_glade_ID = GTK_WIDGET(gtk_builder_get_object(builder, "glade_ID")); */
 

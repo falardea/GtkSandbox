@@ -48,8 +48,23 @@ typedef struct {
 
    GtkWidget *w_trvwSamplesTable;
    GtkWidget *w_lblSelectionText;
-   GtkWidget *w_btnPrintSelection;
+   GtkWidget *w_btnEditSelection;
+   GtkWidget *w_editSampleDateTime;
+   GtkWidget *w_lblSampleDate;
+   GtkWidget *w_entrySampleHour;
+   GtkWidget *w_entrySampleMinute;
+   GtkWidget *w_entryMeasurement1;
+   GtkWidget *w_entryMeasurement2;
+   GtkWidget *w_entryMeasurement3;
+   GtkWidget *w_entryMeasurement4;
+   GtkWidget *w_entryCalculationA;
+   GtkWidget *w_entryCalculationB;
 
+   // Datepicker
+   GtkWidget *w_ppvrDatepicker;
+   GtkWidget *w_popCalendar;
+   GtkWidget *w_popDone;
+   GtkWidget *w_popCancel;
 
    GObject *g_trslctnSelectedSample;
 

@@ -1,6 +1,8 @@
 /*
  * Created by french on 3/6/24.
 */
+#define _XOPEN_SOURCE
+#include <time.h>
 #include "view_samples.h"
 #include "../../models/model_samples.h"
 #include "../root/view_msgout.h"
@@ -61,19 +63,51 @@ void on_btnPrintSelection_clicked(__attribute__((unused)) GtkButton *button, gpo
    }
 }
 
-
 void on_sample_selection_changed(GtkTreeSelection* self,
                                  gpointer user_data)
 {
    AppWidgets_T *appWidgetsT = (AppWidgets_T *)user_data;
    GtkTreeIter tableCursor;
+   GtkTreeModel *samplesModel;
    gboolean enableEdit = FALSE;
 
    /* If there is a selection, this button should only be enabled if there is a selection */
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
-   if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(self), NULL, &tableCursor))
+   if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(self), &samplesModel, &tableCursor))
    {
       enableEdit = TRUE;
+      gchararray timestamp;
+      float m1, m2, m3, m4, cA, cB;
+      char dispBuf[20];
+      struct tm result;
+
+      gtk_tree_model_get(samplesModel, &tableCursor,
+                         COL_TIMESTAMP, &timestamp,
+                         COL_MEASUREMENT_1, &m1, COL_MEASUREMENT_2, &m2, COL_MEASUREMENT_3, &m3, COL_MEASUREMENT_4, &m4,
+                         COL_CALCULATED_A, &cA, COL_CALCULATED_B, &cB,
+                         -1);
+
+      strptime(timestamp, "%Y-%0m-%0dT0H:0M:%0S", &result);
+      strftime(dispBuf, sizeof(dispBuf), "%Y-%0m-%0d", &result);
+      gtk_label_set_label(GTK_LABEL(appWidgetsT->w_lblSampleDate), dispBuf);
+      strftime(dispBuf, sizeof(dispBuf), "%0H", &result);
+      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entrySampleHour), dispBuf);
+      strftime(dispBuf, sizeof(dispBuf), "%0M", &result);
+      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entrySampleMinute), dispBuf);
+      snprintf(dispBuf, sizeof(dispBuf), "%f", m1);
+      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement1), dispBuf);
+      snprintf(dispBuf, sizeof(dispBuf), "%f", m2);
+      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement2), dispBuf);
+      snprintf(dispBuf, sizeof(dispBuf), "%f", m3);
+      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement3), dispBuf);
+      snprintf(dispBuf, sizeof(dispBuf), "%f", m4);
+      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement4), dispBuf);
+      snprintf(dispBuf, sizeof(dispBuf), "%f", cA);
+      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryCalculationA), dispBuf);
+      snprintf(dispBuf, sizeof(dispBuf), "%f", cB);
+      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryCalculationB), dispBuf);
+
+      free(timestamp);
    }
-   gtk_widget_set_sensitive(GTK_WIDGET(appWidgetsT->w_btnPrintSelection), enableEdit);
+   gtk_widget_set_sensitive(GTK_WIDGET(appWidgetsT->w_btnEditSelection), enableEdit);
 }
