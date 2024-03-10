@@ -84,9 +84,9 @@ static void model_device_init( ModelDevice *self )
 {
    self->device_name = g_strdup( "INIT_UNNAMED" );
    self->enabled = FALSE;
-   logging_llprint(LOGLEVEL_DEBUG, "%s: object instance init: device_name = %s\n",
-                   __func__,
-                   self->device_name);
+   logging_llprintf(LOGLEVEL_DEBUG, "%s: object instance init: device_name = %s\n",
+                    __func__,
+                    self->device_name);
 }
 
 static void model_device_finalize( GObject *self )
@@ -94,7 +94,7 @@ static void model_device_finalize( GObject *self )
    ModelDevice *thisDevice = MODEL_DEVICE(self );
    g_free(thisDevice->device_name);
    GObjectClass *parent_class = G_OBJECT_CLASS( model_device_parent_class );
-   logging_llprint(LOGLEVEL_DEBUG, "%s: object instance finalize\n", __func__);
+   logging_llprintf(LOGLEVEL_DEBUG, "%s: object instance finalize\n", __func__);
    ( *parent_class->finalize )( self );
 }
 

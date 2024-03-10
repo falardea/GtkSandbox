@@ -22,14 +22,14 @@ RVALUE_T setDisplayEnv(void) {
       FILE *pF;
       pF = popen(cmd, "r");
       if (pF == NULL) {
-         logging_llprint(LOGLEVEL_ERROR, "%s: trying to open cmd interface\n", __func__);
+         logging_llprintf(LOGLEVEL_ERROR, "%s: trying to open cmd interface\n", __func__);
          return DISPLAY_ENV_ERR;
       }
 
       // Execute the cmd via write to cmd interface, or die
       char retBuf[256];
       if (fgets(retBuf, 256, pF) == NULL) {
-         logging_llprint(LOGLEVEL_ERROR, "%s: something went wrong reading cmd response\n", __func__);
+         logging_llprintf(LOGLEVEL_ERROR, "%s: something went wrong reading cmd response\n", __func__);
          return DISPLAY_ENV_ERR;
       }
       // strip the newline and add the ":0.0" display number
@@ -40,10 +40,10 @@ RVALUE_T setDisplayEnv(void) {
 
       // Close the cmd interface, or die
       if (pclose(pF) != 0) {
-         logging_llprint(LOGLEVEL_ERROR, "%s: closing cmd interface\n", __func__);
+         logging_llprintf(LOGLEVEL_ERROR, "%s: closing cmd interface\n", __func__);
          return DISPLAY_ENV_ERR;
       }
-      logging_llprint(LOGLEVEL_DEBUG, "%s: setenv: DISPLAY=%s\n", __func__, nameserverStr);
+      logging_llprintf(LOGLEVEL_DEBUG, "%s: setenv: DISPLAY=%s\n", __func__, nameserverStr);
 
       return (setenv("DISPLAY", nameserverStr, false) ? SUCCESS : DISPLAY_ENV_ERR);
    } else {

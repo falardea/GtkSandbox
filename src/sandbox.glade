@@ -110,7 +110,13 @@
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">The selected</property>
+                                <property name="margin-start">10</property>
+                                <property name="margin-end">10</property>
+                                <property name="margin-top">10</property>
+                                <property name="margin-bottom">10</property>
+                                <property name="label" translatable="yes">The selected:</property>
+                                <property name="justify">right</property>
+                                <property name="xalign">1</property>
                               </object>
                               <packing>
                                 <property name="left-attach">0</property>
@@ -121,8 +127,12 @@
                               <object class="GtkLabel" id="lblSelectionText">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">label</property>
+                                <property name="margin-start">10</property>
+                                <property name="margin-end">10</property>
+                                <property name="margin-top">10</property>
+                                <property name="margin-bottom">10</property>
                                 <property name="ellipsize">end</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="left-attach">1</property>

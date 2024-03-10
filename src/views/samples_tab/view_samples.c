@@ -4,7 +4,7 @@
 #include "view_samples.h"
 #include "../../models/model_samples.h"
 #include "../../utils/logging.h"
-#include "common_defs.h"
+#include "../root/view_msgout.h"
 
 void build_samples_view(GtkWidget *samplesTable)
 {
@@ -29,7 +29,8 @@ void build_samples_view(GtkWidget *samplesTable)
                                                cellRenderer, "text", COL_CALCULATED_B, NULL);
    g_object_set(cellRenderer, "cell-background", "white", "cell-background-set", TRUE, NULL);
 
-   logging_llprint(LOGLEVEL_DEBUG, "%s\n", __func__);
+   /* not using printLoglevelMsgOut here, since the "destination" is likely not completely setup */
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
 }
 
 void on_btnPrintSelection_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data)
@@ -58,7 +59,7 @@ void on_btnPrintSelection_clicked(__attribute__((unused)) GtkButton *button, gpo
       char testMsg[256];
       snprintf(testMsg, sizeof (testMsg), "%s:SAMPLE:>>%s|%f|%f|%f|%f\n", __func__,
                timestamp, m1, m2, m3, m4);
-      logging_llprint(LOGLEVEL_DEBUG, "%s", testMsg);
+      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s", testMsg);
       gtk_label_set_label(GTK_LABEL(appWidgetsT->w_lblSelectionText), testMsg);
       free(timestamp);
    }
@@ -73,7 +74,7 @@ void on_sample_selection_changed(GtkTreeSelection* self,
    gboolean enableEdit = FALSE;
 
    /* If there is a selection, this button should only be enabled if there is a selection */
-   logging_llprint(LOGLEVEL_DEBUG, "%s\n", __func__);
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
    if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(self), NULL, &tableCursor))
    {
       enableEdit = TRUE;

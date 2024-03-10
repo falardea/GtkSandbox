@@ -16,7 +16,7 @@ gboolean childWindowDelete(__attribute__((unused)) GtkWidget *eventSrc, __attrib
                            __attribute__((unused)) gpointer data) {
    // TRUE to stop other handlers from being invoked for the event.
    // FALSE to propagate the event further
-   logging_llprint(LOGLEVEL_DEBUG, "%s: decrementing child count\n", __func__);
+   logging_llprintf(LOGLEVEL_DEBUG, "%s: decrementing child count\n", __func__);
    currentChildCount--;
    return FALSE;
 }

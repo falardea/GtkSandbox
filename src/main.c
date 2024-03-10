@@ -11,7 +11,7 @@
 
 extern WORKFLOW_STATE_T (*set_workflow_state[N_WORKFLOW_STATES])(void);
 void exit_test(void) {
-   logging_llprint(LOGLEVEL_DEBUG, "%s called as expected\n", __func__);
+   logging_llprintf(LOGLEVEL_DEBUG, "%s called as expected\n", __func__);
 
    WORKFLOW_STATE_T currStep = STARTUP;
    while (currStep != SHUTDOWN && currStep != ERROR)
@@ -26,14 +26,14 @@ int main(int argc, char **argv) {
    app_init(argc, argv);
 
    if (getAppModelInitState() != INIT_ERROR) {
-      logging_llprint(LOGLEVEL_DEBUG, "application initialized, starting UI\n");
+      logging_llprintf(LOGLEVEL_DEBUG, "application initialized, starting UI\n");
       gtk_main();
-      logging_llprint(LOGLEVEL_DEBUG, "UI closed, shutting down\n");
+      logging_llprintf(LOGLEVEL_DEBUG, "UI closed, shutting down\n");
 
       exit_test();
    } else {
       setAppModelRuntimeState(RUNTIME_HANDLING_ERROR);
-      logging_llprint(LOGLEVEL_ERROR, "application initialization failed, attempting a graceful shutdown\n");
+      logging_llprintf(LOGLEVEL_ERROR, "application initialization failed, attempting a graceful shutdown\n");
       // Graceful shutdown stuff here
       setAppModelRuntimeState(RUNTIME_SHUTTING_DOWN);
    }

@@ -8,6 +8,6 @@
 #include "../common_defs.h"
 
 const char *strLoglevel(LOGLEVEL_T loglevelT);
-int logging_llprint(LOGLEVEL_T logLevel, const char *_format, ...);
+int logging_llprintf(LOGLEVEL_T logLevel, const char *_format, ...);
 
 #endif  /* GTKSANDBOX_LOGGING_H */

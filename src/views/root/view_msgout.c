@@ -10,10 +10,13 @@ static char timestamp[20];  // not sure why it felt better to allocate the memor
 
 void set_msgout_buffer(const char *msgout)
 {
-   GtkTextBuffer  *tvBuff  =  gtk_text_view_get_buffer(GTK_TEXT_VIEW(g_appWidgetsT->w_tvAppMsgOut));
-   GtkTextIter    endIter;
-   gtk_text_buffer_get_end_iter(tvBuff, &endIter);
-   gtk_text_buffer_insert(tvBuff, &endIter, msgout, -1);
+   if (getAppModelInitState() == INIT_SUCCESS)
+   {  /* Let's not use the MsgOut widget before it's been built */
+      GtkTextBuffer  *tvBuff  =  gtk_text_view_get_buffer(GTK_TEXT_VIEW(g_appWidgetsT->w_tvAppMsgOut));
+      GtkTextIter    endIter;
+      gtk_text_buffer_get_end_iter(tvBuff, &endIter);
+      gtk_text_buffer_insert(tvBuff, &endIter, msgout, -1);
+   }
 }
 
 void printLoglevelMsgOut(LOGLEVEL_T loglevel, const char *_format, ...)
@@ -29,8 +32,10 @@ void printLoglevelMsgOut(LOGLEVEL_T loglevel, const char *_format, ...)
       getTimestamp(timestamp, sizeof(timestamp));
       snprintf(ll_msg_out, sizeof (ll_msg_out), "%s:%s:%s", timestamp, strLoglevel(loglevel), line_out);
 
+      logging_llprintf(LOGLEVEL_DEBUG, "%s", ll_msg_out);
+
+      logging_llprintf(loglevel, "%s", line_out);
       set_msgout_buffer(ll_msg_out);
-      logging_llprint(loglevel, "%s", line_out);
    }
 }
 

@@ -42,6 +42,6 @@ GtkTreeModel *build_samples_model(void)
                       COL_TIMESTAMP, "2023-05-06T06:08:10",
                       COL_MEASUREMENT_1, 1.4, COL_MEASUREMENT_2, 1.4, COL_MEASUREMENT_3, 1.4, COL_MEASUREMENT_4, 1.4,
                       COL_CALCULATED_A, 0.0, COL_CALCULATED_B, 0.0, -1);
-   logging_llprint(LOGLEVEL_DEBUG, "%s\n", __func__);
+   logging_llprintf(LOGLEVEL_DEBUG, "%s\n", __func__);
    return GTK_TREE_MODEL(sampleCalcTable);
 }

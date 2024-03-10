@@ -22,7 +22,7 @@ const char *strLoglevel(LOGLEVEL_T loglevelT)
       return DEBUG_STR;
 }
 
-int logging_llprint(LOGLEVEL_T logLevel, const char *_format, ...) {
+int logging_llprintf(LOGLEVEL_T logLevel, const char *_format, ...) {
    int done = 0;
    if (logLevel >= getAppModelLoglevel()) {
       // This started as effectively a copy of stdio.printf
