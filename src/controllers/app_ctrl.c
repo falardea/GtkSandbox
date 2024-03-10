@@ -48,6 +48,8 @@ void app_init(int argc, char **argv) {
 
 void app_finalize(void)
 {
+   g_object_unref(g_appWidgetsT->g_trslctnSelectedSample);
+   g_object_unref(sampleCalcTable);
    g_object_unref(modelDeviceA);
    g_object_unref(modelDeviceB);
 }

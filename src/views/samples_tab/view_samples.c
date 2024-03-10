@@ -45,10 +45,22 @@ void on_btnPrintSelection_clicked(__attribute__((unused)) GtkButton *button, gpo
    {
       /* Get the selection */
       /* tableCursor is set if there is a selection */
+      gchararray timestamp;
+      float m1, m2, m3, m4;
+      gtk_tree_model_get(samplesModel, &tableCursor,
+                         COL_TIMESTAMP, &timestamp,
+                         COL_MEASUREMENT_1, &m1,
+                         COL_MEASUREMENT_2, &m2,
+                         COL_MEASUREMENT_3, &m3,
+                         COL_MEASUREMENT_4, &m4,
+                         -1);
+
       char testMsg[256];
-      snprintf(testMsg, sizeof (testMsg), "%s:  +++  +++  Test Message +++ +++\n", __func__);
+      snprintf(testMsg, sizeof (testMsg), "%s:SAMPLE:>>%s|%f|%f|%f|%f\n", __func__,
+               timestamp, m1, m2, m3, m4);
       logging_llprint(LOGLEVEL_DEBUG, "%s", testMsg);
       gtk_label_set_label(GTK_LABEL(appWidgetsT->w_lblSelectionText), testMsg);
+      free(timestamp);
    }
 }
 
@@ -62,9 +74,7 @@ void on_sample_selection_changed(GtkTreeSelection* self,
 
    /* If there is a selection, this button should only be enabled if there is a selection */
    logging_llprint(LOGLEVEL_DEBUG, "%s\n", __func__);
-   if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(self),
-                                        NULL,
-                                        &tableCursor))
+   if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(self), NULL, &tableCursor))
    {
       enableEdit = TRUE;
    }

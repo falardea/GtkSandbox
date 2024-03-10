@@ -1,11 +1,11 @@
-$sandbox-slate: rgba(100, 100, 120, 1);
-$dark-sandbox-slate: darken($sandbox-slate, 20%);
+$sandbox-slate: rgba(77, 77, 97, 1);
+$dark-sandbox-slate: darken($sandbox-slate, 30%);
 $light-sandbox-slate: lighten($sandbox-slate, 20%);
 
 window {
   //background-image: none;
   background-color: $sandbox-slate;
-  color: black;
+  color: $light-sandbox-slate;
 }
 
 treeview {

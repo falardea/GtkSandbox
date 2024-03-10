@@ -15,8 +15,20 @@ typedef enum {
    DISPLAY_ENV_ERR // TODO: fill in more values here... or delete this
 } RVALUE_T;
 
+typedef enum {
+   LOGLEVEL_DEBUG,
+   LOGLEVEL_INFO,
+   LOGLEVEL_ERROR
+} LOGLEVEL_T;
+
+extern const char* DEBUG_STR;
+extern const char* INFO_STR;
+extern const char* ERROR_STR;
+extern const int   LOGGING_MAX_MSG_LENGTH;
+
 typedef struct {
    GtkWidget *w_mainAppWnd;
+   GtkWidget *w_tvAppMsgOut;
    GtkWidget *w_btnCloseMainApp;
 
    GtkWidget *w_tbBindingSrc;

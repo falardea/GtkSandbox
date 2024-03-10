@@ -7,29 +7,29 @@
 
 // Thinking about making this static... would that make it a Singleton?
 // A model interface might be nothing more than setter/getter functions
-static ApplicationModel gAppModel = {INIT_UNINITIALIZED,
+static ApplicationModel sAppModel = {INIT_UNINITIALIZED,
                                      RUNTIME_UNINITIALIZED,
                                      false,
                                      LOGLEVEL_ERROR};
 
 void setAppModelInitState(APP_INIT_STATE appInitState) {
-   gAppModel.initState = appInitState;
+   sAppModel.initState = appInitState;
 }
 
 APP_INIT_STATE getAppModelInitState(void) {
-   return gAppModel.initState;
+   return sAppModel.initState;
 }
 
 void setAppModelRuntimeState(APP_RUNTIME_STATE appRuntimeState) {
-   gAppModel.runtimeState = appRuntimeState;
+   sAppModel.runtimeState = appRuntimeState;
 }
 
 APP_RUNTIME_STATE getAppModelRuntimeState(void) {
-   return gAppModel.runtimeState;
+   return sAppModel.runtimeState;
 }
 
 void setAppModelDebuggingFlag(bool enable) {
-   gAppModel.debuggingEnabled = enable;
+   sAppModel.debuggingEnabled = enable;
    if (enable) {
       // TODO: set and immediately use log level?
       printf("Debugging Enabled\n");
@@ -37,7 +37,7 @@ void setAppModelDebuggingFlag(bool enable) {
 }
 
 bool getAppModelDebuggingFlag(void) {
-   return gAppModel.debuggingEnabled;
+   return sAppModel.debuggingEnabled;
 }
 
 /**
@@ -47,10 +47,10 @@ bool getAppModelDebuggingFlag(void) {
  * runtime life of the application.
  */
 void setAppModelLoglevel(LOGLEVEL_T logLevel) {
-   if (gAppModel.runtimeLoglevel > logLevel)
-      gAppModel.runtimeLoglevel = logLevel;
+   if (sAppModel.runtimeLoglevel > logLevel)
+      sAppModel.runtimeLoglevel = logLevel;
 }
 
 LOGLEVEL_T getAppModelLoglevel(void) {
-   return gAppModel.runtimeLoglevel;
+   return sAppModel.runtimeLoglevel;
 }

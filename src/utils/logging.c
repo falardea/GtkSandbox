@@ -6,12 +6,14 @@
 #include "sys_interface.h"
 #include "logging.h"
 
-const char *DEBUG_STR = "DEBUG";
-const char *INFO_STR = "INFO";
-const char *ERROR_STR = "ERROR";
+const char* DEBUG_STR = "DEBUG";
+const char* INFO_STR = "INFO";
+const char* ERROR_STR = "ERROR";
+const int   LOGGING_MAX_MSG_LENGTH = 1024;
 static char timestamp[20];  // not sure why it felt better to allocate the memory once
 
-const char *strLoglevel(LOGLEVEL_T loglevelT) {
+const char *strLoglevel(LOGLEVEL_T loglevelT)
+{
    if (loglevelT == LOGLEVEL_ERROR)
       return ERROR_STR;
    else if (loglevelT == LOGLEVEL_INFO)
@@ -23,14 +25,14 @@ const char *strLoglevel(LOGLEVEL_T loglevelT) {
 int logging_llprint(LOGLEVEL_T logLevel, const char *_format, ...) {
    int done = 0;
    if (logLevel >= getAppModelLoglevel()) {
-      // This is effectively a copy of stdio.printf, with a filter for log level
-      // Probably not a "production" way of doing this, but it's a sandbox, so meh
+      // This started as effectively a copy of stdio.printf
+      char line_out[LOGGING_MAX_MSG_LENGTH];
       va_list arg;
       getTimestamp(timestamp, sizeof(timestamp));
-      printf("%s:%s:", timestamp, strLoglevel(logLevel));
       va_start(arg, _format);
-      done = vfprintf(stdout, _format, arg);
+      done = vsnprintf(line_out, sizeof (line_out), _format, arg);
       va_end(arg);
+      printf("%s:%s:%s", timestamp, strLoglevel(logLevel), line_out);
       return done;
    }
    return done;

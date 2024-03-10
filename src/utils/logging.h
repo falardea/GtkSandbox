@@ -5,14 +5,9 @@
 #define GTKSANDBOX_LOGGING_H
 
 #include <stdarg.h>
-#include "common_defs.h"
+#include "../common_defs.h"
 
-typedef enum {
-   LOGLEVEL_DEBUG,
-   LOGLEVEL_INFO,
-   LOGLEVEL_ERROR
-} LOGLEVEL_T;
-
+const char *strLoglevel(LOGLEVEL_T loglevelT);
 int logging_llprint(LOGLEVEL_T logLevel, const char *_format, ...);
 
 #endif  /* GTKSANDBOX_LOGGING_H */

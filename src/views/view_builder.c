@@ -47,6 +47,7 @@ AppWidgets_T *build_application(void) {
 
    appWidgetsT->w_mainAppWnd = GTK_WIDGET(gtk_builder_get_object(builder, "app_wnd"));
    appWidgetsT->w_btnCloseMainApp = GTK_WIDGET(gtk_builder_get_object(builder, "btnCloseMainApp"));
+   appWidgetsT->w_tvAppMsgOut = GTK_WIDGET(gtk_builder_get_object(builder, "tvAppMsgOut"));
 
    appWidgetsT->w_tbBindingSrc = GTK_WIDGET(gtk_builder_get_object(builder, "tbBindingSrc"));
    appWidgetsT->w_tbBoundTarget1 = GTK_WIDGET(gtk_builder_get_object(builder, "tbBoundTarget1"));

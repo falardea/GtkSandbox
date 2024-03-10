@@ -44,7 +44,10 @@ set(MY_SOURCES
     src/models/model_samples.c
     src/models/model_samples.h
     src/views/samples_tab/view_samples.c
-    src/views/samples_tab/view_samples.h)
+    src/views/samples_tab/view_samples.h
+    src/views/root/view_msgout.h
+    src/views/root/view_msgout.c
+)
 set(IMAGES_DIR ${PROJECT_RESOURCE_DIR}/images)
 set(STYLE_DIR ${PROJECT_RESOURCE_DIR}/style)
 set(SCSS_SOURCE ${STYLE_DIR}/sandbox_style.scss)
