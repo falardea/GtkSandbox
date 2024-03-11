@@ -8,7 +8,6 @@
 #include "../root/view_msgout.h"
 
 
-
 void build_samples_view(GtkWidget *samplesTable)
 {
    GtkCellRenderer *cellRenderer;
@@ -37,7 +36,7 @@ void build_samples_view(GtkWidget *samplesTable)
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
 }
 
-void on_btnPrintSelection_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data)
+void on_btnEditSelection_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data)
 {
    AppWidgets_T *appWidgetsT = (AppWidgets_T *)user_data;
    GtkTreeIter tableCursor;
@@ -74,11 +73,9 @@ void on_sample_selection_changed(GtkTreeSelection* self,
    GtkTreeModel *samplesModel;
    gboolean enableEdit = FALSE;
 
-   /* If there is a selection, this button should only be enabled if there is a selection */
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
    if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(self), &samplesModel, &tableCursor))
    {
-      enableEdit = TRUE;
       gchararray timestamp;
       float m1, m2, m3, m4, cA, cB;
       char dispBuf[20];
@@ -89,7 +86,8 @@ void on_sample_selection_changed(GtkTreeSelection* self,
                          COL_MEASUREMENT_1, &m1, COL_MEASUREMENT_2, &m2, COL_MEASUREMENT_3, &m3, COL_MEASUREMENT_4, &m4,
                          COL_CALCULATED_A, &cA, COL_CALCULATED_B, &cB,
                          -1);
-
+      /* Interesting note, this "enable", set before getting the tree model, is false, even when set TRUE, really */
+      enableEdit = TRUE;
       strptime(timestamp, "%Y-%0m-%0dT%0H:%0M:%0S", &result);
       gtk_calendar_select_month(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mon, result.tm_year+1900);
       gtk_calendar_select_day(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mday);
@@ -114,9 +112,12 @@ void on_sample_selection_changed(GtkTreeSelection* self,
       snprintf(dispBuf, sizeof(dispBuf), "%f", cB);
       gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryCalculationB), dispBuf);
 
+      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s:CHECKPOINT: selected? enableEdit=%s\n", __func__, enableEdit?"true":"false");
       free(timestamp);
    }
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s:CHECKPOINT: enableEdit=%s\n", __func__, enableEdit?"true":"false");
    gtk_widget_set_sensitive(GTK_WIDGET(appWidgetsT->w_btnEditSelection), enableEdit);
+
 }
 
 // Calendar popover
@@ -146,14 +147,12 @@ void on_popCancel_clicked(__attribute__((unused)) GtkButton *button, gpointer *u
    gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrDatepicker));
 }
 
-void on_editSampleDateTime_toggled(__attribute__((unused)) GtkMenuButton *mbutton, gpointer *user_data)
+void on_editSampleDateTime_toggled(__attribute__((unused)) GtkMenuButton *mbutton, __attribute__((unused)) gpointer *user_data)
 {
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(mbutton)))
    {
-      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: Set Calendar to value in label\n", __func__);
+      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: is there anything to do here?\n", __func__);
    } else {
-      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: don't do anything, the buttons will either set"
-                                          "the label value, or leave it alone.\n", __func__);
+      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: don't do anything.\n", __func__);
    }
-
 }
