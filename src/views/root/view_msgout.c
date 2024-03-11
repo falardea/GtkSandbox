@@ -42,8 +42,6 @@ void printLoglevelMsgOut(LOGLEVEL_T loglevel, const char *_format, ...)
       getTimestamp(timestamp, sizeof(timestamp));
       snprintf(ll_msg_out, sizeof (ll_msg_out), "%s:%s:%s", timestamp, strLoglevel(loglevel), line_out);
 
-      logging_llprintf(LOGLEVEL_DEBUG, "%s", ll_msg_out);
-
       logging_llprintf(loglevel, "%s", line_out);
       set_msgout_buffer(ll_msg_out);
    }

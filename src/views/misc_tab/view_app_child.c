@@ -30,10 +30,10 @@ void testBtnClicked(__attribute__((unused)) GtkWidget *btnSrc,
    static bool first = true;
    clickCount++;
    if (first) {
-      printLoglevelMsgOut(LOGLEVEL_DEBUG, "Testing... testing %d...\n", clickCount);
+      printLoglevelMsgOut(LOGLEVEL_INFO, "Testing... testing %d...\n", clickCount);
       first = false;
    } else {
-      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%d...\n", clickCount);
+      printLoglevelMsgOut(LOGLEVEL_INFO, "%d...\n", clickCount);
    }
 }
 

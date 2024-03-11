@@ -7,6 +7,8 @@
 #include "../../models/model_samples.h"
 #include "../root/view_msgout.h"
 
+
+
 void build_samples_view(GtkWidget *samplesTable)
 {
    GtkCellRenderer *cellRenderer;
@@ -17,6 +19,7 @@ void build_samples_view(GtkWidget *samplesTable)
 
    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(samplesTable), -1, "Meas1",
                                                cellRenderer, "text", COL_MEASUREMENT_1, NULL);
+
    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(samplesTable), -1, "Meas2",
                                                cellRenderer, "text", COL_MEASUREMENT_2, NULL);
    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(samplesTable), -1, "Meas3",
@@ -79,7 +82,7 @@ void on_sample_selection_changed(GtkTreeSelection* self,
       gchararray timestamp;
       float m1, m2, m3, m4, cA, cB;
       char dispBuf[20];
-      struct tm result;
+      struct tm result;  // TODO: Maybe if we used a GDateTime in the TreeModel?
 
       gtk_tree_model_get(samplesModel, &tableCursor,
                          COL_TIMESTAMP, &timestamp,
@@ -87,13 +90,16 @@ void on_sample_selection_changed(GtkTreeSelection* self,
                          COL_CALCULATED_A, &cA, COL_CALCULATED_B, &cB,
                          -1);
 
-      strptime(timestamp, "%Y-%0m-%0dT0H:0M:%0S", &result);
-      strftime(dispBuf, sizeof(dispBuf), "%Y-%0m-%0d", &result);
+      strptime(timestamp, "%Y-%0m-%0dT%0H:%0M:%0S", &result);
+      gtk_calendar_select_month(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mon, result.tm_year+1900);
+      gtk_calendar_select_day(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mday);
+      strftime(dispBuf, sizeof(dispBuf), "%Y-%m-%d", &result);
       gtk_label_set_label(GTK_LABEL(appWidgetsT->w_lblSampleDate), dispBuf);
-      strftime(dispBuf, sizeof(dispBuf), "%0H", &result);
+      strftime(dispBuf, sizeof(dispBuf), "%H", &result);
       gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entrySampleHour), dispBuf);
-      strftime(dispBuf, sizeof(dispBuf), "%0M", &result);
+      strftime(dispBuf, sizeof(dispBuf), "%M", &result);
       gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entrySampleMinute), dispBuf);
+
       snprintf(dispBuf, sizeof(dispBuf), "%f", m1);
       gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement1), dispBuf);
       snprintf(dispBuf, sizeof(dispBuf), "%f", m2);
@@ -102,6 +108,7 @@ void on_sample_selection_changed(GtkTreeSelection* self,
       gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement3), dispBuf);
       snprintf(dispBuf, sizeof(dispBuf), "%f", m4);
       gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement4), dispBuf);
+
       snprintf(dispBuf, sizeof(dispBuf), "%f", cA);
       gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryCalculationA), dispBuf);
       snprintf(dispBuf, sizeof(dispBuf), "%f", cB);
@@ -110,4 +117,43 @@ void on_sample_selection_changed(GtkTreeSelection* self,
       free(timestamp);
    }
    gtk_widget_set_sensitive(GTK_WIDGET(appWidgetsT->w_btnEditSelection), enableEdit);
+}
+
+// Calendar popover
+/* TODO: Should we be splitting this popover into it's own view?  Where does the menu callback go? */
+void on_popDone_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data)
+{
+   AppWidgets_T *appWidgetsT = (AppWidgets_T *)user_data;
+   guint year, month, day;
+   gtk_calendar_get_date(GTK_CALENDAR(appWidgetsT->w_popCalendar), &year, &month, &day);
+   char tempDate[11];
+   snprintf(tempDate, sizeof (tempDate), "%d-%02d-%02d\n", year, month+1, day);
+   gtk_label_set_label(GTK_LABEL(appWidgetsT->w_lblSampleDate), tempDate);
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, tempDate);
+   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrDatepicker));
+}
+
+void on_popCancel_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data)
+{ /* On cancel, reset the GtkCalendar back to the time on the label*/
+   AppWidgets_T *appWidgetsT = (AppWidgets_T *)user_data;
+   struct tm result;  // TODO: GDateTime?
+   strptime(gtk_label_get_label(GTK_LABEL(appWidgetsT->w_lblSampleDate)),
+            "%Y-%0m-%0d", &result);
+   gtk_calendar_select_month(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mon, result.tm_year+1900);
+   gtk_calendar_select_day(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mday);
+
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrDatepicker));
+}
+
+void on_editSampleDateTime_toggled(__attribute__((unused)) GtkMenuButton *mbutton, gpointer *user_data)
+{
+   if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(mbutton)))
+   {
+      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: Set Calendar to value in label\n", __func__);
+   } else {
+      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: don't do anything, the buttons will either set"
+                                          "the label value, or leave it alone.\n", __func__);
+   }
+
 }

@@ -36,6 +36,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <signal name="clicked" handler="on_popDone_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -49,6 +50,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
+                <signal name="clicked" handler="on_popCancel_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -222,12 +224,36 @@
                                     <property name="draw-indicator">True</property>
                                     <property name="direction">up</property>
                                     <property name="popover">ppvrDatepicker</property>
+                                    <signal name="toggled" handler="on_editSampleDateTime_toggled" swapped="no"/>
                                     <child>
-                                      <object class="GtkAccelLabel" id="lblSampleDate">
+                                      <object class="GtkBox">
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="label" translatable="yes">YYYY-MM-DD</property>
-                                        <property name="width-chars">15</property>
+                                        <child>
+                                          <object class="GtkImage">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="stock">gtk-justify-fill</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkAccelLabel" id="lblSampleDate">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">YYYY-MM-DD</property>
+                                            <property name="width-chars">15</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
                                       </object>
                                     </child>
                                   </object>
