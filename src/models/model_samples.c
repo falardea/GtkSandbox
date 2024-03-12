@@ -4,6 +4,7 @@
  * Heavily influenced by the GTK 3 TreeView tutorial:
  * https://docs.gtk.org/gtk3/treeview-tutorial.html
 */
+#include <math.h>
 #include "model_samples.h"
 #include "../utils/logging.h"
 
@@ -25,7 +26,7 @@ GtkTreeModel *build_samples_model(void)
    gtk_list_store_append(sampleCalcTable, &insertCursor);
    gtk_list_store_set(sampleCalcTable, &insertCursor,
                       COL_TIMESTAMP, "2023-02-28T23:45:07",
-                      COL_MEASUREMENT_1, 1.1, COL_MEASUREMENT_2, 1.2, COL_MEASUREMENT_3, 1.3, COL_MEASUREMENT_4, 1.4,
+                      COL_MEASUREMENT_1, NAN, COL_MEASUREMENT_2, 1.2, COL_MEASUREMENT_3, 1.3, COL_MEASUREMENT_4, 1.4,
                       COL_CALCULATED_A, 0.0, COL_CALCULATED_B, 0.0, -1);
    gtk_list_store_append(sampleCalcTable, &insertCursor);
    gtk_list_store_set(sampleCalcTable, &insertCursor,

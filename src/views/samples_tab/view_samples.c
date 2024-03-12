@@ -7,6 +7,42 @@
 #include "../../models/model_samples.h"
 #include "../root/view_msgout.h"
 
+void calcA_measurement_average(__attribute__((unused)) GtkTreeViewColumn   *col,
+                               GtkCellRenderer     *renderer,
+                               GtkTreeModel        *model,
+                               GtkTreeIter         *rowCursor,
+                               __attribute__((unused)) gpointer            user_data)
+{
+   float m1, m2, m3, m4, average;
+   char strAverage[20];
+   gtk_tree_model_get(model, rowCursor,
+                      COL_MEASUREMENT_1, &m1, COL_MEASUREMENT_2, &m2, COL_MEASUREMENT_3, &m3, COL_MEASUREMENT_4, &m4,
+                      -1);
+   /* TODO: VALIDATION!! */
+   average = (m1 + m2 + m3 + m4)/4;
+   snprintf(strAverage, sizeof(strAverage), "%0.1f", average);
+   g_object_set(renderer, "text", strAverage, NULL);
+}
+
+void calcB_measurement_max(__attribute__((unused)) GtkTreeViewColumn   *col,
+                               GtkCellRenderer     *renderer,
+                               GtkTreeModel        *model,
+                               GtkTreeIter         *rowCursor,
+                               __attribute__((unused)) gpointer            user_data)
+{
+   float m1, m2, m3, m4, Max;
+   char strMax[20];
+   gtk_tree_model_get(model, rowCursor,
+                      COL_MEASUREMENT_1, &m1, COL_MEASUREMENT_2, &m2, COL_MEASUREMENT_3, &m3, COL_MEASUREMENT_4, &m4,
+                      -1);
+   /* TODO: VALIDATION!! */
+   Max = (m1 > m2) ? m1 : m2;
+   Max = (Max > m3) ? Max : m3;
+   Max = (Max > m4) ? Max : m4;
+
+   snprintf(strMax, sizeof(strMax), "%0.1f", Max);
+   g_object_set(renderer, "text", strMax, NULL);
+}
 
 void build_samples_view(GtkWidget *samplesTable)
 {
@@ -26,11 +62,16 @@ void build_samples_view(GtkWidget *samplesTable)
    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(samplesTable), -1, "Meas4",
                                                cellRenderer, "text", COL_MEASUREMENT_4, NULL);
 
-   gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(samplesTable), -1, "CalcA",
-                                               cellRenderer, "text", COL_CALCULATED_A, NULL);
-   gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(samplesTable), -1, "CalcB",
-                                               cellRenderer, "text", COL_CALCULATED_B, NULL);
+
+   gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(samplesTable), -1, "CalcA",
+                                               cellRenderer, calcA_measurement_average, NULL, NULL);
+
+   gtk_tree_view_insert_column_with_data_func(GTK_TREE_VIEW(samplesTable), -1, "CalcB",
+                                               cellRenderer, calcB_measurement_max, NULL, NULL);
+
    g_object_set(cellRenderer, "cell-background", "white", "cell-background-set", TRUE, NULL);
+
+   /* Set a function for the cal columns */
 
    /* not using printLoglevelMsgOut here, since the "destination" is likely not completely setup */
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
@@ -117,7 +158,6 @@ void on_sample_selection_changed(GtkTreeSelection* self,
    }
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s:CHECKPOINT: enableEdit=%s\n", __func__, enableEdit?"true":"false");
    gtk_widget_set_sensitive(GTK_WIDGET(appWidgetsT->w_btnEditSelection), enableEdit);
-
 }
 
 // Calendar popover
