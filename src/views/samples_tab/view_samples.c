@@ -129,6 +129,7 @@ void on_sample_selection_changed(GtkTreeSelection* self,
                          -1);
       /* Interesting note, this "enable", set before getting the tree model, is false, even when set TRUE, really */
       enableEdit = TRUE;
+
       strptime(timestamp, "%Y-%0m-%0dT%0H:%0M:%0S", &result);
       gtk_calendar_select_month(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mon, result.tm_year+1900);
       gtk_calendar_select_day(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mday);
@@ -195,4 +196,37 @@ void on_editSampleDateTime_toggled(__attribute__((unused)) GtkMenuButton *mbutto
    } else {
       printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: don't do anything.\n", __func__);
    }
+}
+
+void on_btnDeleteRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+   gtk_popover_popup(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
+}
+
+void on_btnAreYouSureConfirm_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
+}
+void on_btnAreYouSureCancel_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
+}
+
+void on_btnCreateRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+}
+void on_btnChangeRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+}
+void on_btnCancelRowChange_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
 }

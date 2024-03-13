@@ -49,6 +49,10 @@ typedef struct {
    GtkWidget *w_trvwSamplesTable;
    GtkWidget *w_lblSelectionText;
    GtkWidget *w_btnEditSelection;
+   GtkWidget *w_btnCreateRow;
+   GtkWidget *w_btnDeleteRow;
+   GtkWidget *w_btnChangeRow;
+   GtkWidget *w_btnCancelRowChange;
    GtkWidget *w_editSampleDateTime;
    GtkWidget *w_lblSampleDate;
    GtkWidget *w_entrySampleHour;
@@ -60,11 +64,17 @@ typedef struct {
    GtkWidget *w_entryCalculationA;
    GtkWidget *w_entryCalculationB;
 
-   // Datepicker
+   // Popover Datepicker
    GtkWidget *w_ppvrDatepicker;
    GtkWidget *w_popCalendar;
    GtkWidget *w_popDone;
    GtkWidget *w_popCancel;
+
+   // Popover Confirm/Cancel
+   GtkWidget *w_ppvrAreYouSure;
+   GtkWidget *w_lblPopoverAreYouSureMsg;
+   GtkWidget *w_btnAreYouSureConfirm;
+   GtkWidget *w_btnAreYouSureCancel;
 
    GObject *g_trslctnSelectedSample;
 

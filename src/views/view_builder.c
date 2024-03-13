@@ -65,6 +65,11 @@ AppWidgets_T *build_application(void) {
 
    appWidgetsT->w_trvwSamplesTable = GTK_WIDGET(gtk_builder_get_object(builder, "trvwSamplesTable"));
    appWidgetsT->w_btnEditSelection = GTK_WIDGET(gtk_builder_get_object(builder, "btnEditSelection"));
+   appWidgetsT->w_btnCreateRow = GTK_WIDGET(gtk_builder_get_object(builder, "btnCreateRow"));
+   appWidgetsT->w_btnDeleteRow = GTK_WIDGET(gtk_builder_get_object(builder, "btnDeleteRow"));
+   appWidgetsT->w_btnChangeRow = GTK_WIDGET(gtk_builder_get_object(builder, "btnChangeRow"));
+   appWidgetsT->w_btnCancelRowChange = GTK_WIDGET(gtk_builder_get_object(builder, "btnCancelRowChange"));
+
    appWidgetsT->w_lblSelectionText = GTK_WIDGET(gtk_builder_get_object(builder, "lblSelectionText"));
 
    appWidgetsT->w_editSampleDateTime = GTK_WIDGET(gtk_builder_get_object(builder, "editSampleDateTime"));
@@ -83,6 +88,11 @@ AppWidgets_T *build_application(void) {
    appWidgetsT->w_popCalendar = GTK_WIDGET(gtk_builder_get_object(builder, "popCalendar"));
    appWidgetsT->w_popDone = GTK_WIDGET(gtk_builder_get_object(builder, "popDone"));
    appWidgetsT->w_popCancel = GTK_WIDGET(gtk_builder_get_object(builder, "popCancel"));
+
+   appWidgetsT->w_ppvrAreYouSure = GTK_WIDGET(gtk_builder_get_object(builder, "ppvrAreYouSure"));
+   appWidgetsT->w_lblPopoverAreYouSureMsg = GTK_WIDGET(gtk_builder_get_object(builder, "lblPopoverAreYouSureMsg"));
+   appWidgetsT->w_btnAreYouSureConfirm = GTK_WIDGET(gtk_builder_get_object(builder, "btnAreYouSureConfirm"));
+   appWidgetsT->w_btnAreYouSureCancel = GTK_WIDGET(gtk_builder_get_object(builder, "btnAreYouSureCancel"));
 
    /* appWidgetsT->w_glade_ID = GTK_WIDGET(gtk_builder_get_object(builder, "glade_ID")); */
 
