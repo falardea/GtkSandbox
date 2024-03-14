@@ -46,3 +46,14 @@ GtkTreeModel *build_samples_model(void)
    logging_llprintf(LOGLEVEL_DEBUG, "%s\n", __func__);
    return GTK_TREE_MODEL(sampleCalcTable);
 }
+
+void create_new_sample(void)
+{
+   GtkTreeIter rowCursor;
+   gtk_list_store_append(sampleCalcTable, &rowCursor);
+
+   gtk_list_store_set(sampleCalcTable, &rowCursor,
+                      COL_TIMESTAMP, "2021-07-06T06:08:10",
+                      COL_MEASUREMENT_1, 0.25, COL_MEASUREMENT_2, 1234.43, COL_MEASUREMENT_3, -0.3, COL_MEASUREMENT_4, 3.14,
+                      COL_CALCULATED_A, 0.0, COL_CALCULATED_B, 0.0, -1);
+}

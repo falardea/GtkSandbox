@@ -3,6 +3,7 @@
 */
 #define _XOPEN_SOURCE
 #include <time.h>
+#include "../view_utils.h"
 #include "view_samples.h"
 #include "../../models/model_samples.h"
 #include "../root/view_msgout.h"
@@ -105,9 +106,7 @@ void on_btnEditSelection_clicked(__attribute__((unused)) GtkButton *button, gpoi
       free(timestamp);
    }
 }
-
-void on_sample_selection_changed(GtkTreeSelection* self,
-                                 gpointer user_data)
+void on_sample_selection_changed(GtkTreeSelection* self, gpointer user_data)
 {
    AppWidgets_T *appWidgetsT = (AppWidgets_T *)user_data;
    GtkTreeIter tableCursor;
@@ -122,13 +121,20 @@ void on_sample_selection_changed(GtkTreeSelection* self,
       char dispBuf[20];
       struct tm result;  // TODO: Maybe if we used a GDateTime in the TreeModel?
 
+      enableEdit = TRUE;
+
       gtk_tree_model_get(samplesModel, &tableCursor,
                          COL_TIMESTAMP, &timestamp,
                          COL_MEASUREMENT_1, &m1, COL_MEASUREMENT_2, &m2, COL_MEASUREMENT_3, &m3, COL_MEASUREMENT_4, &m4,
                          COL_CALCULATED_A, &cA, COL_CALCULATED_B, &cB,
                          -1);
-      /* Interesting note, this "enable", set before getting the tree model, is false, even when set TRUE, really */
-      enableEdit = TRUE;
+      if (!enableEdit)
+      {
+         /* Interesting note: this "enable", set to TRUE before getting the tree model, will get set to !TRUE */
+         printLoglevelMsgOut(LOGLEVEL_ERROR, "%s:gtk_tree_model_get has corrupted enableEdit=%s, re-enabling\n",
+                             __func__, enableEdit?"true":"false");
+         enableEdit = TRUE;
+      }
 
       strptime(timestamp, "%Y-%0m-%0dT%0H:%0M:%0S", &result);
       gtk_calendar_select_month(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mon, result.tm_year+1900);
@@ -140,25 +146,71 @@ void on_sample_selection_changed(GtkTreeSelection* self,
       strftime(dispBuf, sizeof(dispBuf), "%M", &result);
       gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entrySampleMinute), dispBuf);
 
-      snprintf(dispBuf, sizeof(dispBuf), "%f", m1);
-      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement1), dispBuf);
-      snprintf(dispBuf, sizeof(dispBuf), "%f", m2);
-      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement2), dispBuf);
-      snprintf(dispBuf, sizeof(dispBuf), "%f", m3);
-      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement3), dispBuf);
-      snprintf(dispBuf, sizeof(dispBuf), "%f", m4);
-      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement4), dispBuf);
+      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement1), "%f", m1);
+      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement2), "%f", m2);
+      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement3), "%f", m3);
+      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement4), "%f", m4);
 
-      snprintf(dispBuf, sizeof(dispBuf), "%f", cA);
-      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryCalculationA), dispBuf);
-      snprintf(dispBuf, sizeof(dispBuf), "%f", cB);
-      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entryCalculationB), dispBuf);
+      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryCalculationA), "%f", cA);
+      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryCalculationB), "%f", cB);
 
-      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s:CHECKPOINT: selected? enableEdit=%s\n", __func__, enableEdit?"true":"false");
       free(timestamp);
    }
-   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s:CHECKPOINT: enableEdit=%s\n", __func__, enableEdit?"true":"false");
+   else
+   {
+      gtk_label_set_label(GTK_LABEL(appWidgetsT->w_lblSampleDate), "YYYY-MM-DD");
+      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entrySampleHour), "");
+      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entrySampleMinute), "");
+
+      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryMeasurement1), NULL, NULL);
+      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryMeasurement2), NULL, NULL);
+      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryMeasurement3), NULL, NULL);
+      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryMeasurement4), NULL, NULL);
+      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryCalculationA), NULL, NULL);
+      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryCalculationB), NULL, NULL);
+   }
    gtk_widget_set_sensitive(GTK_WIDGET(appWidgetsT->w_btnEditSelection), enableEdit);
+}
+void on_editSampleDateTime_toggled(__attribute__((unused)) GtkMenuButton *mbutton, __attribute__((unused)) gpointer *user_data)
+{
+   if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(mbutton)))
+   {
+      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: is there anything to do here?\n", __func__);
+   } else {
+      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: don't do anything.\n", __func__);
+   }
+}
+void on_btnDeleteRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+   gtk_popover_popup(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
+}
+void on_btnAreYouSureConfirm_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
+}
+void on_btnAreYouSureCancel_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
+}
+void on_btnCreateRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+   create_new_sample();
+   //TODO: post addition sort?
+}
+void on_btnChangeRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+}
+void on_btnCancelRowChange_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+{
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
 }
 
 // Calendar popover
@@ -174,7 +226,6 @@ void on_popDone_clicked(__attribute__((unused)) GtkButton *button, gpointer *use
    printLoglevelMsgOut(LOGLEVEL_DEBUG, tempDate);
    gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrDatepicker));
 }
-
 void on_popCancel_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data)
 { /* On cancel, reset the GtkCalendar back to the time on the label*/
    AppWidgets_T *appWidgetsT = (AppWidgets_T *)user_data;
@@ -186,47 +237,4 @@ void on_popCancel_clicked(__attribute__((unused)) GtkButton *button, gpointer *u
 
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
    gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrDatepicker));
-}
-
-void on_editSampleDateTime_toggled(__attribute__((unused)) GtkMenuButton *mbutton, __attribute__((unused)) gpointer *user_data)
-{
-   if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(mbutton)))
-   {
-      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: is there anything to do here?\n", __func__);
-   } else {
-      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: don't do anything.\n", __func__);
-   }
-}
-
-void on_btnDeleteRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
-{
-   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
-   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
-   gtk_popover_popup(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
-}
-
-void on_btnAreYouSureConfirm_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
-{
-   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
-   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
-   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
-}
-void on_btnAreYouSureCancel_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
-{
-   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
-   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
-   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
-}
-
-void on_btnCreateRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
-{
-   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
-}
-void on_btnChangeRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
-{
-   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
-}
-void on_btnCancelRowChange_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
-{
-   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
 }

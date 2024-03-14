@@ -17,5 +17,6 @@ typedef enum {
 } SAMPLES_COLUMNS_T;
 
 GtkTreeModel *build_samples_model(void);
+void create_new_sample(void);
 
 #endif  /* GTKSANDBOX_MODEL_SAMPLES_H */
