@@ -9,6 +9,8 @@ extern "C" {
 #endif
 #include <gtk/gtk.h>
 
+#define REALLY_LONG_ISO_TIME_STRING "2000-01-31T12:34:56.789-01:23"
+
 typedef enum {
    SUCCESS,
    PARSE_ARG_ERR,

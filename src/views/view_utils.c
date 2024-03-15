@@ -3,18 +3,28 @@
 */
 #include "view_utils.h"
 
-void view_utils_set_float_entry_formatted_text(GtkEntry *destination, const char *float_format, float value)
+static void vu_set_widget_text(GtkWidget *destination, const char *display_string)
 {
-   char display_string[20];
+   if (GTK_IS_ENTRY(destination))
+      gtk_entry_set_text(GTK_ENTRY(destination), display_string);
+   else if (GTK_IS_LABEL(destination))
+      gtk_label_set_label(GTK_LABEL(destination), display_string);
+   else if (GTK_IS_BUTTON(destination))
+      gtk_button_set_label(GTK_BUTTON(destination), display_string);
+}
+
+void vu_set_float_entry_text(GtkEntry *destination, const char *float_format, float value)
+{
+   char display_string[32];
    snprintf(display_string, sizeof(display_string), float_format, value);
    gtk_entry_set_text(destination, display_string);
 }
 
-void view_utils_clear_float_entry_to_default(GtkEntry *destination, const char *float_format, float *default_value)
+void vu_clear_float_entry_text(GtkEntry *destination, const char *float_format, float *default_value)
 {
    if (default_value != NULL) /* We might have 0 defaults, so explicit NULL check, not just defined check*/
    {
-      char display_string[20];
+      char display_string[32];
       snprintf(display_string, sizeof(display_string), float_format, default_value);
       gtk_entry_set_text(destination, display_string);
    }
@@ -22,4 +32,29 @@ void view_utils_clear_float_entry_to_default(GtkEntry *destination, const char *
    {
       gtk_entry_set_text(destination, "");
    }
+}
+
+void vu_set_time_widget_text(GtkWidget *destination, const char *datetime_format, struct tm *source)
+{
+   char display_string[32];
+   if (source != NULL){
+      strftime(display_string, sizeof(display_string), datetime_format, source);
+   } else {
+      display_string[0] = '\0';
+   }
+   vu_set_widget_text(destination, display_string);
+}
+
+void vu_clear_time_widget_text(GtkWidget *destination, const char *with_format, const char *default_value)
+{
+   char display_string[32];
+   if (default_value != NULL) /* We might have 0 defaults, so explicit NULL check, not just defined check*/
+   {
+      snprintf(display_string, sizeof(display_string), with_format, default_value);
+   }
+   else
+   {
+      display_string[0] = '\0';
+   }
+   vu_set_widget_text(destination, display_string);
 }

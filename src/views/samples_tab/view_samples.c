@@ -80,12 +80,12 @@ void build_samples_view(GtkWidget *samplesTable)
 
 void on_btnEditSelection_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data)
 {
-   AppWidgets_T *appWidgetsT = (AppWidgets_T *)user_data;
+   AppWidgets_T *wdgts = (AppWidgets_T *)user_data;
    GtkTreeIter tableCursor;
    GtkTreeModel *samplesModel;
 
    /* If there is a selection, this button should only be enabled if there is a selection */
-   if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(appWidgetsT->g_trslctnSelectedSample),
+   if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(wdgts->g_trslctnSelectedSample),
                                         &samplesModel,
                                         &tableCursor))
    {
@@ -108,7 +108,7 @@ void on_btnEditSelection_clicked(__attribute__((unused)) GtkButton *button, gpoi
 }
 void on_sample_selection_changed(GtkTreeSelection* self, gpointer user_data)
 {
-   AppWidgets_T *appWidgetsT = (AppWidgets_T *)user_data;
+   AppWidgets_T *wdgts = (AppWidgets_T *)user_data;
    GtkTreeIter tableCursor;
    GtkTreeModel *samplesModel;
    gboolean enableEdit = FALSE;
@@ -118,8 +118,7 @@ void on_sample_selection_changed(GtkTreeSelection* self, gpointer user_data)
    {
       gchararray timestamp;
       float m1, m2, m3, m4, cA, cB;
-      char dispBuf[20];
-      struct tm result;  // TODO: Maybe if we used a GDateTime in the TreeModel?
+      struct tm tm_of_timestamp;
 
       enableEdit = TRUE;
 
@@ -136,40 +135,44 @@ void on_sample_selection_changed(GtkTreeSelection* self, gpointer user_data)
          enableEdit = TRUE;
       }
 
-      strptime(timestamp, "%Y-%0m-%0dT%0H:%0M:%0S", &result);
-      gtk_calendar_select_month(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mon, result.tm_year+1900);
-      gtk_calendar_select_day(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mday);
-      strftime(dispBuf, sizeof(dispBuf), "%Y-%m-%d", &result);
-      gtk_label_set_label(GTK_LABEL(appWidgetsT->w_lblSampleDate), dispBuf);
-      strftime(dispBuf, sizeof(dispBuf), "%H", &result);
-      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entrySampleHour), dispBuf);
-      strftime(dispBuf, sizeof(dispBuf), "%M", &result);
-      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entrySampleMinute), dispBuf);
+      strptime(timestamp, "%Y-%0m-%0dT%0H:%0M:%0S", &tm_of_timestamp);
+      gtk_calendar_select_month(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_timestamp.tm_mon, tm_of_timestamp.tm_year + 1900);
+      gtk_calendar_select_day(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_timestamp.tm_mday);
+      vu_set_time_widget_text(GTK_WIDGET(wdgts->w_lblSampleDate), "%Y-%m-%d", &tm_of_timestamp);
+      vu_set_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleHour), "%H", &tm_of_timestamp);
+      vu_set_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleMinute), "%M", &tm_of_timestamp);
 
-      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement1), "%f", m1);
-      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement2), "%f", m2);
-      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement3), "%f", m3);
-      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryMeasurement4), "%f", m4);
+      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement1), "%f", m1);
+      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement2), "%f", m2);
+      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement3), "%f", m3);
+      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement4), "%f", m4);
 
-      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryCalculationA), "%f", cA);
-      view_utils_set_float_entry_formatted_text(GTK_ENTRY(appWidgetsT->w_entryCalculationB), "%f", cB);
+      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryCalculationA), "%f", cA);
+      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryCalculationB), "%f", cB);
 
       free(timestamp);
    }
    else
    {
-      gtk_label_set_label(GTK_LABEL(appWidgetsT->w_lblSampleDate), "YYYY-MM-DD");
-      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entrySampleHour), "");
-      gtk_entry_set_text(GTK_ENTRY(appWidgetsT->w_entrySampleMinute), "");
+      time_t now;
+      time(&now);
+      struct tm tm_of_now;
+      memcpy(&tm_of_now, gmtime(&now), sizeof(struct tm)); // so we don't have any race conditions?
+      gtk_calendar_select_month(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_now.tm_mon, tm_of_now.tm_year+1900);
+      gtk_calendar_select_day(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_now.tm_mday);
 
-      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryMeasurement1), NULL, NULL);
-      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryMeasurement2), NULL, NULL);
-      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryMeasurement3), NULL, NULL);
-      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryMeasurement4), NULL, NULL);
-      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryCalculationA), NULL, NULL);
-      view_utils_clear_float_entry_to_default(GTK_ENTRY(appWidgetsT->w_entryCalculationB), NULL, NULL);
+      vu_clear_time_widget_text(GTK_WIDGET(wdgts->w_lblSampleDate), "%s", "YYYY-MM-DD");
+      vu_clear_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleHour), NULL, NULL);
+      vu_clear_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleMinute), NULL, NULL);
+
+      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement1), NULL, NULL);
+      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement2), NULL, NULL);
+      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement3), NULL, NULL);
+      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement4), NULL, NULL);
+      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryCalculationA), NULL, NULL);
+      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryCalculationB), NULL, NULL);
    }
-   gtk_widget_set_sensitive(GTK_WIDGET(appWidgetsT->w_btnEditSelection), enableEdit);
+   gtk_widget_set_sensitive(GTK_WIDGET(wdgts->w_btnEditSelection), enableEdit);
 }
 void on_editSampleDateTime_toggled(__attribute__((unused)) GtkMenuButton *mbutton, __attribute__((unused)) gpointer *user_data)
 {
@@ -182,21 +185,21 @@ void on_editSampleDateTime_toggled(__attribute__((unused)) GtkMenuButton *mbutto
 }
 void on_btnDeleteRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
 {
-   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
+   AppWidgets_T *wdgts = (AppWidgets_T *) user_data;
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
-   gtk_popover_popup(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
+   gtk_popover_popup(GTK_POPOVER(wdgts->w_ppvrAreYouSure));
 }
 void on_btnAreYouSureConfirm_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
 {
-   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
+   AppWidgets_T *wdgts = (AppWidgets_T *) user_data;
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
-   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
+   gtk_popover_popdown(GTK_POPOVER(wdgts->w_ppvrAreYouSure));
 }
 void on_btnAreYouSureCancel_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
 {
-   AppWidgets_T *appWidgetsT = (AppWidgets_T *) user_data;
+   AppWidgets_T *wdgts = (AppWidgets_T *) user_data;
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
-   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrAreYouSure));
+   gtk_popover_popdown(GTK_POPOVER(wdgts->w_ppvrAreYouSure));
 }
 void on_btnCreateRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
 {
@@ -217,24 +220,24 @@ void on_btnCancelRowChange_clicked(__attribute__((unused)) GtkButton *button, __
 /* TODO: Should we be splitting this popover into it's own view?  Where does the menu callback go? */
 void on_popDone_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data)
 {
-   AppWidgets_T *appWidgetsT = (AppWidgets_T *)user_data;
+   AppWidgets_T *wdgts = (AppWidgets_T *)user_data;
    guint year, month, day;
-   gtk_calendar_get_date(GTK_CALENDAR(appWidgetsT->w_popCalendar), &year, &month, &day);
+   gtk_calendar_get_date(GTK_CALENDAR(wdgts->w_popCalendar), &year, &month, &day);
    char tempDate[11];
    snprintf(tempDate, sizeof (tempDate), "%d-%02d-%02d\n", year, month+1, day);
-   gtk_label_set_label(GTK_LABEL(appWidgetsT->w_lblSampleDate), tempDate);
+   gtk_label_set_label(GTK_LABEL(wdgts->w_lblSampleDate), tempDate);
    printLoglevelMsgOut(LOGLEVEL_DEBUG, tempDate);
-   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrDatepicker));
+   gtk_popover_popdown(GTK_POPOVER(wdgts->w_ppvrDatepicker));
 }
 void on_popCancel_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data)
 { /* On cancel, reset the GtkCalendar back to the time on the label*/
-   AppWidgets_T *appWidgetsT = (AppWidgets_T *)user_data;
+   AppWidgets_T *wdgts = (AppWidgets_T *)user_data;
    struct tm result;  // TODO: GDateTime?
-   strptime(gtk_label_get_label(GTK_LABEL(appWidgetsT->w_lblSampleDate)),
+   strptime(gtk_label_get_label(GTK_LABEL(wdgts->w_lblSampleDate)),
             "%Y-%0m-%0d", &result);
-   gtk_calendar_select_month(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mon, result.tm_year+1900);
-   gtk_calendar_select_day(GTK_CALENDAR(appWidgetsT->w_popCalendar), result.tm_mday);
+   gtk_calendar_select_month(GTK_CALENDAR(wdgts->w_popCalendar), result.tm_mon, result.tm_year+1900);
+   gtk_calendar_select_day(GTK_CALENDAR(wdgts->w_popCalendar), result.tm_mday);
 
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
-   gtk_popover_popdown(GTK_POPOVER(appWidgetsT->w_ppvrDatepicker));
+   gtk_popover_popdown(GTK_POPOVER(wdgts->w_ppvrDatepicker));
 }
