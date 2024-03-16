@@ -13,25 +13,48 @@ static void vu_set_widget_text(GtkWidget *destination, const char *display_strin
       gtk_button_set_label(GTK_BUTTON(destination), display_string);
 }
 
-void vu_set_float_entry_text(GtkEntry *destination, const char *float_format, float value)
+void vu_set_float_widget_text(GtkWidget *destination, const char *float_format, float value)
 {
    char display_string[32];
+
    snprintf(display_string, sizeof(display_string), float_format, value);
-   gtk_entry_set_text(destination, display_string);
+   vu_set_widget_text(destination, display_string);
 }
 
-void vu_clear_float_entry_text(GtkEntry *destination, const char *float_format, float *default_value)
+void vu_set_double_widget_text(GtkWidget *destination, const char *double_format, double value)
 {
+   char display_string[32];
+
+   snprintf(display_string, sizeof(display_string), double_format, value);
+   vu_set_widget_text(destination, display_string);
+}
+
+void vu_clear_float_widget_text(GtkWidget *destination, const char *float_format, float *default_value)
+{
+   char display_string[32];
    if (default_value != NULL) /* We might have 0 defaults, so explicit NULL check, not just defined check*/
    {
-      char display_string[32];
       snprintf(display_string, sizeof(display_string), float_format, default_value);
-      gtk_entry_set_text(destination, display_string);
    }
    else
    {
-      gtk_entry_set_text(destination, "");
+      display_string[0] = '\0';
    }
+   vu_set_widget_text(destination, display_string);
+}
+
+void vu_clear_double_widget_text(GtkWidget *destination, const char *double_format, double *default_value)
+{
+   char display_string[32];
+   if (default_value != NULL) /* We might have 0 defaults, so explicit NULL check, not just defined check*/
+   {
+      snprintf(display_string, sizeof(display_string), double_format, default_value);
+   }
+   else
+   {
+      display_string[0] = '\0';
+   }
+   vu_set_widget_text(destination, display_string);
 }
 
 void vu_set_time_widget_text(GtkWidget *destination, const char *datetime_format, struct tm *source)

@@ -4,6 +4,7 @@
 #include "app_ctrl.h"
 #include "common_defs.h"
 #include "globals.h"
+#include "ctrl_samples.h"
 #include "utils/sys_interface.h"
 #include "utils/parse_args.h"
 #include "utils/logging.h"
@@ -42,6 +43,8 @@ void app_init(int argc, char **argv) {
 
    applyApplicationStyle(g_appWidgetsT);
    logging_llprintf(LOGLEVEL_DEBUG, "applyApplicationStyle success\n");
+
+   load_sample_data_from_file();
 
    setAppModelInitState(INIT_SUCCESS);
 }

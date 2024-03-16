@@ -3,10 +3,55 @@
 */
 #define _XOPEN_SOURCE
 #include <time.h>
+#include <math.h>
 #include "../view_utils.h"
 #include "view_samples.h"
 #include "../../models/model_samples.h"
 #include "../root/view_msgout.h"
+#include "utils/logging.h"
+
+static void set_row_entries_view(SamplesRow_T *row, AppWidgets_T *wdgts)
+{
+   struct tm tm_of_timestamp;
+   strptime(row->timestampStr, "%Y-%0m-%0dT%0H:%0M:%0S", &tm_of_timestamp);
+   logging_llprintf(LOGLEVEL_DEBUG, "%s: CHECKPOINT: %s \n", __func__, row->timestampStr);
+
+   gtk_calendar_select_month(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_timestamp.tm_mon, tm_of_timestamp.tm_year + 1900);
+   gtk_calendar_select_day(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_timestamp.tm_mday);
+   vu_set_time_widget_text(GTK_WIDGET(wdgts->w_lblSampleDate), "%Y-%m-%d", &tm_of_timestamp);
+   vu_set_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleHour), "%H", &tm_of_timestamp);
+   vu_set_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleMinute), "%M", &tm_of_timestamp);
+
+   vu_set_float_widget_text(GTK_WIDGET(wdgts->w_entryMeasurement1), "%0.2f", row->measurement1);
+   vu_set_float_widget_text(GTK_WIDGET(wdgts->w_entryMeasurement2), "%0.2f", row->measurement1);
+   vu_set_float_widget_text(GTK_WIDGET(wdgts->w_entryMeasurement3), "%0.2f", row->measurement1);
+   vu_set_float_widget_text(GTK_WIDGET(wdgts->w_entryMeasurement4), "%0.2f", row->measurement1);
+
+   vu_set_double_widget_text(GTK_WIDGET(wdgts->w_entryCalculationA), "%0.2f", row->calculationA);
+   vu_set_double_widget_text(GTK_WIDGET(wdgts->w_entryCalculationB), "%0.2f", row->calculationA);
+}
+
+static void clear_row_entries_view(AppWidgets_T *wdgts)
+{
+   time_t now;
+   time(&now);
+   struct tm tm_of_now;
+   memcpy(&tm_of_now, gmtime(&now), sizeof(struct tm)); // so we don't have any race conditions?
+   gtk_calendar_select_month(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_now.tm_mon, tm_of_now.tm_year+1900);
+   gtk_calendar_select_day(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_now.tm_mday);
+
+   vu_clear_time_widget_text(GTK_WIDGET(wdgts->w_lblSampleDate), "%s", "YYYY-MM-DD");
+   vu_clear_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleHour), NULL, NULL);
+   vu_clear_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleMinute), NULL, NULL);
+
+   float defaultClearedValue = 0.0f;
+   vu_clear_float_widget_text(GTK_WIDGET(wdgts->w_entryMeasurement1), "%0.1f", &defaultClearedValue);
+   vu_clear_float_widget_text(GTK_WIDGET(wdgts->w_entryMeasurement2), NULL, NULL);
+   vu_clear_float_widget_text(GTK_WIDGET(wdgts->w_entryMeasurement3), NULL, NULL);
+   vu_clear_float_widget_text(GTK_WIDGET(wdgts->w_entryMeasurement4), NULL, NULL);
+   vu_clear_double_widget_text(GTK_WIDGET(wdgts->w_entryCalculationA), NULL, NULL);
+   vu_clear_double_widget_text(GTK_WIDGET(wdgts->w_entryCalculationB), NULL, NULL);
+}
 
 void calcA_measurement_average(__attribute__((unused)) GtkTreeViewColumn   *col,
                                GtkCellRenderer     *renderer,
@@ -116,61 +161,17 @@ void on_sample_selection_changed(GtkTreeSelection* self, gpointer user_data)
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
    if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(self), &samplesModel, &tableCursor))
    {
-      gchararray timestamp;
-      float m1, m2, m3, m4, cA, cB;
-      struct tm tm_of_timestamp;
-
       enableEdit = TRUE;
 
-      gtk_tree_model_get(samplesModel, &tableCursor,
-                         COL_TIMESTAMP, &timestamp,
-                         COL_MEASUREMENT_1, &m1, COL_MEASUREMENT_2, &m2, COL_MEASUREMENT_3, &m3, COL_MEASUREMENT_4, &m4,
-                         COL_CALCULATED_A, &cA, COL_CALCULATED_B, &cB,
-                         -1);
-      if (!enableEdit)
-      {
-         /* Interesting note: this "enable", set to TRUE before getting the tree model, will get set to !TRUE */
-         printLoglevelMsgOut(LOGLEVEL_ERROR, "%s:gtk_tree_model_get has corrupted enableEdit=%s, re-enabling\n",
-                             __func__, enableEdit?"true":"false");
-         enableEdit = TRUE;
-      }
-
-      strptime(timestamp, "%Y-%0m-%0dT%0H:%0M:%0S", &tm_of_timestamp);
-      gtk_calendar_select_month(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_timestamp.tm_mon, tm_of_timestamp.tm_year + 1900);
-      gtk_calendar_select_day(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_timestamp.tm_mday);
-      vu_set_time_widget_text(GTK_WIDGET(wdgts->w_lblSampleDate), "%Y-%m-%d", &tm_of_timestamp);
-      vu_set_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleHour), "%H", &tm_of_timestamp);
-      vu_set_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleMinute), "%M", &tm_of_timestamp);
-
-      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement1), "%f", m1);
-      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement2), "%f", m2);
-      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement3), "%f", m3);
-      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement4), "%f", m4);
-
-      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryCalculationA), "%f", cA);
-      vu_set_float_entry_text(GTK_ENTRY(wdgts->w_entryCalculationB), "%f", cB);
-
-      free(timestamp);
+      //------------------
+      SamplesRow_T row;
+      get_selected_sample(&tableCursor, &row);
+      //------------------
+      set_row_entries_view(&row, wdgts);
    }
    else
    {
-      time_t now;
-      time(&now);
-      struct tm tm_of_now;
-      memcpy(&tm_of_now, gmtime(&now), sizeof(struct tm)); // so we don't have any race conditions?
-      gtk_calendar_select_month(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_now.tm_mon, tm_of_now.tm_year+1900);
-      gtk_calendar_select_day(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_now.tm_mday);
-
-      vu_clear_time_widget_text(GTK_WIDGET(wdgts->w_lblSampleDate), "%s", "YYYY-MM-DD");
-      vu_clear_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleHour), NULL, NULL);
-      vu_clear_time_widget_text(GTK_WIDGET(wdgts->w_entrySampleMinute), NULL, NULL);
-
-      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement1), NULL, NULL);
-      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement2), NULL, NULL);
-      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement3), NULL, NULL);
-      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryMeasurement4), NULL, NULL);
-      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryCalculationA), NULL, NULL);
-      vu_clear_float_entry_text(GTK_ENTRY(wdgts->w_entryCalculationB), NULL, NULL);
+      clear_row_entries_view(wdgts);
    }
    gtk_widget_set_sensitive(GTK_WIDGET(wdgts->w_btnEditSelection), enableEdit);
 }
@@ -204,12 +205,37 @@ void on_btnAreYouSureCancel_clicked(__attribute__((unused)) GtkButton *button, _
 void on_btnCreateRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
 {
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
-   create_new_sample();
+   time_t now;
+   time(&now);
+   struct tm tm_of_now;
+   memcpy(&tm_of_now, gmtime(&now), sizeof(struct tm)); // so we don't have any race conditions?
+
+   SamplesRow_T blank;
+   strftime(blank.timestampStr, sizeof(blank.timestampStr), "%Y-%m-%dT%H:%M:%S", &tm_of_now);
+   blank.measurement1 = NAN;
+   blank.measurement2 = NAN;
+   blank.measurement3 = NAN;
+   blank.measurement4 = NAN;
+   blank.calculationA = NAN;
+   blank.calculationB = NAN;
+
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: CHECKPOINT %s \n", __func__, blank.timestampStr);
+   create_new_sample(&blank);
    //TODO: post addition sort?
 }
 void on_btnChangeRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
 {
-   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s:enter\n", __func__);
+   AppWidgets_T *wdgts = (AppWidgets_T *)user_data;
+   GtkTreeIter tableCursor;
+   gtk_tree_selection_get_selected (GTK_TREE_SELECTION(wdgts->g_trslctnSelectedSample), NULL, &tableCursor);
+
+   SamplesRow_T row;
+   get_selected_sample(&tableCursor, &row);
+
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", row.timestampStr);
+
+   printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s:exit\n", __func__);
 }
 void on_btnCancelRowChange_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
 {

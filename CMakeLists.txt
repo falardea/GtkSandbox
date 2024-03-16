@@ -47,7 +47,7 @@ set(MY_SOURCES
     src/views/samples_tab/view_samples.h
     src/views/root/view_msgout.h
     src/views/root/view_msgout.c
-    src/views/view_utils.c src/views/view_utils.h)
+    src/views/view_utils.c src/views/view_utils.h src/controllers/ctrl_samples.c src/controllers/ctrl_samples.h)
 set(IMAGES_DIR ${PROJECT_RESOURCE_DIR}/images)
 set(STYLE_DIR ${PROJECT_RESOURCE_DIR}/style)
 set(SCSS_SOURCE ${STYLE_DIR}/sandbox_style.scss)

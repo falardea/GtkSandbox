@@ -106,6 +106,8 @@ AppWidgets_T *build_application(void) {
    bind_toggle_src_active_tar_sensitive(GTK_TOGGLE_BUTTON(appWidgetsT->w_tbBindingSrc), appWidgetsT->w_tbBoundTarget2);
    bind_toggle_active_label_swap(GTK_TOGGLE_BUTTON(appWidgetsT->w_tbTextSwapToggleExample));
 
+
+
    g_object_bind_property(appWidgetsT->w_tbBiDirModelBoundEnable, "active",
                           modelDeviceA, "device-enabled", G_BINDING_BIDIRECTIONAL);
 

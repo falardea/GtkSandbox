@@ -47,13 +47,48 @@ GtkTreeModel *build_samples_model(void)
    return GTK_TREE_MODEL(sampleCalcTable);
 }
 
-void create_new_sample(void)
+void create_new_sample(SamplesRow_T *fromSample)
 {
    GtkTreeIter rowCursor;
    gtk_list_store_append(sampleCalcTable, &rowCursor);
 
-   gtk_list_store_set(sampleCalcTable, &rowCursor,
-                      COL_TIMESTAMP, "2021-07-06T06:08:10",
-                      COL_MEASUREMENT_1, 0.25, COL_MEASUREMENT_2, 1234.43, COL_MEASUREMENT_3, -0.3, COL_MEASUREMENT_4, 3.14,
-                      COL_CALCULATED_A, 0.0, COL_CALCULATED_B, 0.0, -1);
+   if (fromSample) {
+      gtk_list_store_set(sampleCalcTable,
+                         &rowCursor,
+                         COL_TIMESTAMP,      fromSample->timestampStr,
+                         COL_MEASUREMENT_1,  fromSample->measurement1,
+                         COL_MEASUREMENT_2,  fromSample->measurement2,
+                         COL_MEASUREMENT_3,  fromSample->measurement3,
+                         COL_MEASUREMENT_4,  fromSample->measurement4,
+                         COL_CALCULATED_A,   fromSample->calculationA,
+                         COL_CALCULATED_B,   fromSample->calculationB,
+                         -1);
+   } else {
+      gtk_list_store_set(sampleCalcTable,
+                         &rowCursor,
+                         COL_TIMESTAMP,      "2021-07-06T06:08:10",
+                         COL_MEASUREMENT_1,  NAN,
+                         COL_MEASUREMENT_2,  NAN,
+                         COL_MEASUREMENT_3,  NAN,
+                         COL_MEASUREMENT_4,  NAN,
+                         COL_CALCULATED_A,   NAN,
+                         COL_CALCULATED_B,   NAN,
+                         -1);
+   }
+}
+
+void get_selected_sample(GtkTreeIter *selected_row, SamplesRow_T *snapshot)
+{
+   gchararray timestamp;
+   gtk_tree_model_get(GTK_TREE_MODEL(sampleCalcTable), selected_row,
+                      COL_TIMESTAMP, &timestamp,
+                      COL_MEASUREMENT_1, &snapshot->measurement1,
+                      COL_MEASUREMENT_2, &snapshot->measurement2,
+                      COL_MEASUREMENT_3, &snapshot->measurement3,
+                      COL_MEASUREMENT_4, &snapshot->measurement4,
+                      COL_CALCULATED_A, &snapshot->calculationA,
+                      COL_CALCULATED_B, &snapshot->calculationB,
+                      -1);
+   strcpy(snapshot->timestampStr, timestamp);
+   g_free(timestamp);
 }

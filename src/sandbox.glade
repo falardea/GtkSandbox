@@ -2,73 +2,6 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkPopover" id="ppvrDatepicker">
-    <property name="can-focus">False</property>
-    <child>
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">10</property>
-        <child>
-          <object class="GtkCalendar" id="popCalendar">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="year">2024</property>
-            <property name="month">2</property>
-            <property name="day">10</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButtonBox">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="spacing">10</property>
-            <property name="layout-style">spread</property>
-            <child>
-              <object class="GtkButton" id="popDone">
-                <property name="label" translatable="yes">Done</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <signal name="clicked" handler="on_popDone_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="popCancel">
-                <property name="label" translatable="yes">Cancel</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <signal name="clicked" handler="on_popCancel_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="pack-type">end</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-  </object>
   <object class="GtkApplicationWindow" id="mainAppWnd">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -100,7 +33,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label-xalign">0</property>
-                    <property name="shadow-type">none</property>
+                    <property name="label-yalign">0</property>
                     <child>
                       <!-- n-columns=1 n-rows=1 -->
                       <object class="GtkGrid">
@@ -134,6 +67,8 @@
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="margin-start">5</property>
+                        <property name="margin-top">5</property>
                         <property name="label" translatable="yes">Samples Table</property>
                       </object>
                     </child>
@@ -159,6 +94,7 @@
                           <object class="GtkButtonBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
+                            <property name="spacing">5</property>
                             <property name="layout-style">end</property>
                             <child>
                               <object class="GtkButton" id="btnEditSelection">
@@ -206,6 +142,9 @@
                                 <property name="non-homogeneous">True</property>
                               </packing>
                             </child>
+                            <child>
+                              <placeholder/>
+                            </child>
                           </object>
                           <packing>
                             <property name="left-attach">0</property>
@@ -224,6 +163,7 @@
                               <object class="GtkGrid">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="margin-bottom">10</property>
                                 <property name="row-spacing">10</property>
                                 <property name="column-spacing">10</property>
                                 <child>
@@ -237,53 +177,6 @@
                                   </object>
                                   <packing>
                                     <property name="left-attach">0</property>
-                                    <property name="top-attach">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkMenuButton" id="editSampleDateTime">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">True</property>
-                                    <property name="focus-on-click">False</property>
-                                    <property name="receives-default">True</property>
-                                    <property name="draw-indicator">True</property>
-                                    <property name="direction">up</property>
-                                    <property name="popover">ppvrDatepicker</property>
-                                    <signal name="toggled" handler="on_editSampleDateTime_toggled" swapped="no"/>
-                                    <child>
-                                      <object class="GtkBox">
-                                        <property name="visible">True</property>
-                                        <property name="can-focus">False</property>
-                                        <child>
-                                          <object class="GtkImage">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <property name="stock">gtk-justify-fill</property>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkAccelLabel" id="lblSampleDate">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <property name="label" translatable="yes">YYYY-MM-DD</property>
-                                            <property name="width-chars">15</property>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                      </object>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="left-attach">1</property>
                                     <property name="top-attach">0</property>
                                   </packing>
                                 </child>
@@ -310,6 +203,7 @@
                                     <child>
                                       <object class="GtkEntry" id="entrySampleHour">
                                         <property name="visible">True</property>
+                                        <property name="sensitive">False</property>
                                         <property name="can-focus">True</property>
                                         <property name="width-chars">5</property>
                                       </object>
@@ -338,6 +232,7 @@
                                     <child>
                                       <object class="GtkEntry" id="entrySampleMinute">
                                         <property name="visible">True</property>
+                                        <property name="sensitive">False</property>
                                         <property name="can-focus">True</property>
                                         <property name="width-chars">5</property>
                                       </object>
@@ -369,12 +264,60 @@
                                     <property name="top-attach">0</property>
                                   </packing>
                                 </child>
+                                <child>
+                                  <object class="GtkToggleButton" id="editSampleDateTime">
+                                    <property name="visible">True</property>
+                                    <property name="sensitive">False</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="receives-default">True</property>
+                                    <signal name="toggled" handler="on_editSampleDateTime_toggled" swapped="no"/>
+                                    <child>
+                                      <object class="GtkBox">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">False</property>
+                                        <property name="spacing">5</property>
+                                        <child>
+                                          <object class="GtkImage">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="icon-name">x-office-calendar</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="lblSampleDate">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="margin-bottom">1</property>
+                                            <property name="label" translatable="yes">YYYY-MM-DD</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="padding">5</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="left-attach">1</property>
+                                    <property name="top-attach">0</property>
+                                  </packing>
+                                </child>
                               </object>
                             </child>
                             <child type="label">
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="margin-start">5</property>
+                                <property name="margin-top">5</property>
                                 <property name="label" translatable="yes">Timestamp</property>
                               </object>
                             </child>
@@ -396,6 +339,7 @@
                               <object class="GtkGrid">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="margin-bottom">10</property>
                                 <property name="row-spacing">10</property>
                                 <child>
                                   <object class="GtkBox">
@@ -420,6 +364,7 @@
                                     <child>
                                       <object class="GtkEntry" id="entryMeasurement1">
                                         <property name="visible">True</property>
+                                        <property name="sensitive">False</property>
                                         <property name="can-focus">True</property>
                                         <property name="width-chars">8</property>
                                         <property name="input-purpose">number</property>
@@ -475,6 +420,7 @@
                                     <child>
                                       <object class="GtkEntry" id="entryMeasurement2">
                                         <property name="visible">True</property>
+                                        <property name="sensitive">False</property>
                                         <property name="can-focus">True</property>
                                         <property name="width-chars">8</property>
                                         <property name="input-purpose">number</property>
@@ -530,6 +476,7 @@
                                     <child>
                                       <object class="GtkEntry" id="entryMeasurement3">
                                         <property name="visible">True</property>
+                                        <property name="sensitive">False</property>
                                         <property name="can-focus">True</property>
                                         <property name="width-chars">8</property>
                                         <property name="input-purpose">number</property>
@@ -585,6 +532,7 @@
                                     <child>
                                       <object class="GtkEntry" id="entryMeasurement4">
                                         <property name="visible">True</property>
+                                        <property name="sensitive">False</property>
                                         <property name="can-focus">True</property>
                                         <property name="width-chars">8</property>
                                         <property name="input-purpose">number</property>
@@ -623,6 +571,8 @@
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="margin-start">5</property>
+                                <property name="margin-top">5</property>
                                 <property name="label" translatable="yes">Measurements</property>
                               </object>
                             </child>
@@ -644,6 +594,7 @@
                               <object class="GtkGrid">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="margin-bottom">10</property>
                                 <property name="row-spacing">10</property>
                                 <child>
                                   <object class="GtkBox">
@@ -668,7 +619,8 @@
                                     <child>
                                       <object class="GtkEntry" id="entryCalculationA">
                                         <property name="visible">True</property>
-                                        <property name="can-focus">True</property>
+                                        <property name="sensitive">False</property>
+                                        <property name="can-focus">False</property>
                                         <property name="width-chars">8</property>
                                         <property name="input-purpose">number</property>
                                       </object>
@@ -723,7 +675,8 @@
                                     <child>
                                       <object class="GtkEntry" id="entryCalculationB">
                                         <property name="visible">True</property>
-                                        <property name="can-focus">True</property>
+                                        <property name="sensitive">False</property>
+                                        <property name="can-focus">False</property>
                                         <property name="width-chars">8</property>
                                         <property name="input-purpose">number</property>
                                       </object>
@@ -763,12 +716,14 @@
                                     <property name="margin-right">10</property>
                                     <property name="margin-end">10</property>
                                     <property name="margin-bottom">10</property>
+                                    <property name="spacing">5</property>
                                     <property name="baseline-position">bottom</property>
                                     <property name="layout-style">end</property>
                                     <child>
                                       <object class="GtkButton" id="btnChangeRow">
                                         <property name="label" translatable="yes">Confrim</property>
                                         <property name="visible">True</property>
+                                        <property name="sensitive">False</property>
                                         <property name="can-focus">True</property>
                                         <property name="receives-default">True</property>
                                         <signal name="clicked" handler="on_btnChangeRow_clicked" swapped="no"/>
@@ -783,6 +738,7 @@
                                       <object class="GtkButton" id="btnCancelRowChange">
                                         <property name="label" translatable="yes">Cancel</property>
                                         <property name="visible">True</property>
+                                        <property name="sensitive">False</property>
                                         <property name="can-focus">True</property>
                                         <property name="receives-default">True</property>
                                         <signal name="clicked" handler="on_btnCancelRowChange_clicked" swapped="no"/>
@@ -806,6 +762,8 @@
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
+                                <property name="margin-start">5</property>
+                                <property name="margin-top">5</property>
                                 <property name="label" translatable="yes">Calculations</property>
                               </object>
                             </child>
@@ -821,6 +779,8 @@
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="margin-start">5</property>
+                        <property name="margin-top">5</property>
                         <property name="label" translatable="yes">Sample Entry</property>
                       </object>
                     </child>
@@ -1665,6 +1625,74 @@ This will permanently remove this sample.  There's no undo, are you sure?  Reall
           <packing>
             <property name="left-attach">0</property>
             <property name="top-attach">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkPopover" id="ppvrDatepicker">
+    <property name="can-focus">False</property>
+    <property name="relative-to">editSampleDateTime</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
+        <child>
+          <object class="GtkCalendar" id="popCalendar">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="year">2024</property>
+            <property name="month">2</property>
+            <property name="day">10</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButtonBox">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="spacing">10</property>
+            <property name="layout-style">spread</property>
+            <child>
+              <object class="GtkButton" id="popDone">
+                <property name="label" translatable="yes">Done</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <signal name="clicked" handler="on_popDone_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="popCancel">
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <signal name="clicked" handler="on_popCancel_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="pack-type">end</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </object>
