@@ -162,11 +162,8 @@ void on_sample_selection_changed(GtkTreeSelection* self, gpointer user_data)
    if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(self), &samplesModel, &tableCursor))
    {
       enableEdit = TRUE;
-
-      //------------------
       SamplesRow_T row;
       get_selected_sample(&tableCursor, &row);
-      //------------------
       set_row_entries_view(&row, wdgts);
    }
    else

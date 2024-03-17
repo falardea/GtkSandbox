@@ -6,7 +6,7 @@
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="window-position">center</property>
-    <property name="default-width">1024</property>
+    <property name="default-width">300</property>
     <property name="default-height">768</property>
     <property name="gravity">center</property>
     <signal name="delete-event" handler="on_mainAppWnd_delete_event" swapped="no"/>
@@ -17,7 +17,7 @@
         <property name="hexpand">True</property>
         <property name="vexpand">True</property>
         <property name="orientation">vertical</property>
-        <property name="baseline-position">bottom</property>
+        <property name="baseline-position">top</property>
         <child>
           <object class="GtkNotebook">
             <property name="visible">True</property>
@@ -190,7 +190,7 @@
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">Sample Time:</property>
                                         <property name="justify">right</property>
-                                        <property name="width-chars">15</property>
+                                        <property name="width-chars">13</property>
                                         <property name="xalign">1</property>
                                       </object>
                                       <packing>
@@ -351,7 +351,7 @@
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">Measurement 1:</property>
                                         <property name="justify">right</property>
-                                        <property name="width-chars">25</property>
+                                        <property name="width-chars">15</property>
                                         <property name="xalign">1</property>
                                       </object>
                                       <packing>
@@ -381,7 +381,7 @@
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">units</property>
-                                        <property name="width-chars">14</property>
+                                        <property name="width-chars">7</property>
                                         <property name="xalign">0</property>
                                       </object>
                                       <packing>
@@ -407,7 +407,7 @@
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">Measurement 2:</property>
                                         <property name="justify">right</property>
-                                        <property name="width-chars">25</property>
+                                        <property name="width-chars">15</property>
                                         <property name="xalign">1</property>
                                       </object>
                                       <packing>
@@ -437,7 +437,7 @@
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">units</property>
-                                        <property name="width-chars">14</property>
+                                        <property name="width-chars">7</property>
                                         <property name="xalign">0</property>
                                       </object>
                                       <packing>
@@ -463,7 +463,7 @@
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">Measurement 3:</property>
                                         <property name="justify">right</property>
-                                        <property name="width-chars">25</property>
+                                        <property name="width-chars">15</property>
                                         <property name="xalign">1</property>
                                       </object>
                                       <packing>
@@ -493,7 +493,7 @@
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">units</property>
-                                        <property name="width-chars">14</property>
+                                        <property name="width-chars">7</property>
                                         <property name="xalign">0</property>
                                       </object>
                                       <packing>
@@ -519,7 +519,7 @@
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">Measurement 4:</property>
                                         <property name="justify">right</property>
-                                        <property name="width-chars">25</property>
+                                        <property name="width-chars">15</property>
                                         <property name="xalign">1</property>
                                       </object>
                                       <packing>
@@ -549,7 +549,7 @@
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="label" translatable="yes">units</property>
-                                        <property name="width-chars">14</property>
+                                        <property name="width-chars">7</property>
                                         <property name="xalign">0</property>
                                       </object>
                                       <packing>
@@ -801,7 +801,6 @@
               </object>
               <packing>
                 <property name="menu-label">List View</property>
-                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
@@ -1115,7 +1114,6 @@
               <packing>
                 <property name="menu-label">Button Box</property>
                 <property name="position">1</property>
-                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
@@ -1465,7 +1463,74 @@
               <packing>
                 <property name="menu-label">Misc</property>
                 <property name="position">2</property>
-                <property name="tab-fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkAspectFrame">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label-xalign">0</property>
+                <property name="shadow-type">none</property>
+                <property name="ratio">2</property>
+                <property name="obey-child">False</property>
+                <child>
+                  <object class="GtkStack" id="stckSetupWizard">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="transition-type">under-up</property>
+                    <child>
+                      <object class="GtkBox" id="stckpgHorizontalPair">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="spacing">5</property>
+                        <property name="homogeneous">True</property>
+                        <child>
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <object class="GtkViewport">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <child>
+                              <placeholder/>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="name">page0</property>
+                        <property name="title" translatable="yes">Start Page</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="nblblWizardTab">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Wizard</property>
+              </object>
+              <packing>
+                <property name="position">3</property>
               </packing>
             </child>
           </object>
@@ -1480,27 +1545,34 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="spacing">10</property>
+            <property name="baseline-position">bottom</property>
             <child>
               <object class="GtkScrolledWindow">
-                <property name="width-request">820</property>
+                <property name="width-request">760</property>
                 <property name="height-request">150</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="valign">center</property>
                 <property name="margin-start">10</property>
                 <property name="margin-end">10</property>
                 <property name="margin-top">10</property>
                 <property name="margin-bottom">10</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
                 <property name="hscrollbar-policy">never</property>
                 <property name="window-placement-set">False</property>
                 <property name="shadow-type">in</property>
-                <property name="min-content-width">100</property>
-                <property name="max-content-width">820</property>
+                <property name="min-content-width">250</property>
+                <property name="min-content-height">100</property>
+                <property name="max-content-width">1024</property>
+                <property name="max-content-height">320</property>
                 <child>
                   <object class="GtkTextView" id="tvAppMsgOut">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
                     <property name="editable">False</property>
                     <property name="wrap-mode">char</property>
                     <property name="cursor-visible">False</property>
@@ -1521,13 +1593,14 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="halign">end</property>
+                <property name="vexpand">True</property>
                 <property name="orientation">vertical</property>
                 <property name="baseline-position">bottom</property>
                 <property name="layout-style">end</property>
                 <child>
                   <object class="GtkButton" id="btnCloseMainApp">
                     <property name="label" translatable="yes">Close</property>
-                    <property name="width-request">80</property>
+                    <property name="width-request">25</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -1543,7 +1616,7 @@
                 </child>
               </object>
               <packing>
-                <property name="expand">True</property>
+                <property name="expand">False</property>
                 <property name="fill">True</property>
                 <property name="pack-type">end</property>
                 <property name="position">1</property>
@@ -1551,8 +1624,9 @@
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
+            <property name="pack-type">end</property>
             <property name="position">1</property>
           </packing>
         </child>
