@@ -7,6 +7,5 @@
 #include "globals.h"
 
 void build_samples_view(GtkWidget *samplesTable);
-void on_btnEditSelection_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data);
 
 #endif  /* GTKSANDBOX_VIEW_SAMPLES_H */

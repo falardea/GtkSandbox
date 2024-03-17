@@ -123,33 +123,27 @@ void build_samples_view(GtkWidget *samplesTable)
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
 }
 
-void on_btnEditSelection_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data)
+void on_tbtnEditSelection_toggled(__attribute__((unused)) GtkToggleButton *button, gpointer *user_data)
 {
-   AppWidgets_T *wdgts = (AppWidgets_T *)user_data;
-   GtkTreeIter tableCursor;
-   GtkTreeModel *samplesModel;
-
-   /* If there is a selection, this button should only be enabled if there is a selection */
-   if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(wdgts->g_trslctnSelectedSample),
-                                        &samplesModel,
-                                        &tableCursor))
+   if(gtk_toggle_button_get_active(button))
    {
-      /* Get the selection */
-      /* tableCursor is set if there is a selection */
-      gchararray timestamp;
-      float m1, m2, m3, m4;
-      gtk_tree_model_get(samplesModel, &tableCursor,
-                         COL_TIMESTAMP, &timestamp,
-                         COL_MEASUREMENT_1, &m1,
-                         COL_MEASUREMENT_2, &m2,
-                         COL_MEASUREMENT_3, &m3,
-                         COL_MEASUREMENT_4, &m4,
-                         -1);
+      AppWidgets_T *wdgts = (AppWidgets_T *)user_data;
+      GtkTreeIter tableCursor;
+      GtkTreeModel *samplesModel;
 
-      printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s:SAMPLE:>>%s|%f|%f|%f|%f\n", __func__,
-                          timestamp, m1, m2, m3, m4);
-      free(timestamp);
+      /* If there is a selection, this button should only be enabled if there is a selection */
+      if (gtk_tree_selection_get_selected (GTK_TREE_SELECTION(wdgts->g_trslctnSelectedSample),
+                                           &samplesModel,
+                                           &tableCursor))
+      {
+         SamplesRow_T row;
+         get_selected_sample(&tableCursor, &row);
+
+         printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s:EDITING SAMPLE:%s|%f|%f|%f|%f\n", __func__,
+                             row.timestampStr, row.measurement1, row.measurement2, row.measurement3, row.measurement4);
+      }
    }
+
 }
 void on_sample_selection_changed(GtkTreeSelection* self, gpointer user_data)
 {
@@ -170,7 +164,7 @@ void on_sample_selection_changed(GtkTreeSelection* self, gpointer user_data)
    {
       clear_row_entries_view(wdgts);
    }
-   gtk_widget_set_sensitive(GTK_WIDGET(wdgts->w_btnEditSelection), enableEdit);
+   gtk_widget_set_sensitive(GTK_WIDGET(wdgts->w_tbtnEditSelection), enableEdit);
 }
 void on_editSampleDateTime_toggled(__attribute__((unused)) GtkMenuButton *mbutton, __attribute__((unused)) gpointer *user_data)
 {
@@ -181,7 +175,7 @@ void on_editSampleDateTime_toggled(__attribute__((unused)) GtkMenuButton *mbutto
       printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s: don't do anything.\n", __func__);
    }
 }
-void on_btnDeleteRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+void on_tbtnDeleteRow_toggled(__attribute__((unused)) GtkToggleButton *button, __attribute__((unused)) gpointer *user_data)
 {
    AppWidgets_T *wdgts = (AppWidgets_T *) user_data;
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
@@ -199,7 +193,7 @@ void on_btnAreYouSureCancel_clicked(__attribute__((unused)) GtkButton *button, _
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
    gtk_popover_popdown(GTK_POPOVER(wdgts->w_ppvrAreYouSure));
 }
-void on_btnCreateRow_clicked(__attribute__((unused)) GtkButton *button, __attribute__((unused)) gpointer *user_data)
+void on_tbtnCreateRow_toggled(__attribute__((unused)) GtkToggleButton *button, __attribute__((unused)) gpointer *user_data)
 {
    printLoglevelMsgOut(LOGLEVEL_DEBUG, "%s\n", __func__);
    time_t now;

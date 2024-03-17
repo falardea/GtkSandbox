@@ -29,56 +29,91 @@ extern const char* ERROR_STR;
 extern const int   LOGGING_MAX_MSG_LENGTH;
 
 typedef struct {
-   GtkWidget *w_mainAppWnd;
-   GtkWidget *w_tvAppMsgOut;
-   GtkWidget *w_btnCloseMainApp;
+   // ********************************************************************************
+   // Basic app framework
+   GtkWidget   *w_mainAppWnd;
+   GtkWidget   *w_tvAppMsgOut;
+   GtkWidget   *w_btnCloseMainApp;
 
-   GtkWidget *w_tbBindingSrc;
-   GtkWidget *w_tbBoundTarget1;
-   GtkWidget *w_tbBoundTarget2;
-   GtkWidget *w_tbTextSwapToggleExample;
+   // ********************************************************************************
+   GtkWidget   *w_nbExamplesTabs;
+   GtkWidget   *w_nblblSamplesTab;
+   GtkWidget   *w_nbSamplesTab;
+   GtkWidget   *w_nblblBottonBoxTab;
+   GtkWidget   *w_nbButtonBoxTab;
+   GtkWidget   *w_nblblMiscTab;
+   GtkWidget   *w_nbMiscTab;
+   GtkWidget   *w_nblblWizardTab;
+   GtkWidget   *w_nbWizardTab;
 
-   GtkWidget *w_tbBiDirModelBoundEnable;
-   GtkWidget *w_bUnboundModelEnable;
-   GtkWidget *w_bUnboundModelDisable;
-   GtkWidget *w_bPrintModelEnableState;
+   // ********************************************************************************
+   // Button binding example
+   GtkWidget   *w_tbBindingSrc;
+   GtkWidget   *w_tbBoundTarget1;
+   GtkWidget   *w_tbBoundTarget2;
+   // Button toggle example
+   GtkWidget   *w_tbTextSwapToggleExample;
+   // Custom model, two-way bound toggle, with model toggles and print of model state
+   GtkWidget   *w_tbBiDirModelBoundEnable;
+   GtkWidget   *w_bUnboundModelEnable;
+   GtkWidget   *w_bUnboundModelDisable;
+   GtkWidget   *w_bPrintModelEnableState;
 
-   GtkWidget *w_btnLaunchChildWnd;
-   GtkWidget *w_lblChildCount;
+   // ********************************************************************************
+   // Child wnd launching example
+   GtkWidget   *w_btnLaunchChildWnd;
+   GtkWidget   *w_lblChildCount;
+   GtkWidget   *w_tvChildMsgOutViewer;
 
-   GtkWidget *w_tvChildMsgOutViewer;
+   // ********************************************************************************
+   // Samples table example using a TreeView, row selection, row view and row manipulation
+   // Tree Selection is NOT a widget, but is essentially bound to the tree view
+   GtkWidget   *w_trvwSamplesTable;
+   GObject     *g_trslctnSelectedSample;
 
-   GtkWidget *w_trvwSamplesTable;
-   GtkWidget *w_lblSelectionText;
-   GtkWidget *w_btnEditSelection;
-   GtkWidget *w_btnCreateRow;
-   GtkWidget *w_btnDeleteRow;
-   GtkWidget *w_btnChangeRow;
-   GtkWidget *w_btnCancelRowChange;
-   GtkWidget *w_editSampleDateTime;
-   GtkWidget *w_lblSampleDate;
-   GtkWidget *w_entrySampleHour;
-   GtkWidget *w_entrySampleMinute;
-   GtkWidget *w_entryMeasurement1;
-   GtkWidget *w_entryMeasurement2;
-   GtkWidget *w_entryMeasurement3;
-   GtkWidget *w_entryMeasurement4;
-   GtkWidget *w_entryCalculationA;
-   GtkWidget *w_entryCalculationB;
+   GtkWidget   *w_tbtnEditSelection;
+   GtkWidget   *w_tbtnCreateRow;
+   GtkWidget   *w_tbtnDeleteRow;
+   GtkWidget   *w_ppvrAreYouSure;
+   GtkWidget   *w_lblPopoverAreYouSureMsg;
+   GtkWidget   *w_btnAreYouSureConfirm;
+   GtkWidget   *w_btnAreYouSureCancel;
 
+   GtkWidget   *w_editSampleDateTime;
+   GtkWidget   *w_lblSampleDate;
+   GtkWidget   *w_entrySampleHour;
+   GtkWidget   *w_entrySampleMinute;
    // Popover Datepicker
-   GtkWidget *w_ppvrDatepicker;
-   GtkWidget *w_popCalendar;
-   GtkWidget *w_popDone;
-   GtkWidget *w_popCancel;
+   GtkWidget   *w_ppvrDatepicker;
+   GtkWidget   *w_popCalendar;
+   GtkWidget   *w_popDone;
+   GtkWidget   *w_popCancel;
 
-   // Popover Confirm/Cancel
-   GtkWidget *w_ppvrAreYouSure;
-   GtkWidget *w_lblPopoverAreYouSureMsg;
-   GtkWidget *w_btnAreYouSureConfirm;
-   GtkWidget *w_btnAreYouSureCancel;
+   GtkWidget   *w_entryMeasurement1;
+   GtkWidget   *w_entryMeasurement2;
+   GtkWidget   *w_entryMeasurement3;
+   GtkWidget   *w_entryMeasurement4;
 
-   GObject *g_trslctnSelectedSample;
+   GtkWidget   *w_entryCalculationA;
+   GtkWidget   *w_entryCalculationB;
+
+   GtkWidget   *w_btnChangeRow;
+   GtkWidget   *w_btnCancelRowChange;
+
+   // ********************************************************************************
+   GtkWidget   *w_stck_SetupWizard;
+   GtkWidget   *w_stckpg_HorizontalPair;
+   GtkWidget   *w_btn_HorizontalPair_next;
+   GtkWidget   *w_btn_HorizontalPair_back;
+   GtkWidget   *w_stckpg_GridPage;
+   GtkWidget   *w_btn_GridPage_next;
+   GtkWidget   *w_btn_GridPage_back;
+   GtkWidget   *w_stckpg_VerticalPair;
+   GtkWidget   *w_btn_VerticalPair_next;
+   GtkWidget   *w_btn_VerticalPair_back;
+   GtkWidget   *w_stckpg_HorizontalPair1;
+   GtkWidget   *w_btn_HorizontalPair_next1;
+   GtkWidget   *w_btn_HorizontalPair_back1;
 
 } AppWidgets_T;
 
