@@ -30,23 +30,23 @@ typedef struct {
    APP_INIT_STATE initState;
    APP_RUNTIME_STATE runtimeState;
    bool debuggingEnabled;
+   bool useTimestamps;
    LOGLEVEL_T runtimeLoglevel;
 } ApplicationModel;
 
 void setAppModelInitState(APP_INIT_STATE appInitState);
-
 APP_INIT_STATE getAppModelInitState(void);
 
 void setAppModelRuntimeState(APP_RUNTIME_STATE appRuntimeState);
-
 APP_RUNTIME_STATE getAppModelRuntimeState(void);
 
 void setAppModelDebuggingFlag(bool enable);
-
 bool getAppModelDebuggingFlag(void);
 
-void setAppModelLoglevel(LOGLEVEL_T logLevel);
+void setAppModelUseTimestampsFlag(bool enable);
+bool getAppModelUseTimestampsFlag(void);
 
+void setAppModelLoglevel(LOGLEVEL_T logLevel);
 LOGLEVEL_T getAppModelLoglevel(void);
 
 #endif  /* SANDBOX_APP_MODEL_H */

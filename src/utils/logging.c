@@ -25,14 +25,21 @@ const char *strLoglevel(LOGLEVEL_T loglevelT)
 int logging_llprintf(LOGLEVEL_T logLevel, const char *_format, ...) {
    int done = 0;
    if (logLevel >= getAppModelLoglevel()) {
+      bool use_ts = getAppModelUseTimestampsFlag();
       // This started as effectively a copy of stdio.printf
       char line_out[LOGGING_MAX_MSG_LENGTH];
+
+      if (use_ts)
+         getTimestamp(timestamp, sizeof(timestamp));
+
       va_list arg;
-      getTimestamp(timestamp, sizeof(timestamp));
       va_start(arg, _format);
       done = vsnprintf(line_out, sizeof (line_out), _format, arg);
       va_end(arg);
-      printf("%s:%s:%s", timestamp, strLoglevel(logLevel), line_out);
+
+      /* TODO: This seems a bit sloppy, we slipped the use of use_ts in as an afterthought  */
+      printf("%s%s%s:%s", (use_ts) ? timestamp : "", (use_ts) ? ":":"", strLoglevel(logLevel), line_out);
+
       return done;
    }
    return done;

@@ -32,15 +32,23 @@ void set_msgout_buffer(const char *msgout)
 void printLoglevelMsgOut(LOGLEVEL_T loglevel, const char *_format, ...)
 {
    if (loglevel >= getAppModelLoglevel()) {
+      bool use_ts = getAppModelUseTimestampsFlag();
+
+      // We're not going to "flag" out the timestamp in the memory sizing here, because... who cares if it's too big?
       char ll_msg_out[LOGGING_MAX_MSG_LENGTH + sizeof(timestamp) + (2*sizeof(':')) + sizeof(strLoglevel(loglevel))];
       char line_out[LOGGING_MAX_MSG_LENGTH];
+
       va_list arg;
       va_start(arg, _format);
       vsnprintf(line_out, sizeof (line_out), _format, arg);
       va_end(arg);
 
-      getTimestamp(timestamp, sizeof(timestamp));
-      snprintf(ll_msg_out, sizeof (ll_msg_out), "%s:%s:%s", timestamp, strLoglevel(loglevel), line_out);
+      if (use_ts)
+         getTimestamp(timestamp, sizeof(timestamp));
+
+      /* TODO: Same as logging_llprintf, this is a big icky, is there a better way? */
+      snprintf(ll_msg_out, sizeof (ll_msg_out), "%s%s%s:%s",
+               use_ts ? timestamp:"", use_ts?":":"",strLoglevel(loglevel), line_out);
 
       logging_llprintf(loglevel, "%s", line_out);
       set_msgout_buffer(ll_msg_out);

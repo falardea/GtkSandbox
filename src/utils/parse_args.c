@@ -13,6 +13,7 @@ static void print_usage(char *argv) {
           "A sandbox project for experimenting with GTK3 and design patterns in C.\n"
           " -D --debug\tEnable Debugging and enable Debug (full) level logging\n"
           " -v --verbose\tEnable Info level logging\n"
+          " +t --timestamps\tEnable timestamps\n"
           " -h --help\tPrint this help message\n\n", exeName);
 }
 
@@ -24,7 +25,10 @@ RVALUE_T parse_input_args(int argc, char **argv) {
          setAppModelLoglevel(LOGLEVEL_DEBUG);
       } else if ((strcmp(argv[i], "-v") == 0) || (strcmp(argv[i], "--verbose") == 0))  // -v or --verbose
       {
-        setAppModelLoglevel(LOGLEVEL_INFO);
+         setAppModelLoglevel(LOGLEVEL_INFO);
+      } else if ((strcmp(argv[i], "+t") == 0) || (strcmp(argv[i], "--timestamps") == 0))  // +t or --timestamps
+      {
+         setAppModelUseTimestampsFlag(true);
       } else if ((strcmp(argv[i], "-h") == 0) || (strcmp(argv[i], "--help") == 0))  // -v or --verbose
       {
          // TODO: Is the only difference here the explicit call for help?  Maybe not an error, just excuse to exit?
