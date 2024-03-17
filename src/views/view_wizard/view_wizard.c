@@ -8,6 +8,7 @@ void on_btn_HorizontalPair_next_clicked(__attribute__((unused)) GtkButton *butto
 {
    AppWidgets_T *wdgts = (AppWidgets_T *) user_data;
    logging_llprintf(LOGLEVEL_DEBUG, "%s\n", __func__);
+   gtk_stack_set_visible_child(GTK_STACK(wdgts->w_stck_SetupWizard), wdgts->w_stckpg_GridPage);
 }
 void on_btn_HorizontalPair_back_clicked(__attribute__((unused)) GtkButton *button, gpointer *user_data)
 {
