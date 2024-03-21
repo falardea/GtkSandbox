@@ -1661,6 +1661,8 @@ Example</property>
                                     <property name="can-focus">False</property>
                                     <child>
                                       <object class="GtkImage">
+                                        <property name="width-request">350</property>
+                                        <property name="height-request">350</property>
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
                                         <property name="pixbuf">../resources/images/my_spinner200x200_50fps.gif</property>

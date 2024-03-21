@@ -27,9 +27,12 @@ void childCloseButtonClicked(GtkWidget *btnSrc, __attribute__((unused)) gpointer
 
 void testBtnClicked(__attribute__((unused)) GtkWidget *btnSrc,
                     __attribute__((unused)) gpointer *user_date) {
+   AppWidgets_T *widgets = (AppWidgets_T *) user_date;
    static bool first = true;
    clickCount++;
    if (first) {
+//      gtk_container_child_set_property(widgets->w_stck_SetupWizard, setup_start_page, "label", "Yay!");
+
       printLoglevelMsgOut(LOGLEVEL_INFO, "Testing... testing %d...\n", clickCount);
       first = false;
    } else {

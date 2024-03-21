@@ -65,6 +65,10 @@ typedef struct {
    GtkWidget   *w_lblChildCount;
    GtkWidget   *w_tvChildMsgOutViewer;
 
+   GtkWidget   *w_content_area;
+   GtkWidget   *w_main_setup_slide_stack;
+   GtkWidget   *w_setup_start_page;
+
    // ********************************************************************************
    // Samples table example using a TreeView, row selection, row view and row manipulation
    // Tree Selection is NOT a widget, but is essentially bound to the tree view
