@@ -81,6 +81,7 @@
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkStack" id="main_setup_slide_stack">
+                <property name="name">setup-stack</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <child>
@@ -100,6 +101,9 @@
                     <property name="name">Start Page</property>
                   </packing>
                 </child>
+                <style>
+                  <class name="child-widget"/>
+                </style>
               </object>
               <packing>
                 <property name="expand">True</property>

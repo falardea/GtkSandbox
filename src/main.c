@@ -20,7 +20,7 @@ void exit_test(void) {
    }
 }
 
-GSourceFunc some_task_on_timeout(gpointer user_data)
+gboolean some_task_on_timeout(__attribute__((unused)) gpointer user_data)
 {  /* An example of a timeout function, just because I was playing with it...
     */
    logging_llprintf(LOGLEVEL_INFO, "%s: CHECKPOINT \n", __func__);
@@ -31,7 +31,7 @@ GSourceFunc some_task_on_timeout(gpointer user_data)
 int main(int argc, char **argv) {
    printf("ver.%d.%d.%d\n", project_VERSION_MAJOR, project_VERSION_MINOR, project_VERSION_PATCH);
 
-   g_timeout_add(5000, (GSourceFunc)some_task_on_timeout, NULL);
+   g_timeout_add(5000, (GSourceFunc )(some_task_on_timeout), NULL);
 
    app_init(argc, argv);
 
