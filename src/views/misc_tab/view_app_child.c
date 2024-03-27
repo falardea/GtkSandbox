@@ -27,12 +27,11 @@ void childCloseButtonClicked(GtkWidget *btnSrc, __attribute__((unused)) gpointer
 
 void testBtnClicked(__attribute__((unused)) GtkWidget *btnSrc,
                     __attribute__((unused)) gpointer *user_date) {
-   AppWidgets_T *widgets = (AppWidgets_T *) user_date;
    static bool first = true;
    clickCount++;
    if (first) {
+//   AppWidgets_T *widgets = (AppWidgets_T *) user_date;
 //      gtk_container_child_set_property(widgets->w_stck_SetupWizard, setup_start_page, "label", "Yay!");
-
       printLoglevelMsgOut(LOGLEVEL_INFO, "Testing... testing %d...\n", clickCount);
       first = false;
    } else {
@@ -56,6 +55,7 @@ void openChildGladeWnd(__attribute__((unused)) GtkWidget *parent,
    gtk_builder_connect_signals(guiBuilder, endowment);
    currentChildCount++;
    gtk_widget_show_all(ref_sandboxChildWnd);
+
    g_object_unref(guiBuilder);
 }
 
