@@ -42,7 +42,7 @@ AppWidgets_T *build_application(void) {
    builder = gtk_builder_new();
 
    if (gtk_builder_add_from_resource(builder, "/sandbox/resources/sandbox.glade", NULL) == 0) {
-      logging_llprintf(LOGLEVEL_ERROR, "gtk_builder_add_from_file failed to load glade resource\n");
+      logging_llprintf(LOGLEVEL_ERROR, "%s failed to load glade resource %s\n", __func__, "sandbox.glade");
       return NULL;
    }
 

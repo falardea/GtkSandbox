@@ -64,9 +64,9 @@ void openChildGladeWnd(__attribute__((unused)) GtkWidget *parent,
    GtkBuilder *guiBuilder;
 
    guiBuilder = gtk_builder_new();
-   if (gtk_builder_add_from_resource(guiBuilder, "/sandbox/resources/sandbox_child.glade", NULL) == 0)
+   if (gtk_builder_add_from_resource(guiBuilder, "/sbc/resources/sandbox_child.glade", NULL) == 0)
    {
-      printLoglevelMsgOut(LOGLEVEL_ERROR, "%s: failed to load %s", __func__ , "sandbox_child.glade");
+      printLoglevelMsgOut(LOGLEVEL_ERROR, "%s: failed to load resource %s", __func__ , "sandbox_child.glade");
    }
    ref_sandboxChildWnd = GTK_WIDGET(gtk_builder_get_object(guiBuilder, "sandboxChildWnd"));
 

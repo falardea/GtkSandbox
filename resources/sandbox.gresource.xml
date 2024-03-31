@@ -2,8 +2,10 @@
 <gresources>
     <gresource prefix="/sandbox">
         <file preprocess="xml-stripblanks">resources/sandbox.glade</file>
-        <file preprocess="xml-stripblanks">resources/sandbox_child.glade</file>
         <file>resources/style/sandbox_style.css</file>
         <file>resources/images/my_spinner200x200_50fps.gif</file>
+    </gresource>
+    <gresource prefix="/sbc">
+        <file preprocess="xml-stripblanks">resources/sandbox_child.glade</file>
     </gresource>
 </gresources>
