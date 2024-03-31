@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/sandbox">
+        <file preprocess="xml-stripblanks">resources/sandbox.glade</file>
+        <file preprocess="xml-stripblanks">resources/sandbox_child.glade</file>
+        <file>resources/style/sandbox_style.css</file>
+        <file>resources/images/my_spinner200x200_50fps.gif</file>
+    </gresource>
+</gresources>

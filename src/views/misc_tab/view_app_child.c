@@ -12,6 +12,24 @@ static uint32_t currentChildCount = 0;
 static const uint32_t MAX_CHILDREN = 3;
 static uint32_t clickCount = 0;
 
+typedef enum
+{
+   DEFAULT,    // uninitialized
+   NOT_READY,  // initialized (created), not show ready
+   READY       // ready to show the user
+} APP_READY_STATE;
+
+typedef struct
+{
+   AppWidgets_T         *parent_widgets;
+   APP_READY_STATE      *ready_state;
+} ChildUserData_T;
+
+/* We could malloc these too? */
+ChildUserData_T childA;
+ChildUserData_T childB;
+ChildUserData_T childC;
+
 gboolean childWindowDelete(__attribute__((unused)) GtkWidget *eventSrc, __attribute__((unused)) GdkEvent *event,
                            __attribute__((unused)) gpointer data) {
    // TRUE to stop other handlers from being invoked for the event.
@@ -46,12 +64,13 @@ void openChildGladeWnd(__attribute__((unused)) GtkWidget *parent,
    GtkBuilder *guiBuilder;
 
    guiBuilder = gtk_builder_new();
-
-   if (gtk_builder_add_from_file(guiBuilder, "sandbox_child.glade", NULL) == 0)
+   if (gtk_builder_add_from_resource(guiBuilder, "/sandbox/resources/sandbox_child.glade", NULL) == 0)
    {
       printLoglevelMsgOut(LOGLEVEL_ERROR, "%s: failed to load %s", __func__ , "sandbox_child.glade");
    }
    ref_sandboxChildWnd = GTK_WIDGET(gtk_builder_get_object(guiBuilder, "sandboxChildWnd"));
+
+   /* TODO: perhaps we put the parent's endowment (user_data) into a different struct for the child and add other flavorings? */
    gtk_builder_connect_signals(guiBuilder, endowment);
    currentChildCount++;
    gtk_widget_show_all(ref_sandboxChildWnd);

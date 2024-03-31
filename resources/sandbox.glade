@@ -1666,7 +1666,7 @@ Example</property>
                                         <property name="height-request">350</property>
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="pixbuf">../resources/images/my_spinner200x200_50fps.gif</property>
+                                        <property name="resource">/sandbox/resources/images/my_spinner200x200_50fps.gif</property>
                                       </object>
                                       <packing>
                                         <property name="left-attach">0</property>

@@ -7,3 +7,4 @@
 /target/
 /cmake_install.cmake
 /CMakeCache.txt
+/resources/style/sandbox_style.css

@@ -1,0 +1,48 @@
+#main-child-wnd
+{
+  background-color: red;
+  background-image: none;
+}
+
+
+stack {
+  background-color: lightskyblue;
+  background-image: none;
+
+  button
+  {
+    //background-image: darken(lightskyblue, 15%);
+    border: 4px;
+    border-radius: 20px;
+  }
+}
+
+stackswitcher{
+
+  background-image: none;
+  background-color: darkblue;
+  //border: 4px;
+  //border-right: 3px;
+  //border-right-color: darkgray;
+  //border-top-right-radius: 20px;
+  //clip-path: polygon(75% 0, 100% 50%, 75% 100%, 0 100%, 0 0);
+  button
+  {
+    border: 4px;
+    //border-radius: 2000px;
+    background-clip: content-box;
+    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100% );
+
+    label{
+      color: rgba(1, 1, 1, 0);
+    }
+    //border-top-right-radius: 120px;
+    //clip-path: polygon(75% 0, 100% 50%, 75% 100%, 0 100%, 0 0);
+
+    //content: "";
+    //position: absolute;
+    //inset: 0;
+    //background: /* your background */;
+    //clip-path: polygon(0 0,calc(100% - 168px) 0,100% 168px,100% calc(100% - 168px),calc(100% - 168px) 100%,0 100%,0 0,10px  10px ,10px calc(100% - 10px),calc(100% - 168px - 4.14px) calc(100% - 10px),calc(100% - 10px) calc(100% - 168px - 4.14px),calc(100% - 10px) calc(168px + 4.14px),calc(100% - 168px - 4.14px) 10px,10px 10px);
+  }
+}

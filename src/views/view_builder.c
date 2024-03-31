@@ -41,10 +41,7 @@ AppWidgets_T *build_application(void) {
 
    builder = gtk_builder_new();
 
-   // ********************************************************************************
-   // TODO: figure out how to build the application with bundled resources we can load, rather than a file.
-   // ********************************************************************************
-   if (gtk_builder_add_from_file(builder, "sandbox.glade", NULL) == 0) {
+   if (gtk_builder_add_from_resource(builder, "/sandbox/resources/sandbox.glade", NULL) == 0) {
       logging_llprintf(LOGLEVEL_ERROR, "gtk_builder_add_from_file failed to load glade resource\n");
       return NULL;
    }
