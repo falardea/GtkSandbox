@@ -95,7 +95,7 @@ set(MY_SOURCES
     src/controllers/ctrl_samples.h
     src/views/view_wizard/view_wizard.c
     src/views/view_wizard/view_wizard.h
-)
+    src/models/search_worker.c src/models/search_worker.h)
 
 include_directories(${PROJECT_SOURCE_DIR})
 configure_file("${PROJECT_SOURCE_DIR}/version.h.in" "${PROJECT_SOURCE_DIR}/version.h")

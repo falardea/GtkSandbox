@@ -24,6 +24,63 @@
             <property name="can-focus">True</property>
             <property name="tab-pos">left</property>
             <child>
+              <!-- n-columns=3 n-rows=3 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkButton" id="btnEmployWorker">
+                    <property name="label" translatable="yes">Search</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <signal name="clicked" handler="on_btnEmployWorker_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="tab-fill">False</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="nblblWorkerPage">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Worker</property>
+              </object>
+              <packing>
+                <property name="tab-fill">False</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkFrame" id="nbMiscTab">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -358,7 +415,7 @@
               </object>
               <packing>
                 <property name="menu-label">Misc</property>
-                <property name="position">2</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child type="tab">
@@ -370,6 +427,7 @@ Example</property>
               </object>
               <packing>
                 <property name="menu-label">Misc</property>
+                <property name="position">1</property>
                 <property name="tab-fill">False</property>
               </packing>
             </child>
@@ -672,7 +730,7 @@ Example</property>
               </object>
               <packing>
                 <property name="menu-label">Button Box</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
             <child type="tab">
@@ -684,7 +742,7 @@ Examples</property>
               </object>
               <packing>
                 <property name="menu-label">Button Box</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
                 <property name="tab-fill">False</property>
               </packing>
             </child>
@@ -1457,7 +1515,7 @@ Examples</property>
               </object>
               <packing>
                 <property name="menu-label">List View</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <child type="tab">
@@ -1469,7 +1527,7 @@ Example</property>
               </object>
               <packing>
                 <property name="menu-label">List View</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
                 <property name="tab-fill">False</property>
               </packing>
             </child>
@@ -2184,7 +2242,7 @@ Example</property>
               </object>
               <packing>
                 <property name="menu-label">Wizard Example</property>
-                <property name="position">3</property>
+                <property name="position">4</property>
               </packing>
             </child>
             <child type="tab">
@@ -2195,7 +2253,7 @@ Example</property>
 Example</property>
               </object>
               <packing>
-                <property name="position">3</property>
+                <property name="position">4</property>
                 <property name="tab-fill">False</property>
               </packing>
             </child>
