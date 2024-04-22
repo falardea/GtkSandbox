@@ -31,7 +31,7 @@ gboolean some_task_on_timeout(__attribute__((unused)) gpointer user_data)
 int main(int argc, char **argv) {
    printf("ver.%d.%d.%d\n", project_VERSION_MAJOR, project_VERSION_MINOR, project_VERSION_PATCH);
 
-   g_timeout_add(5000, (GSourceFunc )(some_task_on_timeout), NULL);
+   gdk_threads_add_timeout(5000, (GSourceFunc )(some_task_on_timeout), NULL);
 
    app_init(argc, argv);
 
