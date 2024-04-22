@@ -1,48 +1,43 @@
 #main-child-wnd
 {
-  background-color: red;
+  background-color: #103480;
   background-image: none;
 }
 
 
-stack {
-  background-color: lightskyblue;
+stack
+{
+  // -- CAUTION --
+  // The GtkStack has a child CSS node called stack also (probably using the same widgets under the hood)
+  background-color: #4178EA;
   background-image: none;
 
   button
   {
     //background-image: darken(lightskyblue, 15%);
+    color: #1A4EBA;
     border: 4px;
-    border-radius: 20px;
+    border-radius: 50%;
   }
 }
 
-stackswitcher{
-
+stackswitcher
+{
   background-image: none;
   background-color: darkblue;
-  //border: 4px;
-  //border-right: 3px;
-  //border-right-color: darkgray;
-  //border-top-right-radius: 20px;
-  //clip-path: polygon(75% 0, 100% 50%, 75% 100%, 0 100%, 0 0);
   button
   {
     border: 4px;
-    //border-radius: 2000px;
-    background-clip: content-box;
-    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100% );
+    //background-clip: content-box;
+    border-radius: 50%;
 
     label{
-      color: rgba(1, 1, 1, 0);
+      color: #1189E0;
     }
-    //border-top-right-radius: 120px;
-    //clip-path: polygon(75% 0, 100% 50%, 75% 100%, 0 100%, 0 0);
-
-    //content: "";
-    //position: absolute;
-    //inset: 0;
-    //background: /* your background */;
-    //clip-path: polygon(0 0,calc(100% - 168px) 0,100% 168px,100% calc(100% - 168px),calc(100% - 168px) 100%,0 100%,0 0,10px  10px ,10px calc(100% - 10px),calc(100% - 168px - 4.14px) calc(100% - 10px),calc(100% - 10px) calc(100% - 168px - 4.14px),calc(100% - 10px) calc(168px + 4.14px),calc(100% - 168px - 4.14px) 10px,10px 10px);
   }
+}
+
+.round-button
+{
+  border-radius: 50%;
 }

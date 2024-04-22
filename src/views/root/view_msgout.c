@@ -25,6 +25,10 @@ void set_msgout_buffer(const char *msgout)
       }
 
       gtk_text_buffer_insert(tvBuff, &endIter, msgout, -1);
+
+      // This keeps the latest msgout in view, BUT if you were scrolling up and a new msgout was posted, it will
+      // autoscroll to the insertion.  It would be better to only auto-scroll the msgout if the user is not looking
+      // at previous messages
       gtk_text_view_scroll_to_mark(GTK_TEXT_VIEW(g_appWidgetsT->w_tvAppMsgOut), msgOutCursor, 0.0, TRUE, 0.0, 0.0);
    }
 }

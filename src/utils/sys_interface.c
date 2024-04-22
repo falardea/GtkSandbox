@@ -34,7 +34,7 @@ RVALUE_T setDisplayEnv(void) {
       }
       // strip the newline and add the ":0.0" display number
       retBuf[strcspn(retBuf, "\n")] = 0;
-      char displayId[5] = {':', '0', '.', '0', '\n'};
+      char displayId[5] = {':', '0', '.', '0', 0};
       char nameserverStr[sizeof(retBuf) + sizeof(displayId)];
       snprintf(nameserverStr, sizeof(nameserverStr), "%s%s", retBuf, displayId);
 
@@ -45,7 +45,9 @@ RVALUE_T setDisplayEnv(void) {
       }
       logging_llprintf(LOGLEVEL_DEBUG, "%s: setenv: DISPLAY=%s\n", __func__, nameserverStr);
 
-      return (setenv("DISPLAY", nameserverStr, false) ? SUCCESS : DISPLAY_ENV_ERR);
+      bool envSetSuccess = setenv("DISPLAY", nameserverStr, false);
+
+      return (envSetSuccess == 0) ? SUCCESS : DISPLAY_ENV_ERR;
    } else {
       return SUCCESS;
    }

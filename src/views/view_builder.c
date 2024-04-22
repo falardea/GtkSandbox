@@ -10,11 +10,11 @@
 
 gboolean transform_toggle_label_on_off(GBinding *src, const GValue *fromValue,  __attribute__((unused)) GValue *toValue,
                                        __attribute__((unused)) gpointer user_data) {
-   GtkToggleButton *tbutton = (GtkToggleButton *) g_binding_dup_source(src);
+   GtkToggleButton *tbutton = (GtkToggleButton *) g_binding_get_source(src);
    if (tbutton != NULL) {
       gboolean active = g_value_get_boolean(fromValue);
       gtk_button_set_label(GTK_BUTTON(tbutton), active ? "ON" : "OFF");
-      g_object_unref(tbutton);
+//      g_object_unref(tbutton);
       return TRUE;
    }
    return FALSE;

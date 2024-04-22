@@ -11,10 +11,24 @@ window {
 treeview {
   color: black;
   background-color: $dark-sandbox-slate;
-  header button {
+  header > button {
     color: $light-sandbox-slate;
   }
   :selected {
     background-color: cornflowerblue;
+  }
+}
+
+notebook
+{
+  stack {
+    // This stack belongs to the notebook
+    background-color: red;
+    background-image: none;
+    stack {
+      // This stack is a nested stack, on a "page" of the notebook
+      background-color: pink;
+      background-image: none;
+    }
   }
 }
