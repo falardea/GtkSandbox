@@ -14,7 +14,7 @@ static void set_row_entries_view(SamplesRow_T *row, AppWidgets_T *wdgts)
 {
    struct tm tm_of_timestamp;
    strptime(row->timestampStr, "%Y-%0m-%0dT%0H:%0M:%0S", &tm_of_timestamp);
-   logging_llprintf(LOGLEVEL_DEBUG, "%s: CHECKPOINT: %s \n", __func__, row->timestampStr);
+   LOG_DEBUG("CHECKPOINT: %s", row->timestampStr);
 
    gtk_calendar_select_month(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_timestamp.tm_mon, tm_of_timestamp.tm_year + 1900);
    gtk_calendar_select_day(GTK_CALENDAR(wdgts->w_popCalendar), tm_of_timestamp.tm_mday);

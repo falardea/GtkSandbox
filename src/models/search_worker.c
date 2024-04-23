@@ -126,7 +126,7 @@ void search_worker_set_timestamp (SearchWorker *self, const gchar *timestamp )
       };
       for (size_t i = 0; i < ( sizeof(date_lookup) / sizeof(date_lookup[0]) ); i++)
       {
-         logging_llprintf(LOGLEVEL_DEBUG, "Looking for %s\n", date_lookup[i]);
+         LOG_DEBUG(""Looking for %s\n", date_lookup[i]);
          parse_psuedo_csv(date_lookup[i]);
       }
  * */
@@ -134,7 +134,7 @@ void search_worker_set_timestamp (SearchWorker *self, const gchar *timestamp )
 
 void on_btnEmployWorker_clicked(GtkButton *btn, gpointer user_data)
 {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s: CHECKPOINT \n", __func__);
+   LOG_DEBUG("CHECKPOINT");
 }
 
 char *search_string[] = {"Date,Ticks,Notes,field1,field2,field3,field4,field5,field6,field7,field8",
@@ -159,8 +159,7 @@ gboolean compile_regex(regex_t *re, const char *patt)
    if (re_comp_ret != 0) {
       char err_buff[1024];
       regerror(re_comp_ret, re, err_buff, sizeof (err_buff));
-      logging_llprintf(LOGLEVEL_ERROR, "%s: 'regcomp' failed to compile %s, reporting: %s\n",
-                       __func__, patt, err_buff);
+      LOG_ERROR("'regcomp' failed to compile %s, reporting: %s", patt, err_buff);
       return FALSE;
    }
    return TRUE;
@@ -239,7 +238,7 @@ gboolean search_worker_run_lookup( SearchWorker *self, const gchar *timestamp)
       str_cursor = strtok(str_out, ",");
       while(str_cursor != NULL)
       {
-         logging_llprintf(LOGLEVEL_DEBUG, "%s\n", str_cursor);
+         LOG_DEBUG("%s", str_cursor);
          str_cursor = strtok(NULL, ",");
       }
    }

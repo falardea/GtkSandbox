@@ -20,7 +20,7 @@ WORKFLOW_STATE_T (*set_workflow_state[N_WORKFLOW_STATES])(void) =
 
 static void setWorkflowStepCount(uint8_t nSteps)
 {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s: setting workflow step count to %u\n", __func__, nSteps);
+   LOG_DEBUG("setting workflow step count to %u", nSteps);
    nWorkflowSteps = nSteps;
 }
 
@@ -31,25 +31,25 @@ static uint8_t getWorkflowStepCount(void)
 
 WORKFLOW_STATE_T handle_startup(void)
 {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s\n", __func__);
+   LOG_DEBUG("");
    return INIT_HW;
 }
 
 WORKFLOW_STATE_T handle_init_hw(void)
 {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s\n", __func__);
+   LOG_DEBUG("");
    return INIT_CONTROL;
 }
 
 WORKFLOW_STATE_T handle_init_control(void)
 {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s\n", __func__);
+   LOG_DEBUG("");
    return RUNNING;
 }
 
 WORKFLOW_STATE_T handle_running(void)
 {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s\n", __func__);
+   LOG_DEBUG("");
    while(getWorkflowStepCount() > 0)
    {
       setWorkflowStepCount(getWorkflowStepCount() - 1);
@@ -60,18 +60,18 @@ WORKFLOW_STATE_T handle_running(void)
 
 WORKFLOW_STATE_T handle_stopping(void)
 {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s\n", __func__);
+   LOG_DEBUG("");
    return SHUTDOWN;
 }
 
 WORKFLOW_STATE_T handle_error(void)
 {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s\n", __func__);
+   LOG_DEBUG("");
    return SHUTDOWN;
 }
 
 WORKFLOW_STATE_T handle_shutdown(void)
 {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s\n", __func__);
+   LOG_DEBUG("");
    return SHUTDOWN;
 }

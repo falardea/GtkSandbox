@@ -11,7 +11,7 @@
 
 extern WORKFLOW_STATE_T (*set_workflow_state[N_WORKFLOW_STATES])(void);
 void exit_test(void) {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s called as expected\n", __func__);
+   LOG_DEBUG("called as expected");
 
    WORKFLOW_STATE_T currStep = STARTUP;
    while (currStep != SHUTDOWN && currStep != ERROR)
@@ -23,7 +23,7 @@ void exit_test(void) {
 gboolean some_task_on_timeout(__attribute__((unused)) gpointer user_data)
 {  /* An example of a timeout function, just because I was playing with it...
     */
-   logging_llprintf(LOGLEVEL_INFO, "%s: CHECKPOINT \n", __func__);
+   LOG_INFO("CHECKPOINT");
    return G_SOURCE_REMOVE;
 }
 
@@ -37,14 +37,14 @@ int main(int argc, char **argv) {
 
    if (getAppModelInitState() != INIT_ERROR) {
 
-      logging_llprintf(LOGLEVEL_DEBUG, "application initialized, starting UI\n");
+      LOG_DEBUG("application initialized, starting UI");
       gtk_main();
-      logging_llprintf(LOGLEVEL_DEBUG, "UI closed, shutting down\n");
+      LOG_DEBUG("UI closed, shutting down");
 
       exit_test();
    } else {
       setAppModelRuntimeState(RUNTIME_HANDLING_ERROR);
-      logging_llprintf(LOGLEVEL_ERROR, "application initialization failed, attempting a graceful shutdown\n");
+      LOG_ERROR("application initialization failed, attempting a graceful shutdown");
       // Graceful shutdown stuff here
       setAppModelRuntimeState(RUNTIME_SHUTTING_DOWN);
    }

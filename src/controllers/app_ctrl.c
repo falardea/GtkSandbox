@@ -22,14 +22,14 @@ void app_init(int argc, char **argv) {
    retVal = parse_input_args(argc, argv);
    if (retVal == PARSE_ARG_ERR) {
       setAppModelInitState(INIT_ERROR);
-      logging_llprintf(LOGLEVEL_ERROR, "error parsing input args, exiting...\n");
+      LOG_ERROR("error parsing input args, exiting...");
       return;
    }
 
    retVal = setDisplayEnv();
    if (retVal == DISPLAY_ENV_ERR) {
       setAppModelInitState(INIT_ERROR);
-      logging_llprintf(LOGLEVEL_ERROR, "error setting DISPLAY env var, exiting...\n");
+      LOG_ERROR("error setting DISPLAY env var, exiting...");
       return;
    }
 
@@ -39,10 +39,10 @@ void app_init(int argc, char **argv) {
    gtk_init(&argc, &argv);
 
    g_appWidgetsT = build_application();
-   logging_llprintf(LOGLEVEL_DEBUG, "build_application success\n");
+   LOG_DEBUG("build_application success");
 
    applyApplicationStyle(g_appWidgetsT);
-   logging_llprintf(LOGLEVEL_DEBUG, "applyApplicationStyle success\n");
+   LOG_DEBUG("applyApplicationStyle success");
 
    load_sample_data_from_file();
 

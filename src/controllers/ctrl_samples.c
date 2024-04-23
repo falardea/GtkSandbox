@@ -7,10 +7,10 @@
 
 void load_sample_data_from_file(void)
 {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s: stub-function \n", __func__);
+   LOG_DEBUG("stub-function");
 }
 
 void save_sample_date_to_file(void)
 {
-   logging_llprintf(LOGLEVEL_DEBUG, "%s: stub-function \n", __func__);
+   LOG_DEBUG("stub-function");
 }

@@ -5,7 +5,6 @@
 #include "globals.h"
 #include "view_bound_toggles.h"
 #include "views/root/view_msgout.h"
-#include "utils/logging.h"
 
 void on_tbBindingSrc_toggled(GtkToggleButton *tbutton, __attribute__((unused)) gpointer *user_data)
 {
