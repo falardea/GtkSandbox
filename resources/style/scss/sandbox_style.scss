@@ -1,2 +1,91 @@
 @import "sandbox_window";
 @import "sandbox_child_style";
+
+
+
+// For Development and Testing
+button.remove-before-flight {
+  color: #f6f5f4;
+  font-size: xx-large;
+  font-weight: bolder;
+  outline-color: rgba(236, 241, 241, 0.3);
+  border-color: #2e3436;
+  background-image: linear-gradient(to top, #e60000 2px, #ff0000);
+  text-shadow: 0 1px rgba(16, 16, 16, 0.75);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+button.remove-before-flight:active {
+  color: #f6f5f4;
+  outline-color: rgba(236, 241, 241, 0.3);
+  border-color: #2e3436;
+  background-image: image(#b30000);
+}
+
+button.remove-before-flight.toggle:checked {
+  color: #f6f5f4;
+  outline-color: rgba(236, 241, 241, 0.3);
+  border-color: #2e3436;
+  background-image: image(#1a0000);
+}
+
+button.remove-before-flight:backdrop {
+  color: #929595;
+  border-color: #a6a9b6;
+  background-image: image(#ff0000);
+  text-shadow: none;
+}
+
+button.remove-before-flight:backdrop:disabled {
+  color: #d4cfca;
+  border-color: #d5d0cc;
+  background-image: image(#faf9f8);
+}
+
+button.remove-before-flight:disabled {
+  color: #929595;
+  border-color: #cdc7c2;
+  background-image: image(#faf9f8);
+}
+
+#faux_dlg_wnd {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+#faux_dlg_overlay {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+#faux_dlg_grid {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  box-shadow: 0px 0px 5px 2px #929595;
+  background-color: rgba(220, 220, 220, 100);
+}
+
+#faux_dlg_header {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+#faux_dlg_buttonbox {
+  padding: 3px;
+  background-color: #eeeae8;
+}
+
+#faux_dlg_body {
+  padding: 3px;
+}
+
+#faux_dlg_placeholder {
+  padding: 10px;
+}
+
+.faux_dlg_child_empty_red {
+  background-color: red;
+}
+
+.faux_dlg_child_empty_blue {
+  background-color: blue;
+}

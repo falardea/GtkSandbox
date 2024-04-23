@@ -59,6 +59,19 @@ typedef struct {
    GtkWidget   *w_bUnboundModelDisable;
    GtkWidget   *w_bPrintModelEnableState;
 
+   GtkWidget *w_btn_easy_remove_before_flight;
+   GtkWidget *w_dialog_centering_test;
+   GtkWidget *w_grd_child_layout;
+   GtkWidget *w_grd_child_placeholder;
+   GtkWidget *w_hdrbr_faux_dlg;
+   GtkWidget *w_btn_faux_dlg_load_widget;
+   GtkWidget *w_faux_dlg_content;
+   GtkWidget *w_bx_content_holder;
+
+   GtkWidget *w_btn_draw_dsa_drawing_area_red;
+   GtkWidget *w_btn_draw_dsa_drawing_area_blue;
+   GtkWidget *w_dsa_drawing_area;
+
    // ********************************************************************************
    // Child wnd launching example
    GtkWidget   *w_btnLaunchChildWnd;

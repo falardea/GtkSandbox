@@ -2,6 +2,9 @@
 <gresources>
     <gresource prefix="/sandbox">
         <file preprocess="xml-stripblanks">resources/sandbox.glade</file>
+        <file preprocess="xml-stripblanks">resources/dlg_sample_a.glade</file>
+        <file preprocess="xml-stripblanks">resources/dlg_sample_b.glade</file>
+        <!--<file compressed="true" preprocess="xml-stripblanks">dlg_sample_b.glade</file> -->
         <file>resources/style/sandbox_style.css</file>
         <file>resources/images/my_spinner200x200_50fps.gif</file>
     </gresource>

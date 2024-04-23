@@ -133,9 +133,26 @@ AppWidgets_T *build_application(void) {
    appWidgetsT->w_btn_HorizontalPair_next1 = GTK_WIDGET(gtk_builder_get_object(builder, "btn_HorizontalPair_next1"));
    appWidgetsT->w_btn_HorizontalPair_back1 = GTK_WIDGET(gtk_builder_get_object(builder, "btn_HorizontalPair_back1"));
 
+   appWidgetsT->w_btn_easy_remove_before_flight = GTK_WIDGET(gtk_builder_get_object(builder, "btn_easy_remove_before_flight"));
+   appWidgetsT->w_dialog_centering_test = GTK_WIDGET(gtk_builder_get_object(builder, "dialog_centering_test"));
+   appWidgetsT->w_grd_child_layout = GTK_WIDGET(gtk_builder_get_object(builder, "grd_child_layout"));
+   appWidgetsT->w_grd_child_placeholder = GTK_WIDGET(gtk_builder_get_object(builder, "grd_child_placeholder"));
+
+   appWidgetsT->w_hdrbr_faux_dlg = GTK_WIDGET(gtk_builder_get_object(builder, "hdrbr_faux_dlg"));
+   appWidgetsT->w_btn_faux_dlg_load_widget = GTK_WIDGET(gtk_builder_get_object(builder, "btn_faux_dlg_load_widget"));
+   appWidgetsT->w_bx_content_holder = GTK_WIDGET(gtk_builder_get_object(builder, "bx_content_holder"));
+
+   appWidgetsT->w_faux_dlg_content = GTK_WIDGET(gtk_builder_get_object(builder, "faux_dlg_content"));
+   // gtk_container_add(GTK_CONTAINER(widgets->w_faux_dlg_content), widgets->w_grd_child_placeholder);
    // ********************************************************************************
    /* appWidgetsT->w_glade_ID = GTK_WIDGET(gtk_builder_get_object(builder, "glade_ID")); */
 
+   GtkBuilder      *dlg_builder;
+   GtkWidget       *dlg_window;
+   dlg_builder = gtk_builder_new_from_resource("/sandbox/resources/dlg_sample_b.glade");
+   dlg_window = GTK_WIDGET(gtk_builder_get_object(dlg_builder, "grd_child_placeholder_standalone"));
+   gtk_container_add(GTK_CONTAINER(appWidgetsT->w_faux_dlg_content), dlg_window);
+   g_object_unref(dlg_builder);
 
    // ********************************************************************************
    // signals and bindings
