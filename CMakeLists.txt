@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION      3.16)
 
-project(GtkSandbox VERSION          1.2.2)
+project(GtkSandbox VERSION          1.2.2  LANGUAGES C CXX)
+
+set(CMAKE_C_STANDARD                11)
+set(CMAKE_CXX_STANDARD              11)
+set(CMAKE_CXX_STANDARD_REQUIRED     ON)
 
 # Dependencies
 find_package(PkgConfig REQUIRED)
@@ -15,18 +19,12 @@ set(GRESOURCE_C                     sandbox.gresource.c)
 set(GRESOURCE_XML                   sandbox.gresource.xml)
 
 set(PROJECT_TARGET sandbox)
-set(CSS_TARGET sandbox_style.css)
-
-set(CMAKE_C_STANDARD                11)
-set(CMAKE_CXX_STANDARD              11)
-set(CMAKE_CXX_STANDARD_REQUIRED     ON)
-add_compile_options(${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS} -Wall -Wextra -rdynamic)
-add_link_options(-rdynamic)
-
 set(PROJECT_SOURCE_DIR              ./src)
 set(PROJECT_BINARY_DIR              ./target)
-set(PROJECT_RESOURCE_DIR            ${CMAKE_SOURCE_DIR}/resources)
 
+set(CSS_TARGET sandbox_style.css)
+
+set(PROJECT_RESOURCE_DIR            ${CMAKE_SOURCE_DIR}/resources)
 set(IMAGES_DIR                      ${PROJECT_RESOURCE_DIR}/images)
 set(SPINNER_FILE                    ${IMAGES_DIR}/my_spinner200x200_50fps.gif)
 set(STYLE_DIR                       ${PROJECT_RESOURCE_DIR}/style)
@@ -34,6 +32,9 @@ set(SCSS_SOURCE                     ${STYLE_DIR}/scss/sandbox_style.scss)
 set(CSS_OUTFILE                     ${STYLE_DIR}/${CSS_TARGET})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+
+add_compile_options(${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS} -Wall -Wextra -rdynamic)
+add_link_options(-rdynamic)
 
 add_custom_command(OUTPUT ${CSS_OUTFILE} COMMAND sassc -t expanded ${SCSS_SOURCE} ${CSS_OUTFILE})
 

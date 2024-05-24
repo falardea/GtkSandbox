@@ -34,6 +34,18 @@ static void bind_toggle_src_active_tar_sensitive(GtkToggleButton *src, GtkWidget
    g_object_bind_property(src, "active", tar, "sensitive", G_BINDING_DEFAULT);
 }
 
+void genericWidgetSetup(gpointer widget, gpointer user_data)
+{
+//   AppWidgets_T *app_wdgts = (AppWidgets_T*) user_data;
+   if (GTK_IS_WIDGET(widget)){
+//      const char* wName = gtk_widget_get_name(GTK_WIDGET(widget));
+      if (GTK_IS_TOGGLE_BUTTON(widget) && !GTK_IS_RADIO_BUTTON(widget) && !GTK_IS_CHECK_BUTTON(widget))
+      {
+         gtk_style_context_add_class(gtk_widget_get_style_context(widget), "toggle-button");
+      }
+   }
+}
+
 AppWidgets_T *build_application(void) {
    GtkBuilder *builder;
 
@@ -168,6 +180,11 @@ AppWidgets_T *build_application(void) {
 
    bind_toggle_src_active_tar_sensitive(GTK_TOGGLE_BUTTON(appWidgetsT->w_tbBindingSrc), appWidgetsT->w_tbBoundTarget2);
 
+   // Call the generic widget setup function on all the widgets
+   // This lets us easily set up signal handlers for certain classes of widget (e.g. block scrolling, show number pad)
+   GSList *list = gtk_builder_get_objects(builder);
+   g_slist_foreach(list, genericWidgetSetup, appWidgetsT);
+   g_slist_free(list);
    // ********************************************************************************
    // Release anything we've instantiated with a ref-count or anything we've received allocated copies of
    // ********************************************************************************
